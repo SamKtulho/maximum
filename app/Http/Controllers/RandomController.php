@@ -17,12 +17,14 @@ class RandomController extends Controller
         $title = $request->get('title');
         $content = $request->get('content');
         $domain = $request->get('edomain');
+        $tic = $request->get('tic');
 
         if (!$title || !$content || !$domain) {
             $request->session()->flash('alert-warning', 'Введите заголовок, текст письма и хотябы 1 почтовый домен!');
             return redirect('/random/email');
         }
 
-        dd($request->all());
+        $data = Random::prepareData($content, $title, $domain, $tic);
+        return response()->json(['response' => $data]);
     }
 }

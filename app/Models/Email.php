@@ -19,4 +19,9 @@ class Email extends Model
     {
         return $this->stopWords;
     }
+
+    public function domain()
+    {
+        return $this->belongsTo('App\Models\Domain');
+    }
 }

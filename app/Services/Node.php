@@ -1,4 +1,6 @@
 <?php
+namespace App\Services;
+
 /**
  * Project:     Natty CMS: a PHP-based Content Management System
  * File:        Natty/TextRandomizer/Node.php

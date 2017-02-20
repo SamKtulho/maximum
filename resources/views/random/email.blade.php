@@ -49,12 +49,35 @@
                     <span style="margin-left: 15px;"></span>
                     {!! Form::checkbox('edomain[]', 'other', true) !!}
                     {!! Form::label('Остальные') !!}
+                    <span style="margin-left: 25px;"></span>
+                    {!! Form::label('ТИЦ') !!}
+
+                    {!! Form::select('tic', [1 => 'Любой', 10 => '10', 20 => 20, 30 => 30, 40 => 40, 50 => '50-70', 80 => 80, 90 => 90, 100 => '100-200'], '10') !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::submit('Submit', ['class'=>'btn btn-primary']) !!}
+                    {!! Form::button('Submit', ['class'=>'btn btn-primary btn-main']) !!}
                 </div>
                 {!! Form::close()!!}
+
+                <div id="result">
+                    <div id="email"></div>
+                    <h4></h4>
+                    <div id="body"></div>
+                </div>
+
             </div>
         </div>
     </div>
+    <script>
+        $( document ).ready(function() {
+            $('.btn-main').click(function () {
+                var data = $( "form" ).serializeArray();
+                $.post( "/random/email/store", data, function( data ) {
+                    $( "#result #email" ).html( data.response[3] );
+                    $( "#result h4" ).html( data.response[1] );
+                    $( "#result #body" ).html( data.response[0] );
+                });
+            });
+        });
+    </script>
 @endsection
