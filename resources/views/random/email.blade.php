@@ -38,6 +38,19 @@
                     ) !!}
                 </div>
                 <div class="form-group">
+                    {!! Form::checkbox('edomain[]', 'mail', true) !!}
+                    {!! Form::label('@mail.ru') !!}
+                    <span style="margin-left: 15px;"></span>
+                    {!! Form::checkbox('edomain[]', 'yandex', true) !!}
+                    {!! Form::label('@yandex.*') !!}
+                    <span style="margin-left: 15px;"></span>
+                    {!! Form::checkbox('edomain[]', 'gmail', true) !!}
+                    {!! Form::label('@gmail.com') !!}
+                    <span style="margin-left: 15px;"></span>
+                    {!! Form::checkbox('edomain[]', 'other', true) !!}
+                    {!! Form::label('Остальные') !!}
+                </div>
+                <div class="form-group">
                     {!! Form::submit('Submit', ['class'=>'btn btn-primary']) !!}
                 </div>
                 {!! Form::close()!!}

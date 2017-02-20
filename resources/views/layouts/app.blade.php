@@ -43,7 +43,9 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        &nbsp;<li {{ (Request::is('random.email') ? 'class=active' : '') }}>
+                            <a href="/random/email">Email</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

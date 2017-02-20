@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/random/email', 'RandomController@email');
+Route::get('/random/email', ['as' => 'random.email', 'uses' => 'RandomController@email']);
 Route::post('/random/email/store', ['as' => 'random.email.store', 'uses' => 'RandomController@emailStore']);
 
 
