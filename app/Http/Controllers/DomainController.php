@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class DomainController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function create()
     {
         return view('domain.create');
@@ -33,7 +43,7 @@ class DomainController extends Controller
                     $emailModel = Email::where('email', $email)->first();
                     if ($emailModel) {
                         $storedDomain = Domain::where('id', $emailModel->domain_id)->first();
-                        if ($storedDomain && $domain->tic >= $storedDomain->tic) {
+                        if ($storedDomain && $domain->tic > $storedDomain->tic) {
                             $emailModel->domain_id = $domain->id;
                             $emailModel->save();
                         }
@@ -50,5 +60,6 @@ class DomainController extends Controller
                 }
             }
         }
+        return redirect('/domain/create');
     }
 }

@@ -18,4 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/random/email', 'RandomController@email');
+
+
 $router->resource('domain', 'DomainController');
+$router->resource('email', 'EmailController');
