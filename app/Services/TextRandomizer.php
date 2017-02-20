@@ -3,8 +3,6 @@
 namespace App\Services;
 
 require_once dirname(__FILE__) . '/Node.php';
-require_once dirname(__FILE__) . '/GoogleUrlApi.php';
-
 
 class TextRandomizer
 {
@@ -16,7 +14,7 @@ class TextRandomizer
     {
         $text = (string) $text;
         $key = 'AIzaSyB2FOhu6MpvgIpMpqYOwbaDt6po9x7-iCQ';
-        $googer = new GoogleURLAPI($key);
+        $googer = new GoogleUrlApi($key);
         $shortDWName = $googer->shorten("https://docs.google.com/document/d/1-sytIIRkyse81jDKE8e-70m5uizQ5VNQv1jki9U73UI?p=" . time());
 
         $text = str_replace('!faq_link!', '<a href="' . $shortDWName . '">' . $shortDWName . '</a>', $text);
