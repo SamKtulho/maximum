@@ -7,6 +7,11 @@ use App\Services\Random;
 
 class RandomController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function email(Request $request)
     {
         return view('random.email');
