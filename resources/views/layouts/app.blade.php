@@ -14,6 +14,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -43,7 +45,9 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        &nbsp;<li {{ (Request::is('random.email') ? 'class=active' : '') }}>
+                            <a href="/random/email">Email</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

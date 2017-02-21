@@ -16,4 +16,9 @@ class Domain extends Model
 
 
     }
+
+    public function emails()
+    {
+        return $this->hasMany('App\Models\Email');
+    }
 }
