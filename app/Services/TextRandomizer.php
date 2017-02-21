@@ -6,16 +6,73 @@ require_once dirname(__FILE__) . '/Node.php';
 
 class TextRandomizer
 {
+    private $minDomainsMailRu = [
+        'http://wapmaximus.ru/1',
+        'http://wapmaximus.ru/2',
+        'http://wapmaximus.ru/3',
+        'http://wapmaximus.ru/4',
+        'http://wapmaximus.ru/5',
+        'http://wapmaximus.ru/6',
+        'http://wapmaximus.ru/7',
+        'http://wapmaximus.ru/8',
+        'http://wapmaximus.ru/9',
+        'http://wapmaximus.ru/a',
+        'http://wapmaximus.ru/b',
+        'http://wapmaximus.ru/c',
+        'http://wapmaximus.ru/d',
+        'http://wapmaximus.ru/e',
+        'http://wapmaximus.ru/f',
+        'http://wapmaximus.ru/g',
+        'http://wapmaximus.ru/h',
+        'http://wapmaximus.ru/i',
+        'http://wapmaximus.ru/j',
+        'http://wapmaximus.ru/k',
+        'http://wapmaximus.ru/l',
+        'http://wapmaximus.ru/m',
+        'http://wapmaximus.ru/n',
+        'http://wapmaximus.ru/o',
+        'http://wapmaximus.ru/p',
+        'http://wapmaximus.ru/q',
+        'http://wapmaximus.ru/r',
+        'http://wapmaximus.ru/s',
+        'http://wapmaximus.ru/t',
+        'http://wapmaximus.ru/u',
+        'http://wapmaximus.ru/v',
+        'http://wapmaximus.ru/w',
+        'http://wapmaximus.ru/x',
+        'http://wapmaximus.ru/y',
+        'http://wapmaximus.ru/z',
+        'http://wapmaximus.ru/10',
+        'http://wapmaximus.ru/11',
+        'http://wapmaximus.ru/12',
+        'http://wapmaximus.ru/13',
+        'http://wapmaximus.ru/14',
+        'http://wapmaximus.ru/15',
+        'http://wapmaximus.ru/16',
+        'http://wapmaximus.ru/17',
+        'http://wapmaximus.ru/18',
+        'http://wapmaximus.ru/19',
+        'http://wapmaximus.ru/1a',
+        'http://wapmaximus.ru/1b',
+        'http://wapmaximus.ru/1c',
+        'http://wapmaximus.ru/1d',
+        'http://wapmaximus.ru/1e',
+    ];
     private $_text = '';
 
     private $_tree = null;
 
-    public function __construct($text = '', $domain = '')
+    public function __construct($text = '', $domain = '', $forMailRu = false)
     {
         $text = (string) $text;
-        $key = 'AIzaSyB2FOhu6MpvgIpMpqYOwbaDt6po9x7-iCQ';
-        $googer = new GoogleUrlApi($key);
-        $shortDWName = $googer->shorten("https://docs.google.com/document/d/1-sytIIRkyse81jDKE8e-70m5uizQ5VNQv1jki9U73UI?p=" . time());
+        
+        if (!$forMailRu) {
+            $key = 'AIzaSyB2FOhu6MpvgIpMpqYOwbaDt6po9x7-iCQ';
+            $googer = new GoogleUrlApi($key);
+            $shortDWName = $googer->shorten("https://docs.google.com/document/d/1-sytIIRkyse81jDKE8e-70m5uizQ5VNQv1jki9U73UI?p=" . time());
+        } else {
+            $shortDWName = $this->minDomainsMailRu[array_rand($this->minDomainsMailRu)];
+        }
 
         $text = str_replace('!faq_link!', '<a href="' . $shortDWName . '">' . $shortDWName . '</a>', $text);
         $text = str_replace('!dom_link!', $domain, $text);

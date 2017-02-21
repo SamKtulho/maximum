@@ -20,8 +20,7 @@ class RandomController extends Controller
         $tic = $request->get('tic');
 
         if (!$title || !$content || !$domain) {
-            $request->session()->flash('alert-warning', 'Введите заголовок, текст письма и хотябы 1 почтовый домен!');
-            return redirect('/random/email');
+            return response()->json(['error' => 'Введите заголовок, текст письма и хотябы 1 почтовый домен!']);
         }
 
         $data = Random::prepareData($content, $title, $domain, $tic);

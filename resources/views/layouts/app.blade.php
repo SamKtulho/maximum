@@ -46,8 +46,12 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;<li {{ (Request::is('random.email') ? 'class=active' : '') }}>
-                            <a href="/random/email">Email</a>
+                            <a href="/random/email">Генератор писем</a>
                         </li>
+                        <li {{ (Request::is('random.email') ? 'class=active' : '') }}>
+                            <a href="/domain/create">Добавить Email'ы</a>
+                        </li>
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -6,12 +6,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="flash-message">
-                    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                        @if(Session::has('alert-' . $msg))
-
-                            <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-                        @endif
-                    @endforeach
+                    <p class=""> </p>
                 </div> <!-- end .flash-message -->
                 <h1>Письма</h1>
                 {!! Form::open(['route' => 'random.email.store']) !!}
@@ -36,16 +31,16 @@
                     ) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::checkbox('edomain[]', 'mail', true) !!}
+                    {!! Form::checkbox('edomain[]', 'mail', false) !!}
                     {!! Form::label('@mail.ru') !!}
                     <span style="margin-left: 15px;"></span>
-                    {!! Form::checkbox('edomain[]', 'yandex', true) !!}
+                    {!! Form::checkbox('edomain[]', 'yandex', false) !!}
                     {!! Form::label('@yandex.*') !!}
                     <span style="margin-left: 15px;"></span>
-                    {!! Form::checkbox('edomain[]', 'gmail', true) !!}
+                    {!! Form::checkbox('edomain[]', 'gmail', false) !!}
                     {!! Form::label('@gmail.com') !!}
                     <span style="margin-left: 15px;"></span>
-                    {!! Form::checkbox('edomain[]', 'other', true) !!}
+                    {!! Form::checkbox('edomain[]', 'other', false) !!}
                     {!! Form::label('Остальные') !!}
                     <span style="margin-left: 25px;"></span>
                     {!! Form::label('ТИЦ') !!}
@@ -54,6 +49,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::button('Submit', ['class'=>'btn btn-primary btn-main']) !!}
+                    <span id="counter" style="margin-left: 20px;"></span>
                 </div>
                 {!! Form::close()!!}
 
@@ -71,9 +67,17 @@
             $('.btn-main').click(function () {
                 var data = $( "form" ).serializeArray();
                 $.post( "/random/email/store", data, function( data ) {
-                    $( "#result #email" ).html( data.response[3] );
-                    $( "#result h4" ).html( data.response[1] );
-                    $( "#result #body" ).html( data.response[0] );
+                    if (data.error !== undefined) {
+                        $ ('.flash-message').addClass('alert alert-danger');
+                        $( ".flash-message p" ).html( data.error +  '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
+                    } else {
+                        $ ('.flash-message').removeClass('alert alert-danger');
+                        $( ".flash-message p" ).html('');
+                        $( "#result #email" ).html( data.response[3] );
+                        $( "#result h4" ).html( data.response[1] );
+                        $( "#result #body" ).html( data.response[0] );
+                        $('#counter').html('Осталось ' + data.response[4] + ' необработанных домена с текущими настройками.');
+                    }
                 });
             });
         });
