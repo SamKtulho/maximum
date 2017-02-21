@@ -1,10 +1,13 @@
 <?php
 
+namespace App\Services;
+
 // Declare the class
 class GoogleUrlApi {
-	
+
+    public $apiURL = '';
 	// Constructor
-	function GoogleURLAPI($key,$apiURL = 'https://www.googleapis.com/urlshortener/v1/url') {
+	function __construct($key, $apiURL = 'https://www.googleapis.com/urlshortener/v1/url') {
 		// Keep the API Url
 		$this->apiURL = $apiURL.'?key='.$key;
 	}
