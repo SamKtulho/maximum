@@ -23,12 +23,13 @@ class RandomController extends Controller
         $content = $request->get('content');
         $domain = $request->get('edomain');
         $tic = $request->get('tic');
+        $isSkip = (bool) $request->get('skip', false);
 
         if (!$title || !$content || !$domain) {
             return response()->json(['error' => 'Введите заголовок, текст письма и хотябы 1 почтовый домен!']);
         }
 
-        $data = Random::prepareData($content, $title, $domain, $tic);
+        $data = Random::prepareData($content, $title, $domain, $tic, $isSkip);
         return response()->json(['response' => $data]);
     }
 }

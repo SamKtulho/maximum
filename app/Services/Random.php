@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\Email;
 use App\Models\Domain;
+use App\Models\Shorturl;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Random
 {
@@ -13,7 +14,7 @@ class Random
         'yandex' => ['@yandex.%', '@ya.%'],
         'gmail' => ['@gmail.%'],
     ];
-    public static function prepareData($text, $title, $edomain, $tic)
+    public static function prepareData($text, $title, $edomain, $tic, $isSkip)
     {
         $pattern = '';
         foreach ($edomain as $domain) {
@@ -44,9 +45,12 @@ class Random
         $results = reset($results);
 
         if (!empty($results)) {
-            $storedDomain = Domain::where('domain', $results->domain)->first();
-            $storedDomain->status = Domain::STATUS_PROCESSED;
-            $storedDomain->save();
+            if (!$isSkip) {
+                $storedDomain = Domain::where('domain', $results->domain)->first();
+                $storedDomain->status = Domain::STATUS_PROCESSED;
+                $storedDomain->save();
+            }
+
             $forMailRu = false;
             foreach (self::$masks['mail'] as $pat) {
                 if (strpos($results->email, $pat) !== false) {
@@ -57,6 +61,16 @@ class Random
 
             $tRand = new TextRandomizer($text, $results->domain, $forMailRu);
             $titleRand = new TextRandomizer($title, $results->domain, $forMailRu);
+
+            if (!$isSkip && !empty($storedDomain)) {
+                $shortUrl = new Shorturl();
+                $shortUrl->url = $tRand->getShortUrl();
+                $shortUrl->domain_id = $storedDomain->id;
+                $shortUrl->type = $forMailRu ? Shorturl::TYPE_OTHER : Shorturl::TYPE_GOOGLE;
+                $shortUrl->user_id = Auth::user()->id;
+                $shortUrl->save();
+            }
+
             return ([$tRand->getText(), $titleRand->getText(), $results->domain, $results->email, $count]);
         }
         return [];

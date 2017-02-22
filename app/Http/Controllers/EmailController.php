@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Email;
+use App\Models\Shorturl;
 
 class EmailController extends Controller
 {
@@ -43,5 +44,15 @@ class EmailController extends Controller
             }
         }
         return redirect('/email/create');
+    }
+    
+    public function statistic()
+    {
+        $shortUrls = Shorturl::get();
+
+        foreach ($shortUrls as $url) {
+            echo $url->url . ' ';
+            echo $url->user->name . "<br>";
+        }
     }
 }

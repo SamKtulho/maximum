@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Shorturl;
+
 require_once dirname(__FILE__) . '/Node.php';
 
 class TextRandomizer
@@ -61,11 +63,11 @@ class TextRandomizer
     private $_text = '';
 
     private $_tree = null;
+    private $_shortUrl = null;
 
     public function __construct($text = '', $domain = '', $forMailRu = false)
     {
         $text = (string) $text;
-        
         if (!$forMailRu) {
             $key = 'AIzaSyB2FOhu6MpvgIpMpqYOwbaDt6po9x7-iCQ';
             $googer = new GoogleUrlApi($key);
@@ -73,6 +75,7 @@ class TextRandomizer
         } else {
             $shortDWName = $this->minDomainsMailRu[array_rand($this->minDomainsMailRu)];
         }
+        $this->_shortUrl = $shortDWName;
 
         $text = str_replace('!faq_link!', '<a href="' . $shortDWName . '">' . $shortDWName . '</a>', $text);
         $text = str_replace('!dom_link!', $domain, $text);
@@ -209,4 +212,13 @@ class TextRandomizer
     {
         return $this->_tree->numVariant();
     }
+
+    /**
+     * @return bool|mixed|null
+     */
+    public function getShortUrl()
+    {
+        return $this->_shortUrl;
+    }
+
 }

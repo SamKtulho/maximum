@@ -8,14 +8,13 @@
                 <div class="flash-message">
                     <p class=""> </p>
                 </div> <!-- end .flash-message -->
-                <h1>Письма</h1>
                 {!! Form::open(['route' => 'random.email.store']) !!}
                 <div class="form-group">
-                    {!! Form::label('Заголовок') !!}
+                    {!! Form::label('Заголовок письма') !!}
                     {!! Form::text('title', (!empty($title) ? $title : '{1 новое сообщение для владельца домена !dom_link!|Владельцу домена !dom_link!|У вас 1 сообщение владельцу домена !dom_link!|Предложение владельцу домена !dom_link!|Новое сообщение владельцу домена !dom_link!|Для владельца домена !dom_link!}'), ['class'=>'form-control'] ) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('Текст') !!}
+                    {!! Form::label('Текст письма') !!}
                     {!! Form::textarea('content', (!empty($content) ? $content :
                     '
 {Здравствуйте.|Добрый день.|Приветствую вас.}
@@ -31,21 +30,37 @@
                     ) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::checkbox('edomain[]', 'mail', false) !!}
-                    {!! Form::label('@mail.ru') !!}
-                    <span style="margin-left: 15px;"></span>
-                    {!! Form::checkbox('edomain[]', 'yandex', false) !!}
-                    {!! Form::label('@yandex.*') !!}
-                    <span style="margin-left: 15px;"></span>
-                    {!! Form::checkbox('edomain[]', 'gmail', false) !!}
-                    {!! Form::label('@gmail.com') !!}
-                    <span style="margin-left: 15px;"></span>
-                    {!! Form::checkbox('edomain[]', 'other', false) !!}
-                    {!! Form::label('Остальные') !!}
-                    <span style="margin-left: 25px;"></span>
-                    {!! Form::label('ТИЦ') !!}
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            {!! Form::checkbox('edomain[]', 'mail', false, ['class' => 'form-check-input']) !!}
+                            @mail.ru
+                        </label>
+                        <span style="margin-left: 15px;"></span>
+                        <label class="form-check-label">
+                            {!! Form::checkbox('edomain[]', 'yandex', false, ['class' => 'form-check-input']) !!}
+                            @yandex.*
+                        </label>
+                        <span style="margin-left: 15px;"></span>
+                        <label class="form-check-label">
+                            {!! Form::checkbox('edomain[]', 'gmail', false, ['class' => 'form-check-input']) !!}
+                            @gmail.com
+                        </label>
+                        <span style="margin-left: 15px;"></span>
+                        <label class="form-check-label">
+                            {!! Form::checkbox('edomain[]', 'other', false, ['class' => 'form-check-input']) !!}
+                            Остальные
+                        </label>
+                        <span style="margin-left: 25px;"></span>
 
-                    {!! Form::select('tic', [1 => 'Любой', 10 => '10', 20 => 20, 30 => 30, 40 => 40, 50 => '50-70', 80 => 80, 90 => 90, 100 => '100-200'], '10') !!}
+                        {!! Form::label('ТИЦ') !!}
+                        {!! Form::select('tic', [1 => 'Любой', 10 => '10', 20 => 20, 30 => 30, 40 => 40, 50 => '50-70', 80 => 80, 90 => 90, 100 => '100-200'], '10') !!}
+                        <span style="margin-left: 25px;"></span>
+
+                        <label class="form-check-label">
+                            {!! Form::checkbox('skip', 'skip', false, ['class' => 'form-check-input']) !!}
+                            Холостой прогон
+                        </label>
+                    </div>
                 </div>
                 <div class="form-group">
                     {!! Form::button('Submit', ['class'=>'btn btn-primary btn-main']) !!}
