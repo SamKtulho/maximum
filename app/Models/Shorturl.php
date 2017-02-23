@@ -13,4 +13,9 @@ class Shorturl extends Model
     {
         return $this->belongsTo('\App\User');
     }
+
+    public function domain()
+    {
+        return $this->belongsTo('App\Models\Domain');
+    }
 }

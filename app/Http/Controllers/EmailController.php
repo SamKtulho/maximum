@@ -49,10 +49,6 @@ class EmailController extends Controller
     public function statistic()
     {
         $shortUrls = Shorturl::get();
-
-        foreach ($shortUrls as $url) {
-            echo $url->url . ' ';
-            echo $url->user->name . "<br>";
-        }
+        return view('email.statistic', ['shortUrls' => $shortUrls]);
     }
 }

@@ -99,9 +99,10 @@
         </nav>
 
         @yield('content')
-    </div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    </div>
+    <?php if (strpos(Route::currentRouteAction(), 'statistic') === false): ?>
+        <script src="{{ asset('js/app.js') }}"></script>
+    <?php endif; ?>
 </body>
 </html>
