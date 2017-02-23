@@ -34,15 +34,15 @@ class Email
                 }
             }
         }
-        
+
         $result = [];
         $count = 0;
         foreach (self::$masks as $title => $masks) {
             $i = 0;
-            $$title = self::$masks[$title];
-            $model = \App\Models\Email::where('is_valid', 1)->where('email', 'like', '%' . array_shift($$title));
-            if (!empty($$title)) {
-                foreach ($$title as $mask) {
+
+            $model = \App\Models\Email::where('is_valid', 1)->where('email', 'like', '%' . array_shift($masks));
+            if (!empty($masks)) {
+                foreach ($masks as $mask) {
                     $model->orWhere('email', 'like', '%' . $mask);
                 }
             }
