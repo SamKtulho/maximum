@@ -69,8 +69,7 @@ class TextRandomizer
     {
         $text = (string) $text;
         if (!$forMailRu) {
-            $key = 'AIzaSyB2FOhu6MpvgIpMpqYOwbaDt6po9x7-iCQ';
-            $googer = new GoogleUrlApi($key);
+            $googer = new GoogleUrlApi(GoogleUrlApi::KEY);
             $shortDWName = $googer->shorten("https://docs.google.com/document/d/1-sytIIRkyse81jDKE8e-70m5uizQ5VNQv1jki9U73UI?p=" . time());
         } else {
             $shortDWName = $this->minDomainsMailRu[array_rand($this->minDomainsMailRu)];

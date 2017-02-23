@@ -14,32 +14,32 @@
                     <thead>
                     <tr>
                         <th>Ссылка</th>
+                        <th>Клики</th>
                         <th>Домен</th>
                         <th>Email</th>
                         <th>Создатель</th>
                         <th>Дата</th>
-                        <th>Клики</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th>Ссылка</th>
+                        <th>Клики</th>
                         <th>Домен</th>
                         <th>Email</th>
                         <th>Создатель</th>
                         <th>Дата</th>
-                        <th>Клики</th>
                     </tr>
                     </tfoot>
                     <tbody>
                     @foreach ($shortUrls as $shortUrl)
                         <tr>
                             <td><a href="{{ $shortUrl->url }}">{{ $shortUrl->url }} </a></td>
+                            <td> {{ isset($shortUrl->urlstats[0]) ? unserialize($shortUrl->urlstats[0]->stat)['allTime']['shortUrlClicks'] : '?' }} </td>
                             <td> {{ $shortUrl->domain->domain }} </td>
                             <td> {{ $shortUrl->domain->emails[0]->email }} </td>
                             <td> {{ $shortUrl->user->name }} </td>
                             <td> {{ $shortUrl->created_at }} </td>
-                            <td> {{ 0 }} </td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -15,8 +15,8 @@ class CreateUrlstatsTable extends Migration
     {
         Schema::create('urlstats', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('url_id');
-            $table->string('stat');
+            $table->string('shorturl_id');
+            $table->text('stat');
             $table->timestamps();
         });
     }

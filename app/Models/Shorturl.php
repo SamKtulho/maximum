@@ -18,4 +18,9 @@ class Shorturl extends Model
     {
         return $this->belongsTo('App\Models\Domain');
     }
+
+    public function urlstats()
+    {
+        return $this->hasMany('\App\Models\Urlstat');
+    }
 }

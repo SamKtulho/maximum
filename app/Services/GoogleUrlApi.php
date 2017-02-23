@@ -5,11 +5,12 @@ namespace App\Services;
 // Declare the class
 class GoogleUrlApi {
 
+	const KEY = 'AIzaSyB2FOhu6MpvgIpMpqYOwbaDt6po9x7-iCQ';
     public $apiURL = '';
 	// Constructor
-	function __construct($key, $apiURL = 'https://www.googleapis.com/urlshortener/v1/url') {
+	function __construct($key, $params = '', $apiURL = 'https://www.googleapis.com/urlshortener/v1/url') {
 		// Keep the API Url
-		$this->apiURL = $apiURL.'?key='.$key;
+		$this->apiURL = !empty($params) ? ($apiURL . '?' . $params .'&key=' . $key) : ($apiURL. '?key=' . $key);
 	}
 	
 	// Shorten a URL
@@ -29,25 +30,25 @@ class GoogleUrlApi {
 	}
 	
 	// Send information to Google
-	function send($url,$shorten = true) {
+	function send($url = '', $shorten = true) {
 		// Create cURL
 		$ch = curl_init();
 		// If we're shortening a URL...
 		if($shorten) {
 			curl_setopt($ch,CURLOPT_URL,$this->apiURL);
 			curl_setopt($ch,CURLOPT_POST,1);
-			curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode(array("longUrl"=>$url)));
+			curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode(array("longUrl" => $url)));
 			curl_setopt($ch,CURLOPT_HTTPHEADER,array("Content-Type: application/json"));
 		}
 		else {
-			curl_setopt($ch,CURLOPT_URL,$this->apiURL.'&shortUrl='.$url);
+			curl_setopt($ch, CURLOPT_URL, $this->apiURL . ($url ? ('&shortUrl=' . $url) : ''));
 		}
-		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 		// Execute the post
 		$result = curl_exec($ch);
 		// Close the connection
 		curl_close($ch);
 		// Return the result
-		return json_decode($result,true);
+		return json_decode($result, true);
 	}		
 }
