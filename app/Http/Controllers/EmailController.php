@@ -39,7 +39,7 @@ class EmailController extends Controller
             $emailModel = Email::where('email', $emailString)->first();
 
             if ($emailModel) {
-                $emailModel->is_valid = 1;
+                $emailModel->is_valid = Email::STATUS_VALID;
                 $emailModel->save();
             }
         }

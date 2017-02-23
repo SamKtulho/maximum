@@ -26,12 +26,14 @@ class Email
     public static function getEmailsCount()
     {
         $allCount = 0;
-        $allDomains = \App\Models\Domain::where('status', 0)->get();
-        foreach ($allDomains as $value) {
-            foreach ($value->emails as $email) {
-                if ($email->is_valid) {
-                    ++$allCount;
-                }
+
+        $allEmails = \App\Models\Email::where('is_valid', \App\Models\Email::STATUS_VALID)->with(['domain'=> function ($query) {
+            $query->where('status', Domain::STATUS_NOT_PROCESSED);
+        }])->get();
+
+        foreach ($allEmails as $email) {
+            if ($email->domain) {
+                ++$allCount;
             }
         }
 
@@ -39,7 +41,6 @@ class Email
         $count = 0;
         foreach (self::$masks as $title => $masks) {
             $i = 0;
-
             $model = \App\Models\Email::where('is_valid', 1)->where('email', 'like', '%' . array_shift($masks));
             if (!empty($masks)) {
                 foreach ($masks as $mask) {
@@ -47,7 +48,7 @@ class Email
                 }
             }
             foreach ($model->get() as $item) {
-                if ((int) $item->domain->status === 0) {
+                if ((int) $item->domain->status === Domain::STATUS_NOT_PROCESSED) {
                     ++$i;
                 }
             }

@@ -54,7 +54,7 @@ class DomainController extends Controller
                         }
                         $emailModel->email = $email;
                         $emailModel->domain_id = $domain->id;
-                        $emailModel->is_valid = 0;
+                        $emailModel->is_valid = Email::STATUS_NOT_VALID;
                         $emailModel->save();
                     }
                 }
