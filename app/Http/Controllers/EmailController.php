@@ -51,4 +51,9 @@ class EmailController extends Controller
         $shortUrls = Shorturl::get();
         return view('email.statistic', ['shortUrls' => $shortUrls]);
     }
+    
+    public function count()
+    {
+        return response()->json(['response' => \App\Services\Email::getEmailsCount()]);
+    }
 }

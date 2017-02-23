@@ -9,17 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class Random
 {
-    private static $masks = [
-        'mail' => ['@mail.ru', '@list.ru', '@bk.ru', '@inbox.ru'],
-        'yandex' => ['@yandex.%', '@ya.%'],
-        'gmail' => ['@gmail.%'],
-    ];
     public static function prepareData($text, $title, $edomain, $tic, $isSkip)
     {
         $pattern = '';
+        $emailMasks = Email::getMasks();
+
         foreach ($edomain as $domain) {
-            if (isset(self::$masks[$domain])) {
-                foreach (self::$masks[$domain] as $pat)
+            if (isset($emailMasks[$domain])) {
+                foreach ($emailMasks[$domain] as $pat)
                     $pattern .= 'LIKE \'%' . $pat . '\' OR e.email ';
             }
             if ($domain === 'other') {
@@ -29,7 +26,7 @@ class Random
                     $pattern .= ' OR (e.email ';
                     $need = true;
                 }
-                foreach (self::$masks as $pat)
+                foreach ($emailMasks as $pat)
                     foreach ($pat as $p) {
                         $pattern .= 'NOT LIKE \'%' . $p . '\' AND e.email ';
                     }
@@ -52,7 +49,7 @@ class Random
             }
 
             $forMailRu = false;
-            foreach (self::$masks['mail'] as $pat) {
+            foreach ($emailMasks['mail'] as $pat) {
                 if (strpos($results->email, $pat) !== false) {
                     $forMailRu = true;
                     break;

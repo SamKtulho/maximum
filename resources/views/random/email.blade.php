@@ -34,27 +34,31 @@
                         <label class="form-check-label">
                             {!! Form::checkbox('edomain[]', 'mail', false, ['class' => 'form-check-input']) !!}
                             @mail.ru
+                            <span title="Осталось email'ов" id="mail_count"></span>
                         </label>
-                        <span style="margin-left: 15px;"></span>
+                        <span style="margin-left: 12px;"></span>
                         <label class="form-check-label">
                             {!! Form::checkbox('edomain[]', 'yandex', false, ['class' => 'form-check-input']) !!}
                             @yandex.*
+                            <span title="Осталось email'ов" id="yandex_count"></span>
                         </label>
-                        <span style="margin-left: 15px;"></span>
+                        <span style="margin-left: 12px;"></span>
                         <label class="form-check-label">
                             {!! Form::checkbox('edomain[]', 'gmail', false, ['class' => 'form-check-input']) !!}
                             @gmail.com
+                            <span title="Осталось email'ов" id="gmail_count"></span>
                         </label>
-                        <span style="margin-left: 15px;"></span>
+                        <span style="margin-left: 12px;"></span>
                         <label class="form-check-label">
                             {!! Form::checkbox('edomain[]', 'other', false, ['class' => 'form-check-input']) !!}
                             Остальные
+                            <span title="Осталось email'ов" id="other_count"></span>
                         </label>
-                        <span style="margin-left: 25px;"></span>
+                        <span style="margin-left: 20px;"></span>
 
                         {!! Form::label('ТИЦ') !!}
                         {!! Form::select('tic', [1 => 'Любой', 10 => '10', 20 => 20, 30 => 30, 40 => 40, 50 => '50-70', 80 => 80, 90 => 90, 100 => '100-200'], '10') !!}
-                        <span style="margin-left: 25px;"></span>
+                        <span style="margin-left: 20px;"></span>
 
                         <label class="form-check-label">
                             {!! Form::checkbox('skip', 'skip', false, ['class' => 'form-check-input']) !!}
@@ -63,7 +67,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::button('Submit', ['class'=>'btn btn-primary btn-main']) !!}
+                    {!! Form::button('Submit', ['class'=>'btn btn-primary btn-main main-button']) !!}
                     <span id="counter" style="margin-left: 20px;"></span>
                 </div>
                 {!! Form::close()!!}
@@ -80,8 +84,12 @@
     <script>
         $( document ).ready(function() {
             $('.btn-main').click(function () {
+                $('.main-button').prop('disabled', true);
+
                 var data = $( "form" ).serializeArray();
                 $.post( "/random/email/store", data, function( data ) {
+                    $('.main-button').prop('disabled', false);
+
                     if (data.error !== undefined) {
                         $ ('.flash-message').addClass('alert alert-danger');
                         $( ".flash-message p" ).html( data.error +  '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
@@ -91,10 +99,25 @@
                         $( "#result #email" ).html( data.response[3] );
                         $( "#result h4" ).html( data.response[1] );
                         $( "#result #body" ).html( data.response[0] );
-                        $('#counter').html('Осталось ' + data.response[4] + ' необработанных домена с текущими настройками.');
+                       // $('#counter').html('Осталось ' + data.response[4] + ' необработанных домена с текущими настройками.');
                     }
                 });
             });
+
+            function getTotalEmails() {
+                $.get( "/email/count", function( data ) {
+                    if (data.response !== undefined) {
+                        $.each(data.response, function(key, value) {
+                            $( '#' + key + '_count' ).html( '(' + value + ')' );
+
+                        });
+
+                    }
+                });
+            }
+            getTotalEmails();
+            setInterval(getTotalEmails, 60000);
+
         });
     </script>
 @endsection
