@@ -4,7 +4,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-2">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css"/>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -15,6 +15,7 @@
         <tr>
             <th>Ссылка</th>
             <th>Домен</th>
+            <th>Email</th>
             <th>Создатель</th>
             <th>Дата</th>
             <th>Клики</th>
@@ -24,6 +25,7 @@
         <tr>
             <th>Ссылка</th>
             <th>Домен</th>
+            <th>Email</th>
             <th>Создатель</th>
             <th>Дата</th>
             <th>Клики</th>
@@ -34,6 +36,7 @@
             <tr>
                 <td><a href="{{ $shortUrl->url }}">{{ $shortUrl->url }} </a></td>
                 <td> {{ $shortUrl->domain->domain }} </td>
+                <td> {{ $shortUrl->domain->emails[0]->email }} </td>
                 <td> {{ $shortUrl->user->name }} </td>
                 <td> {{ $shortUrl->created_at }} </td>
                 <td> {{ 0 }} </td>
