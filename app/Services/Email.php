@@ -47,7 +47,7 @@ class Email
                 }
             }
             foreach ($model->get() as $item) {
-                if ($item->domain->status === 0) {
+                if ((int) $item->domain->status === 0) {
                     ++$i;
                 }
             }
