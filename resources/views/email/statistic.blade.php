@@ -66,6 +66,7 @@
             } );
             $('#example').DataTable( {
                 'iDisplayLength': 100,
+                "order": [[ 5, "desc" ]],
                 drawCallback: function () {
                     var api = this.api();
                     $( api.table().footer() ).html(
