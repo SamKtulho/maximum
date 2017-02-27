@@ -50,10 +50,12 @@ class Random
             }
 
             $forMailRu = false;
-            foreach ($emailMasks['mail'] as $pat) {
-                if (strpos($results->email, $pat) !== false) {
-                    $forMailRu = true;
-                    break;
+            if (!$isSkip) {
+                foreach ($emailMasks['mail'] as $pat) {
+                    if (strpos($results->email, $pat) !== false) {
+                        $forMailRu = true;
+                        break;
+                    }
                 }
             }
 
