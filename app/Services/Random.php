@@ -13,6 +13,7 @@ class Random
     {
         $pattern = '';
         $emailMasks = Email::getMasks();
+        $edomain = empty($edomain) && $isSkip ? (array) key(Email::getMasks()) : $edomain;
 
         foreach ($edomain as $domain) {
             if (isset($emailMasks[$domain])) {
@@ -56,8 +57,8 @@ class Random
                 }
             }
 
-            $tRand = new TextRandomizer($text, $results->domain, $forMailRu);
-            $titleRand = new TextRandomizer($title, $results->domain, $forMailRu);
+            $tRand = new TextRandomizer($text, ($isSkip ? date('dmY') . '.com' : $results->domain), $forMailRu);
+            $titleRand = new TextRandomizer($title, ($isSkip ? date('dmY') . '.com' : $results->domain), $forMailRu);
 
             if (!$isSkip && !empty($storedDomain)) {
                 $shortUrl = new Shorturl();
@@ -68,7 +69,7 @@ class Random
                 $shortUrl->save();
             }
 
-            return ([$tRand->getText(), $titleRand->getText(), $results->domain, $results->email, $count]);
+            return ([$tRand->getText(), $titleRand->getText(), ($isSkip ? date('dmY') . '.com' : $results->domain), ($isSkip ? '*' : $results->email), $count]);
         }
         return [];
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\Random;
+use App\Models\Template;
 
 class RandomController extends Controller
 {
@@ -14,7 +15,12 @@ class RandomController extends Controller
     
     public function email(Request $request)
     {
-        return view('random.email');
+        $emailTemplate = Template::where('type', Template::TYPE_EMAIL)->first();
+        $template = [];
+        if ($emailTemplate) {
+            $template = unserialize($emailTemplate->template);
+        }
+        return view('random.email', ['template' => $template]);
     }
 
     public function emailStore(Request $request)
@@ -24,12 +30,22 @@ class RandomController extends Controller
         $domain = $request->get('edomain');
         $tic = $request->get('tic');
         $isSkip = (bool) $request->get('skip', false);
+        $isSave = (bool) $request->get('save', false);
 
-        if (!$title || !$content || !$domain) {
+        if (!$title || !$content || (!$domain && !$isSkip)) {
             return response()->json(['error' => 'Введите заголовок, текст письма и хотябы 1 почтовый домен!']);
         }
 
         $data = Random::prepareData($content, $title, $domain, $tic, $isSkip);
+        if ($isSave) {
+            $emailTemplate = Template::where('type', Template::TYPE_EMAIL)->first();
+            if (!$emailTemplate) {
+                $emailTemplate = new Template();
+                $emailTemplate->type = Template::TYPE_EMAIL;
+            }
+            $emailTemplate->template = serialize(['title' => $title, 'content' => $content]);
+            $emailTemplate->save();
+        }
         return response()->json(['response' => $data]);
     }
 }
