@@ -114,7 +114,7 @@
             });
 
             function getTotalEmails() {
-                $.get( "/email/count", function( data ) {
+                $.get( "/link/count", function( data ) {
                     if (data.response !== undefined) {
                         $.each(data.response, function(key, value) {
                             $( '#' + key + '_count' ).html( '(' + value + ')' );

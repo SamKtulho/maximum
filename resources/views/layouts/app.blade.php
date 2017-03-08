@@ -77,6 +77,21 @@
                                     </li>
                                 </ul>
                             </li>
+
+                            <li class="dropdown {{ (Request::is('random.email') ? ' active' : '') }}">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Ссылки<span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="/link/create">Добавить ссылки</a>
+                                    </li>
+                                    <li>
+                                        <a href="/link/statistic">Статистика</a>
+                                    </li>
+                                </ul>
+                            </li>
                         @endif
                     </ul>
 

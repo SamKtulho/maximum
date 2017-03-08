@@ -24,6 +24,8 @@ Route::get('/random/link', ['as' => 'random.link', 'uses' => 'RandomController@l
 Route::post('/random/link/store', ['as' => 'random.link.store', 'uses' => 'RandomController@linkStore']);
 Route::get('/email/statistic', 'EmailController@statistic');
 Route::get('/email/count', 'EmailController@count');
+Route::get('/link/statistic', 'LinkController@statistic');
+Route::get('/link/count', 'LinkController@count');
 
 $router->resource('domain', 'DomainController');
 $router->resource('email', 'EmailController');

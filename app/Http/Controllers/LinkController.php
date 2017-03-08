@@ -61,4 +61,15 @@ class LinkController extends Controller
         $request->session()->flash('alert-success', 'Готово. Успешно ' . $successCount . ' линков. С ошибкой ' . $errorsCount . ' линков.');
         return redirect('/link/create');
     }
+    public function statistic()
+    {
+        $shortUrls = Shorturl::get();
+        return view('email.statistic', ['shortUrls' => $shortUrls]);
+    }
+
+    public function count()
+    {
+        return response()->json(['response' => \App\Services\Link::getLinksCount()]);
+    }
+
 }
