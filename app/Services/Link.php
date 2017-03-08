@@ -26,7 +26,7 @@ class Link
     {
         $allCount = 0;
 
-        $allLinks = \App\Models\Link::where('status', \App\Models\Link::STATUS_NOT_PROCESSED)->with(['domain'=> function ($query) {
+        $allLinks = \App\Models\Link::where('status', \App\Models\Link::STATUS_NOT_PROCESSED)->whereNotNull('registrar')->with(['domain'=> function ($query) {
             $query->where('status', Domain::STATUS_NOT_PROCESSED);
         }])->get();
 
