@@ -44,14 +44,19 @@ class ParseLinks extends Command
             foreach ($urls as $url) {
 
                 $client = new Client();
-                $res = $client->request('GET', $url->link,
-                    ['allow_redirects' => [
-                        'max'             => 10,
-                        'strict'          => true,
-                        'referer'         => true,
-                        'track_redirects' => true
-                    ]]
-                );
+                try {
+                    $res = $client->request('GET', $url->link,
+                        ['allow_redirects' => [
+                            'max'             => 10,
+                            'strict'          => true,
+                            'referer'         => true,
+                            'track_redirects' => true
+                        ]]
+                    );
+                } catch (\Exception $e) {
+                    continue;
+                }
+
 
                 $redirects = $res->getHeaderLine('X-Guzzle-Redirect-History');
 
