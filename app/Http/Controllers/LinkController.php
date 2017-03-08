@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Link;
 use App\Models\Domain;
+use App\Models\Shorturl;
 
 
 class LinkController extends Controller
@@ -63,8 +64,8 @@ class LinkController extends Controller
     }
     public function statistic()
     {
-        $shortUrls = Shorturl::get();
-        return view('email.statistic', ['shortUrls' => $shortUrls]);
+        $shortUrls = Shorturl::where('type', Shorturl::TYPE_REGISTRAR)->get();
+        return view('link.statistic', ['shortUrls' => $shortUrls]);
     }
 
     public function count()

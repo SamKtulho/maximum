@@ -48,7 +48,7 @@ class EmailController extends Controller
     
     public function statistic()
     {
-        $shortUrls = Shorturl::get();
+        $shortUrls = Shorturl::where('type', Shorturl::TYPE_GOOGLE)->orwhere('type', Shorturl::TYPE_OTHER)->get();
         return view('email.statistic', ['shortUrls' => $shortUrls]);
     }
     

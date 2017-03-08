@@ -45,7 +45,7 @@ class GetStatistic extends Command
      */
     public function handle()
     {
-        Shorturl::where('type', Shorturl::TYPE_GOOGLE)->chunk(200, function ($urls) {
+        Shorturl::where('type', Shorturl::TYPE_GOOGLE)->orwhere('type', Shorturl::TYPE_REGISTRAR)->orderby('id', 'desc')->chunk(200, function ($urls) {
             foreach ($urls as $url) {
                 $googleApi = new GoogleUrlApi(GoogleUrlApi::KEY,
                     'shortUrl='. urlencode($url->url) . '&projection=ANALYTICS_CLICKS&fields=analytics'
@@ -63,6 +63,7 @@ class GetStatistic extends Command
                     $urlStat->save();
                 }
             }
+            sleep(10);
         });
     }
 }
