@@ -4,12 +4,68 @@ namespace App\Services;
 
 use App\Models\Domain;
 use App\Models\Shorturl;
+use App\Models\Link as ModelLink;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class Random
 {
-    public static function prepareData($text, $title, $edomain, $tic, $isSkip)
+    public static function linkPrepareData($fio, $email, $title, $text, $domains, $isSkip = false)
+    {
+        $linkMasks = Link::getMasks();
+        $modelLink = DB::table('links');
+        $domains = empty($domains) && $isSkip ? (array) key(Email::getMasks()) : $domains;
+
+
+        if (in_array('other', $domains, true)) {
+            foreach ($linkMasks as $linkMask) {
+                foreach ($linkMask as $item) {
+                    $modelLink->where('registrar', 'not like', $item);
+                }
+            }
+        }
+        foreach ($domains as $domain) {
+            if (isset($linkMasks[$domain])) {
+                foreach ($linkMasks[$domain] as $linkMask) {
+                    $modelLink->orWhere('registrar', $linkMask);
+                }
+            }
+        }
+
+        $modelLink->where('status', ModelLink::STATUS_NOT_PROCESSED);
+
+        $result = $modelLink->first();
+
+        if (!empty($result)) {
+            $storedDomain = Domain::where('id', $result->domain_id)->first();
+            if (!$isSkip) {
+                $storedDomain->status = Domain::STATUS_PROCESSED;
+                $modelLink = ModelLink::find($result->id);
+                $modelLink->status = ModelLink::STATUS_PROCESSED;
+                $modelLink->save();
+                $storedDomain->save();
+            }
+
+            $fioRand = new TextRandomizer($fio, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
+            $emailRand = new TextRandomizer($email, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
+            $tRand = new TextRandomizer($text, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
+            $titleRand = new TextRandomizer($title, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
+
+            if (!$isSkip && !empty($storedDomain)) {
+                $shortUrl = new Shorturl();
+                $shortUrl->url = $tRand->getShortUrl();
+                $shortUrl->domain_id = $result->domain_id;
+                $shortUrl->type = Shorturl::TYPE_REGISTRAR;
+                $shortUrl->user_id = Auth::user()->id;
+                $shortUrl->save();
+            }
+
+            return ([$fioRand->getText(), $emailRand->getText(), $tRand->getText(), $titleRand->getText(), $result->link]);
+        }
+        return [];
+    }
+
+    public static function emailPrepareData($text, $title, $edomain, $tic, $isSkip)
     {
         $pattern = '';
         $emailMasks = Email::getMasks();

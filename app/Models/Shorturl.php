@@ -8,6 +8,7 @@ class Shorturl extends Model
 {
     const TYPE_GOOGLE = 1;
     const TYPE_OTHER = 2;
+    const TYPE_REGISTRAR = 3;
 
     public function user()
     {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Domain;
 use App\Models\Email;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
 
 class DomainController extends Controller
 {

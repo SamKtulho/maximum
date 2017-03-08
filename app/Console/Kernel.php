@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\GetStatistic::class
+        Commands\GetStatistic::class,
+        Commands\ParseLinks::class,
     ];
 
     /**

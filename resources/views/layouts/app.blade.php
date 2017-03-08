@@ -46,15 +46,29 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         @if (!Auth::guest())
+
+                            <li class="dropdown {{ (Request::is('random.email') ? ' active' : '') }}">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Генератор<span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="/random/email">Письма</a>
+                                    </li>
+                                    <li>
+                                        <a href="/random/link">Ссылки</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
                             <li class="dropdown {{ (Request::is('random.email') ? ' active' : '') }}">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Письма<span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="/random/email">Генератор писем</a>
-                                    </li>
                                     <li>
                                         <a href="/domain/create">Добавить Email'ы</a>
                                     </li>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTemplatesTable extends Migration
+class CreateLinksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateTemplatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('templates', function (Blueprint $table) {
+        Schema::create('links', function (Blueprint $table) {
             $table->increments('id');
-            $table->tinyInteger('type');
-            $table->text('template');
+            $table->string('link');
+            $table->integer('domain_id');
+            $table->integer('status');
+            $table->string('registrar')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateTemplatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('templates');
+        Schema::dropIfExists('links');
     }
 }

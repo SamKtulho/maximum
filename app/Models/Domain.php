@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class Domain extends Model
 {
@@ -23,5 +22,10 @@ class Domain extends Model
     public function shorturls()
     {
         return $this->hasMany('\App\Models\Shorturl');
+    }
+
+    public function links()
+    {
+        return $this->hasMany('\App\Models\Links');
     }
 }
