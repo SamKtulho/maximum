@@ -60,7 +60,9 @@ class Random
                 $shortUrl->save();
             }
 
-            return ([$fioRand->getText(), $emailRand->getText(), $tRand->getText(), $titleRand->getText(), $result->link]);
+            $link = $result->registrar === 'nic.ru' ? 'https://www.nic.ru/cgi/whois_webmail.cgi?domain=' . ($isSkip ? date('dmY') . '.com' : $storedDomain->domain) : $result->link;
+
+            return ([$fioRand->getText(), $emailRand->getText(), $tRand->getText(), $titleRand->getText(), $link]);
         }
         return [];
     }
