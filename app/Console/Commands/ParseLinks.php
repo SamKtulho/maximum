@@ -69,10 +69,14 @@ class ParseLinks extends Command
                 } else {
                     $result = [];
                     preg_match('`(http[s]?://)(www.)?([A-Za-z\.0-9-а-я\_]+)/.*`', $redirects, $result);
-                    $url->registrar = $result[3];
-                    $this->info($url->link . ' ' .$result[3]);
+                    if (!empty($result[3])) {
+                        $url->registrar = $result[3];
+                        $this->info($url->link . ' ' .$result[3]);
+                    }
                 }
-                $url->save();
+                if (!empty($url->registrar)) {
+                    $url->save();
+                }
             }
         });
     }
