@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container random-email">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="flash-message">
@@ -83,48 +83,10 @@
                     <div id="email"></div>
                     <h4></h4>
                     <div id="body"></div>
+                    <div class="vert25"></div>
                 </div>
 
             </div>
         </div>
     </div>
-    <script>
-        $( document ).ready(function() {
-            $('.btn-main').click(function () {
-                $('.main-button').prop('disabled', true);
-
-                var data = $( "form" ).serializeArray();
-                $.post( "/random/email/store", data, function( data ) {
-                    $('.main-button').prop('disabled', false);
-
-                    if (data.error !== undefined) {
-                        $ ('.flash-message').addClass('alert alert-danger');
-                        $( ".flash-message p" ).html( data.error +  '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
-                    } else {
-                        $ ('.flash-message').removeClass('alert alert-danger');
-                        $( ".flash-message p" ).html('');
-                        $( "#result #email" ).html( data.response[3] );
-                        $( "#result h4" ).html( data.response[1] );
-                        $( "#result #body" ).html( data.response[0] );
-                       // $('#counter').html('Осталось ' + data.response[4] + ' необработанных домена с текущими настройками.');
-                    }
-                });
-            });
-
-            function getTotalEmails() {
-                $.get( "/email/count", function( data ) {
-                    if (data.response !== undefined) {
-                        $.each(data.response, function(key, value) {
-                            $( '#' + key + '_count' ).html( '(' + value + ')' );
-
-                        });
-
-                    }
-                });
-            }
-            getTotalEmails();
-            setInterval(getTotalEmails, 60000);
-
-        });
-    </script>
 @endsection

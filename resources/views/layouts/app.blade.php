@@ -13,9 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+    <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 
     <script>
         window.Laravel = {!! json_encode([
@@ -131,8 +129,12 @@
         @yield('content')
 
     </div>
-    <?php if (strpos(Route::currentRouteAction(), 'statistic') === false): ?>
-        <script src="{{ asset('js/app.js') }}"></script>
-    <?php endif; ?>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+
+    <script src="{{ asset('js/datatables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('//cdn.datatables.net/plug-ins/1.10.13/api/sum().js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
+
 </body>
 </html>
