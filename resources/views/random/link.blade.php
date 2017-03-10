@@ -9,35 +9,42 @@
                     <p class=""> </p>
                 </div> <!-- end .flash-message -->
                 {!! Form::open(['route' => 'random.link.store']) !!}
-                <div class="form-group">
-                    {!! Form::label('ФИО') !!}
-                    {!! Form::text('fio', (!empty($template['fio']) ? $template['fio'] : '{Петров|Игнатов|Коршунов|Малых} {Олег|Михаил|Евгений|Александр} {Валерьевич|Владимирович|Дмитриевич}'), ['class'=>'form-control', 'style' => 'font-family: sans-serif;'] ) !!}
+                <div class="vert25">
+                    {!! Form::label('Настройки письма') !!}
+                    {!! Form::button('Показать', ['class'=>'btn btn-primary show-button']) !!}
                 </div>
-                <div class="form-group">
-                    {!! Form::label('Email') !!}
-                    {!! Form::text('email', (!empty($template['email']) ? $template['email'] : '{fumka@gmail.com|muhol1@mail.ru|frenke34@yandex.ru|tropor_0@gmail.com}'), ['class'=>'form-control', 'style' => 'font-family: sans-serif;'] ) !!}
-                </div>
-                <div class="form-group">
-                    {!! Form::label('Заголовок письма') !!}
-                    {!! Form::text('title', (!empty($template['title']) ? $template['title'] : '{1 новое сообщение для владельца домена !dom_link!|Владельцу домена !dom_link!|У вас 1 сообщение владельцу домена !dom_link!|Предложение владельцу домена !dom_link!|Новое сообщение владельцу домена !dom_link!|Для владельца домена !dom_link!}'), ['class'=>'form-control', 'style' => 'font-family: sans-serif;'] ) !!}
-                </div>
-                <div class="form-group">
-                    {!! Form::label('Текст письма') !!}
-                    {!! Form::textarea('content', (!empty($template['content']) ? $template['content'] :
-                    '
-{Здравствуйте.|Добрый день.|Приветствую вас.}
-<br><br>
-{Если не ошибаюсь, вы являетесь владельцем домена|Мне вас порекомендовали как владельца домена|У нас к вам предложение, как к владельцу домена} !dom_link!.
-<br><br>
-Мы предлагаем вам {установить|поставить} {нашу рекламу, которая|наш рекламный блок, который} будет {приносить|приносить прибыль} {приблизительно|ориентировочно|примерно} 30000 руб/месяц при {средней|обычной} посещаемости сайта 1000 мобильных пользователей в {день|сутки}.
-<br><br>
-Подробнее по ссылке !faq_link! {(Это Google документ) | (Это Гугл документ)}
-                    '
+                <div class="mail-settings hide">
+                    <div class="form-group">
+                        {!! Form::label('ФИО') !!}
+                        {!! Form::text('fio', (!empty($template['fio']) ? $template['fio'] : '{Петров|Игнатов|Коршунов|Малых} {Олег|Михаил|Евгений|Александр} {Валерьевич|Владимирович|Дмитриевич}'), ['class'=>'form-control', 'style' => 'font-family: sans-serif;'] ) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('Email') !!}
+                        {!! Form::text('email', (!empty($template['email']) ? $template['email'] : '{fumka@gmail.com|muhol1@mail.ru|frenke34@yandex.ru|tropor_0@gmail.com}'), ['class'=>'form-control', 'style' => 'font-family: sans-serif;'] ) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('Заголовок письма') !!}
+                        {!! Form::text('title', (!empty($template['title']) ? $template['title'] : '{1 новое сообщение для владельца домена !dom_link!|Владельцу домена !dom_link!|У вас 1 сообщение владельцу домена !dom_link!|Предложение владельцу домена !dom_link!|Новое сообщение владельцу домена !dom_link!|Для владельца домена !dom_link!}'), ['class'=>'form-control', 'style' => 'font-family: sans-serif;'] ) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('Текст письма') !!}
+                        {!! Form::textarea('content', (!empty($template['content']) ? $template['content'] :
+                        '
+    {Здравствуйте.|Добрый день.|Приветствую вас.}
+    <br><br>
+    {Если не ошибаюсь, вы являетесь владельцем домена|Мне вас порекомендовали как владельца домена|У нас к вам предложение, как к владельцу домена} !dom_link!.
+    <br><br>
+    Мы предлагаем вам {установить|поставить} {нашу рекламу, которая|наш рекламный блок, который} будет {приносить|приносить прибыль} {приблизительно|ориентировочно|примерно} 30000 руб/месяц при {средней|обычной} посещаемости сайта 1000 мобильных пользователей в {день|сутки}.
+    <br><br>
+    Подробнее по ссылке !faq_link! {(Это Google документ) | (Это Гугл документ)}
+                        '
 
-                    ), ['class'=>'form-control', 'style' => 'font-family: sans-serif;']
+                        ), ['class'=>'form-control', 'style' => 'font-family: sans-serif;']
 
-                    ) !!}
+                        ) !!}
+                    </div>
                 </div>
+
                 <div class="form-group">
                     <div class="form-check">
                         <label class="form-check-label">
@@ -91,6 +98,11 @@
     </div>
     <script>
         $( document ).ready(function() {
+
+            $('.show-button').click(function () {
+                $('.mail-settings').toggleClass('hide');
+            });
+
             $('.btn-main').click(function () {
                 $('.main-button').prop('disabled', true);
 
