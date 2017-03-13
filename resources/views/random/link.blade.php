@@ -86,12 +86,16 @@
 
                 <div id="result">
                     <div id="link"></div>
-                    <div id="fio"></div>
+                    <p><div id="domain"></div></p>
+                    <p><div id="fio"></div></p>
                     <div id="email"></div>
+                    <hr>
                     <h4></h4>
-                    <div id="body"></div>
-                    <div class="vert25"></div>
-                    <div class="vert25"></div>
+                    <p>
+                        <div id="body"></div>
+                        <div class="vert25"></div>
+                        <div class="vert25"></div>
+                    </p>
                 </div>
 
             </div>

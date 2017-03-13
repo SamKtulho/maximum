@@ -49,7 +49,10 @@ class Random
             $fioRand = new TextRandomizer($fio, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
             $emailRand = new TextRandomizer($email, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
             $tRand = new TextRandomizer($text, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
-            $titleRand = new TextRandomizer($title, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
+            $titleRand = null;
+            if ($result->registrar !== 'nic.ru' && $result->registrar !== 'reg.ru') {
+                $titleRand = new TextRandomizer($title, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
+            }
 
             if (!$isSkip && !empty($storedDomain)) {
                 $shortUrl = new Shorturl();
@@ -62,7 +65,7 @@ class Random
 
             $link = $result->registrar === 'nic.ru' ? 'https://www.nic.ru/cgi/whois_webmail.cgi?domain=' . ($isSkip ? date('dmY') . '.com' : $storedDomain->domain) : $result->link;
 
-            return ([$fioRand->getText(), $emailRand->getText(), $tRand->getText(), $titleRand->getText(), $link]);
+            return ([$fioRand->getText(), $emailRand->getText(), $tRand->getText(), ($titleRand ? $titleRand->getText() : ''), $link, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain)]);
         }
         return [];
     }

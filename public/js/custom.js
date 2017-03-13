@@ -56,6 +56,7 @@ $( document ).ready(function() {
                     $ ('.flash-message').removeClass('alert alert-danger');
                     $( ".flash-message p" ).html('');
                     $( "#result #fio" ).html( data.response[0] );
+                    $( "#result #domain" ).html( data.response[5] );
                     $( "#result #email" ).html( data.response[1] );
                     $( "#result h4" ).html( data.response[3] );
                     $( "#result #body" ).html( data.response[2] );
