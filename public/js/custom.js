@@ -13,11 +13,12 @@ $( document ).ready(function() {
                     $ ('.flash-message').addClass('alert alert-danger');
                     $( ".flash-message p" ).html( data.error +  '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
                 } else {
+                    var clear = !data.response[0];
                     $ ('.flash-message').removeClass('alert alert-danger');
                     $( ".flash-message p" ).html('');
-                    $( "#result #email" ).html( data.response[3] );
-                    $( "#result h4" ).html( data.response[1] );
-                    $( "#result #body" ).html( data.response[0] );
+                    $( "#result #email" ).html( clear ? '' : data.response[3] );
+                    $( "#result h4" ).html( clear ? '' : data.response[1] );
+                    $( "#result #body" ).html( clear ? '' : data.response[0] );
                 }
             });
         });
@@ -55,12 +56,13 @@ $( document ).ready(function() {
                 } else {
                     $ ('.flash-message').removeClass('alert alert-danger');
                     $( ".flash-message p" ).html('');
-                    $( "#result #fio" ).html( data.response[0] );
-                    $( "#result #domain" ).html( data.response[5] );
-                    $( "#result #email" ).html( data.response[1] );
-                    $( "#result h4" ).html( data.response[3] );
-                    $( "#result #body" ).html( data.response[2] );
-                    $( "#result #link" ).html( '<a target="_blank" href="' + data.response[4] + '">' + data.response[4] + '</a>' );
+                    var clear = !data.response[0];
+                    $( "#result #fio" ).html( clear ? '' : data.response[0] );
+                    $( "#result #domain" ).html( clear ? '' : data.response[5] );
+                    $( "#result #email" ).html( clear ? '' : data.response[1] );
+                    $( "#result h4" ).html( clear ? '' : data.response[3] );
+                    $( "#result #body" ).html( clear ? '' : data.response[2] );
+                    $( "#result #link" ).html( clear ? '' : '<a target="_blank" href="' + data.response[4] + '">' + data.response[4] + '</a>' );
                     // $('#counter').html('Осталось ' + data.response[4] + ' необработанных домена с текущими настройками.');
                 }
             });

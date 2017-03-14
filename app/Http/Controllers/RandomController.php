@@ -41,6 +41,7 @@ class RandomController extends Controller
         $tic = $request->get('tic');
         $isSkip = (bool) $request->get('skip', false);
         $isSave = (bool) $request->get('save', false);
+        $tic = $tic ? $tic : -1;
 
         if (!$title || !$content || (!$domain && !$isSkip)) {
             return response()->json(['error' => 'Введите заголовок, текст письма и хотябы 1 почтовый домен!']);
