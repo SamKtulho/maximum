@@ -101,9 +101,9 @@ $( document ).ready(function() {
             'iDisplayLength': 100,
             "order": [[ 5, "desc" ]],
             columnDefs: [
-                { width: 300, targets: 3 },
-                { width: 110, targets: 5 },
-                { width: 50, targets: 4 }
+
+                { width: 110, targets: 5 }
+
             ],
             drawCallback: function () {
                 var api = this.api();
