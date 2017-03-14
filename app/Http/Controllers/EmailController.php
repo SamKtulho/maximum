@@ -28,20 +28,33 @@ class EmailController extends Controller
         $content = $request->get('content', null);
         if (empty($content)) return back()->with('message', 'Пустой контент');
         $content = explode(PHP_EOL, $content);
+        
+        $errorsCount = $successCount = 0;
         foreach ($content as $string) {
             $string = trim($string);
             $emailString = trim(strstr($string, ' ', true));
             if (!$emailString) continue;
             $status = trim(strstr($string, ' '));
 
-            if ($status === 'Невалидный') continue;
+            if ($status === 'Невалидный') {
+                ++$errorsCount;
+                continue;
+            }
 
             $emailModel = Email::where('email', $emailString)->first();
 
             if ($emailModel) {
                 $emailModel->is_valid = Email::STATUS_VALID;
                 $emailModel->save();
+                ++$successCount;
             }
+        }
+        if ($successCount) {
+            $request->session()->flash('alert-success', 'Валидных емайлов ' . $successCount . '.');
+        }
+
+        if ($errorsCount) {
+            $request->session()->flash('alert-danger', 'Невалидных емайлов ' . $errorsCount . '.');
         }
         return redirect('/email/create');
     }
