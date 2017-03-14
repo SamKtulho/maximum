@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\Shorturl;
 use App\Models\Urlstat;
 use App\Services\GoogleUrlApi;
+use Carbon\Carbon;
 
 class GetStatistic extends Command
 {
@@ -47,6 +48,11 @@ class GetStatistic extends Command
     {
         Shorturl::where('type', Shorturl::TYPE_GOOGLE)->orwhere('type', Shorturl::TYPE_REGISTRAR)->orderby('id', 'desc')->chunk(200, function ($urls) {
             foreach ($urls as $url) {
+
+                if (Carbon::parse($url->created_at)->diffInDays(Carbon::now()) > 7) {
+                    continue;
+                }
+
                 $googleApi = new GoogleUrlApi(GoogleUrlApi::KEY,
                     'shortUrl='. urlencode($url->url) . '&projection=ANALYTICS_CLICKS&fields=analytics'
                 );
