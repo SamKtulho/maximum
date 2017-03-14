@@ -122,7 +122,7 @@ $( document ).ready(function() {
         } );
         $('#example').DataTable( {
             'iDisplayLength': 100,
-            "order": [[ 5, "desc" ]],
+            "order": [[ 4, "desc" ]],
             drawCallback: function () {
                 var api = this.api();
                 $( api.table().footer() ).html(
