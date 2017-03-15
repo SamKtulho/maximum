@@ -40,7 +40,7 @@ class ParseLinks extends Command
      */
     public function handle()
     {
-        Link::where('registrar', null)->chunk(200, function ($urls) {
+        Link::where('registrar', null)->where('status', Link::STATUS_NOT_PROCESSED)->chunk(200, function ($urls) {
             foreach ($urls as $url) {
 
                 $client = new Client();
