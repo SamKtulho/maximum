@@ -66,16 +66,13 @@
                             Холостой прогон
                         </label>
                         <span style="margin-left: 20px;"></span>
-
-                        <label class="form-check-label">
-                            {!! Form::checkbox('save', 'save', false, ['class' => 'form-check-input']) !!}
-                            Сохранить шаблон
-                        </label>
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::button('Submit', ['class'=>'btn btn-primary btn-main main-button']) !!}
                     <span id="counter" style="margin-left: 20px;"></span>
+                    <div id="tooltip" class="pull-right"></div>
+                    {!! Form::button('Сохранить шаблон', ['class'=>'btn save-button pull-right', 'id'=>'save-button']) !!}
                 </div>
                 {!! Form::close()!!}
 

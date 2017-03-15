@@ -40,14 +40,8 @@ class RandomController extends Controller
         $domain = $request->get('edomain');
         $tic = $request->get('tic');
         $isSkip = (bool) $request->get('skip', false);
-        $isSave = (bool) $request->get('save', false);
-        $tic = $tic ? $tic : -1;
+        $isSave = (bool) $request->get('saveTemplate', false);
 
-        if (!$title || !$content || (!$domain && !$isSkip)) {
-            return response()->json(['error' => 'Введите заголовок, текст письма и хотябы 1 почтовый домен!']);
-        }
-
-        $data = Random::emailPrepareData($content, $title, $domain, $tic, $isSkip);
         if ($isSave) {
             $emailTemplate = Template::where('type', Template::TYPE_EMAIL)->first();
             if (!$emailTemplate) {
@@ -56,7 +50,16 @@ class RandomController extends Controller
             }
             $emailTemplate->template = serialize(['title' => $title, 'content' => $content]);
             $emailTemplate->save();
+            return response()->json(['response' => 'Сохранено']);
         }
+
+        $tic = $tic ? $tic : -1;
+
+        if (!$title || !$content || (!$domain && !$isSkip)) {
+            return response()->json(['error' => 'Введите заголовок, текст письма и хотябы 1 почтовый домен!']);
+        }
+
+        $data = Random::emailPrepareData($content, $title, $domain, $tic, $isSkip);
         return response()->json(['response' => $data]);
     }
 
@@ -68,13 +71,8 @@ class RandomController extends Controller
         $fio = $request->get('fio');
         $email = $request->get('email');
         $isSkip = (bool) $request->get('skip', false);
-        $isSave = (bool) $request->get('save', false);
+        $isSave = (bool) $request->get('saveTemplate', false);
 
-        if (!$title || !$content || !$fio || !$email || (!$domain && !$isSkip)) {
-            return response()->json(['error' => 'Введите заголовок, текст письма, ФИО, email и хотябы 1 домен!']);
-        }
-
-        $data = Random::linkPrepareData($fio, $email, $title, $content, $domain, $isSkip);
         if ($isSave) {
             $linkTemplate = Template::where('type', Template::TYPE_LINK)->first();
             if (!$linkTemplate) {
@@ -83,7 +81,15 @@ class RandomController extends Controller
             }
             $linkTemplate->template = serialize(['title' => $title, 'content' => $content, 'fio' => $fio, 'email' => $email]);
             $linkTemplate->save();
+            return response()->json(['response' => 'Сохранено']);
         }
+
+        if (!$title || !$content || !$fio || !$email || (!$domain && !$isSkip)) {
+            return response()->json(['error' => 'Введите заголовок, текст письма, ФИО, email и хотябы 1 домен!']);
+        }
+
+        $data = Random::linkPrepareData($fio, $email, $title, $content, $domain, $isSkip);
+
         return response()->json(['response' => $data]);
     }
 }

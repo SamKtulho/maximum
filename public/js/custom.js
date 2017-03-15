@@ -23,6 +23,20 @@ $( document ).ready(function() {
             });
         });
 
+        $('.save-button').click(function () {
+            var data = $( "form" ).serializeArray();
+            data.push({'name':'saveTemplate', 'value':true});
+            $.post( "/random/email/store", data, function( data ) {
+                if (data.error !== undefined) {
+                    $ ('.flash-message').addClass('alert alert-danger');
+                    $( ".flash-message p" ).html( data.error +  '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
+                } else {
+                    $("#tooltip").attr('title', data.response).tooltip('show');
+                    setTimeout(function(){$("#tooltip").tooltip('hide')}, 1000);
+                }
+            });
+        });
+
         function getTotalEmails() {
             $.get( "/email/count", function( data ) {
                 if (data.response !== undefined) {
@@ -64,6 +78,21 @@ $( document ).ready(function() {
                     $( "#result #body" ).html( clear ? '' : data.response[2] );
                     $( "#result #link" ).html( clear ? '' : '<a target="_blank" href="' + data.response[4] + '">' + data.response[4] + '</a>' );
                     // $('#counter').html('Осталось ' + data.response[4] + ' необработанных домена с текущими настройками.');
+                }
+            });
+        });
+
+        $('.save-button').click(function () {
+            var data = $( "form" ).serializeArray();
+            data.push({'name':'saveTemplate', 'value':true});
+            $.post( "/random/link/store", data, function( data ) {
+                if (data.error !== undefined) {
+                    $ ('.flash-message').addClass('alert alert-danger');
+                    $( ".flash-message p" ).html( data.error +  '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
+                } else {
+                    $("#tooltip").attr('title', data.response).tooltip('show');
+                    setTimeout(function(){$("#tooltip").tooltip('hide')}, 1000);
+
                 }
             });
         });
