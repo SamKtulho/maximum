@@ -28,9 +28,9 @@
                     <tbody>
                     @foreach ($shortUrls as $shortUrl)
                         <tr>
-                            <td><a href="{{ $shortUrl->url }}">{{ $shortUrl->url }} </a></td>
+                            <td><a target="_blank" href="{{ $shortUrl->url }}">{{ $shortUrl->url }} </a></td>
                             <td> {{ isset($shortUrl->urlstats[0]) ? unserialize($shortUrl->urlstats[0]->stat)['allTime']['shortUrlClicks'] : '?' }} </td>
-                            <td> {{ $shortUrl->domain->domain }} </td>
+                            <td> <a target="_blank" href="{{ $shortUrl->domain->domain }}">{{ $shortUrl->domain->domain }}</a> </td>
                             <td> {{ $shortUrl->user->name }} </td>
                             <td> {{ $shortUrl->created_at }} </td>
                         </tr>

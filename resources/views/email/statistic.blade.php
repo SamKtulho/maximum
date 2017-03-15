@@ -5,7 +5,7 @@
     <div class="container email-statistic">
         <div class="row">
             <div class="col-md-12">
-                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <table id="example" class="table table-striped table-bordered table-condensed" cellspacing="0" width="100%">
                     <thead>
                     <tr>
                         <th>Ссылка</th>
@@ -29,9 +29,9 @@
                     <tbody>
                     @foreach ($shortUrls as $shortUrl)
                         <tr>
-                            <td><a href="{{ $shortUrl->url }}">{{ $shortUrl->url }} </a></td>
+                            <td><a target="_blank" href="{{ $shortUrl->url }}">{{ $shortUrl->url }} </a></td>
                             <td> {{ isset($shortUrl->urlstats[0]) ? unserialize($shortUrl->urlstats[0]->stat)['allTime']['shortUrlClicks'] : '?' }} </td>
-                            <td> {{ $shortUrl->domain->domain }} </td>
+                            <td> <a target="_blank" href="{{ $shortUrl->domain->domain }}">{{ $shortUrl->domain->domain }}</a> </td>
                             <td> {{ $shortUrl->domain->emails[0]->email }} </td>
                             <td> {{ $shortUrl->user->name }} </td>
                             <td> {{ $shortUrl->created_at }} </td>

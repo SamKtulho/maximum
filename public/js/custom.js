@@ -100,10 +100,13 @@ $( document ).ready(function() {
         $('#example').DataTable( {
             'iDisplayLength': 100,
             "order": [[ 5, "desc" ]],
-            columnDefs: [
-
-                { width: 110, targets: 5 }
-
+            columns: [
+                { width: '15%' },
+                { width: '6%' },
+                { width: '27%' },
+                { width: '27%' },
+                { width: '9%' },
+                { width: '13%' }
             ],
             drawCallback: function () {
                 var api = this.api();
@@ -130,6 +133,13 @@ $( document ).ready(function() {
         $('#example').DataTable( {
             'iDisplayLength': 100,
             "order": [[ 4, "desc" ]],
+            columns: [
+                { width: '15%' },
+                { width: '7%' },
+                { width: '35%' },
+                { width: '10%' },
+                { width: '15%' }
+            ],
             drawCallback: function () {
                 var api = this.api();
                 $( api.table().footer() ).html(

@@ -133,7 +133,6 @@
     <script src="{{ asset('js/app.js') }}"></script>
 
     <script src="{{ asset('js/datatables.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('//cdn.datatables.net/plug-ins/1.10.13/api/sum().js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
 
 </body>
