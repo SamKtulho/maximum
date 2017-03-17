@@ -61,6 +61,7 @@ class Natty_TextRandomizer_Node
         $result = str_replace(' .', '.', $result);
         $result = str_replace(' !', '!', $result);
         $result = str_replace(' ?', '?', $result);
+        $result = str_replace(' )', ')', $result);
 	//$result = str_replace('<br>', "\n", $result);
         return $result;
     }
