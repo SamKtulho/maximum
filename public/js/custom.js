@@ -130,16 +130,24 @@ $( document ).ready(function() {
                 return a + b;
             }, 0 );
         } );
-        $('#example').DataTable( {
+
+
+        $('#example').DataTable({
             'iDisplayLength': 100,
             "order": [[ 5, "desc" ]],
+            serverSide: true,
+            processing: true,
+            ajax: {
+                "url": "/email/statistic/data",
+                "type": "POST"
+            },
             columns: [
-                { width: '15%' },
-                { width: '6%' },
-                { width: '27%' },
-                { width: '27%' },
-                { width: '9%' },
-                { width: '13%' }
+                {data: 'url', width: '15%'},
+                {data: 'stat', width: '6%'},
+                {data: 'domain', width: '27%'},
+                {data: 'email', width: '27%'},
+                {data: 'user', width: '9%'},
+                {data: 'created_at', width: '13%'}
             ],
             drawCallback: function () {
                 var api = this.api();
@@ -147,7 +155,7 @@ $( document ).ready(function() {
                     '<tr><td>Итого</td><td>' + api.column( 1, {page:'current'} ).data().sum() + '</td><<td></td><td></td><td></td><td></td></tr>'
                 );
             }
-        } );
+        });
     }
 
     if ($('.link-statistic').length > 0) {

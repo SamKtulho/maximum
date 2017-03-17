@@ -23,6 +23,7 @@ Route::post('/random/email/store', ['as' => 'random.email.store', 'uses' => 'Ran
 Route::get('/random/link', ['as' => 'random.link', 'uses' => 'RandomController@link']);
 Route::post('/random/link/store', ['as' => 'random.link.store', 'uses' => 'RandomController@linkStore']);
 Route::get('/email/statistic', 'EmailController@statistic');
+Route::post('/email/statistic/data', 'EmailController@data');
 Route::get('/email/count', 'EmailController@count');
 Route::get('/link/statistic', 'LinkController@statistic');
 Route::get('/link/count', 'LinkController@count');

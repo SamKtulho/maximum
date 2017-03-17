@@ -23,6 +23,6 @@ class Email extends Model
 
     public function domain()
     {
-        return $this->belongsTo('App\Models\Domain');
+        return $this->belongsTo('App\Models\Domain')->select(array('id', 'status'));
     }
 }

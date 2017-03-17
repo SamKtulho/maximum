@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Email;
 use App\Models\Shorturl;
+use Yajra\Datatables\Datatables;
 
 class EmailController extends Controller
 {
@@ -58,11 +59,29 @@ class EmailController extends Controller
         }
         return redirect('/email/create');
     }
+
+    public function data(Datatables $datatables)
+    {
+        return $datatables->eloquent(Shorturl::where('type', Shorturl::TYPE_GOOGLE)->orwhere('type', Shorturl::TYPE_OTHER))
+            ->addColumn('domain', function ($shorturl) {
+                return '<a href="' . $shorturl->domain->domain . '">' . $shorturl->domain->domain . '</a>';
+            })
+            ->addColumn('stat', function ($shorturl) {
+                return isset($shorturl->urlstats[0]) ? unserialize($shorturl->urlstats[0]->stat)['allTime']['shortUrlClicks'] : '?';
+            })
+            ->addColumn('email', function ($shorturl) {
+                return $shorturl->domain->emails[0]->email;
+            })
+            ->addColumn('user', function ($shorturl) {
+                return $shorturl->user->name;
+            })
+            ->rawColumns(['domain'])
+            ->make(true);
+    }
     
     public function statistic()
     {
-        $shortUrls = Shorturl::where('type', Shorturl::TYPE_GOOGLE)->orwhere('type', Shorturl::TYPE_OTHER)->get();
-        return view('email.statistic', ['shortUrls' => $shortUrls]);
+        return view('email.statistic', ['shortUrls' => []]);
     }
     
     public function count()

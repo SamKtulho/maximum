@@ -16,7 +16,7 @@ class Domain extends Model
 
     public function emails()
     {
-        return $this->hasMany('App\Models\Email');
+        return $this->hasMany('App\Models\Email')->select(['id', 'email']);
     }
 
     public function shorturls()

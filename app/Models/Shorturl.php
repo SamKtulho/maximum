@@ -12,12 +12,12 @@ class Shorturl extends Model
 
     public function user()
     {
-        return $this->belongsTo('\App\User');
+        return $this->belongsTo('\App\User')->select(['id', 'name']);
     }
 
     public function domain()
     {
-        return $this->belongsTo('App\Models\Domain');
+        return $this->belongsTo('App\Models\Domain')->select(['id', 'domain']);
     }
 
     public function urlstats()
