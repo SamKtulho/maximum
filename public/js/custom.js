@@ -2,6 +2,10 @@
 $( document ).ready(function() {
 
     if ($('.random-email .btn-main').length > 0) {
+        $('.show-button').click(function () {
+            $('.random-email .mail-settings').toggleClass('hide');
+        });
+
         $('.btn-main').click(function () {
             $('.main-button').prop('disabled', true);
 

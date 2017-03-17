@@ -10,8 +10,8 @@
                 </div> <!-- end .flash-message -->
                 {!! Form::open(['route' => 'random.link.store']) !!}
                 <div class="vert25">
-                    {!! Form::label('Настройки письма') !!}
-                    {!! Form::button('Показать', ['class'=>'btn btn-primary show-button']) !!}
+                    {!! Form::label('Настройки письма:') !!}
+                    {!! Form::button('Показать', ['class'=>'btn btn-sm show-button']) !!}
                 </div>
                 <div class="mail-settings hide">
                     <div class="form-group">
