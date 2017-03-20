@@ -143,10 +143,12 @@ $( document ).ready(function() {
             },
             columns: [
                 {data: 'url', width: '15%'},
-                {data: 'stat', width: '6%'},
-                {data: 'domain', width: '27%'},
-                {data: 'email', width: '27%'},
-                {data: 'user', width: '9%'},
+                {data: 'stat', width: '6%', searchable: false, orderable: false},
+                {data: 'domain.domain', width: '27%', render: function(d) {
+                    return '<a target="_blank" href="//' + d + '">' + d + '</a>';
+                }},
+                {data: 'email', width: '27%', searchable: false, orderable: false},
+                {data: 'user.name', width: '9%'},
                 {data: 'created_at', width: '13%'}
             ],
             drawCallback: function () {

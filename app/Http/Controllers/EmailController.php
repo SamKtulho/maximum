@@ -62,20 +62,22 @@ class EmailController extends Controller
 
     public function data(Datatables $datatables)
     {
-        return $datatables->eloquent(Shorturl::where('type', Shorturl::TYPE_GOOGLE)->orwhere('type', Shorturl::TYPE_OTHER))
-            ->addColumn('domain', function ($shorturl) {
+        $query = Shorturl::with('user')->with('domain')->with('urlstats')->select('shorturls.*')->whereIn('type', [Shorturl::TYPE_GOOGLE, Shorturl::TYPE_OTHER]);
+
+        return $datatables->eloquent($query)
+/*            ->addColumn('domain', function ($shorturl) {
                 return '<a target="_blank" href="//' . $shorturl->domain->domain . '">' . $shorturl->domain->domain . '</a>';
-            })
+            })*/
             ->addColumn('stat', function ($shorturl) {
                 return isset($shorturl->urlstats[0]) ? unserialize($shorturl->urlstats[0]->stat)['allTime']['shortUrlClicks'] : '?';
             })
             ->addColumn('email', function ($shorturl) {
                 return $shorturl->domain->emails[0]->email;
             })
-            ->addColumn('user', function ($shorturl) {
+          /*  ->addColumn('user', function ($shorturl) {
                 return $shorturl->user->name;
-            })
-            ->rawColumns(['domain'])
+            })*/
+           // ->rawColumns(['domain'])
             ->make(true);
     }
     
