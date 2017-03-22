@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\GetStatistic::class,
         Commands\ParseLinks::class,
+        Commands\AddDomainType::class,
     ];
 
     /**

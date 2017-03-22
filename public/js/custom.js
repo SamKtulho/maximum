@@ -191,4 +191,31 @@ $( document ).ready(function() {
             }
         } );
     }
+
+    if ($('.moderator').length > 0) {
+
+        var voteAction = function () {
+            $.ajax({
+                url: '/moderator/vote',
+                type: 'POST',
+                data: {'domain_id': $('#domain_id').val(), 'vote': $('#vote').val(), '_token': $('input[name=_token]').val()},
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.response !== undefined) {
+                        $('#domain_id').val(data.response.id);
+                        $('iframe').attr("src", '//' + data.response.domain);
+                        $('#link').attr("href", '//' + data.response.domain);
+                        $('#link').html(data.response.domain);
+                    }
+                }
+            });
+        };
+
+        voteAction();
+        
+        $('.moderator .btn-lg').click(function(){
+            $('#vote').val($(this).val());
+            setTimeout(voteAction, 400);
+        });
+    }
 });

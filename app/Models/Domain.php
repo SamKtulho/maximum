@@ -8,6 +8,13 @@ class Domain extends Model
 {
     const STATUS_NOT_PROCESSED = 0;
     const STATUS_PROCESSED = 1;
+    const STATUS_MANUAL_CHECK = 3;
+    const STATUS_MODERATE = 4;
+    const STATUS_BAD = 5;
+
+    const TYPE_EMAIL = 0;
+    const TYPE_LINK = 1;
+
     //
     public function prepareData($content)
     {
@@ -26,6 +33,6 @@ class Domain extends Model
 
     public function links()
     {
-        return $this->hasMany('\App\Models\Links');
+        return $this->hasMany('\App\Models\Link');
     }
 }
