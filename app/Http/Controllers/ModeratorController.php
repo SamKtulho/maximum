@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Domain;
+use Illuminate\Support\Facades\DB;
 
 class ModeratorController extends Controller
 {
@@ -38,7 +39,13 @@ class ModeratorController extends Controller
             }
         }
 
-        $domain = Domain::where('type', Domain::TYPE_LINK)->where('status', Domain::STATUS_MODERATE)->first();
+        $domain = DB::table('domains')
+            ->join('links', 'domains.id', '=', 'links.domain_id')
+            ->where('domains.status', Domain::STATUS_MODERATE)
+            ->where('domains.type', Domain::TYPE_LINK)
+            ->where('links.status', 0)
+            ->select('domains.*')
+            ->first();
 
         return response()->json(['response' => $domain]);
     }
