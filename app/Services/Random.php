@@ -13,26 +13,28 @@ class Random
     public static function linkPrepareData($fio, $email, $title, $text, $domains, $isSkip = false)
     {
         $linkMasks = Link::getMasks();
-        $modelLink = DB::table('links');
+        $modelLink = DB::table('links')
+        ->join('domains', 'domains.id', '=', 'links.domain_id')
+        ->where('domains.status', Domain::STATUS_NOT_PROCESSED);
         $domains = empty($domains) && $isSkip ? (array) key(Email::getMasks()) : $domains;
 
 
         if (in_array('other', $domains, true)) {
             foreach ($linkMasks as $linkMask) {
                 foreach ($linkMask as $item) {
-                    $modelLink->where('registrar', 'not like', $item);
+                    $modelLink->where('links.registrar', 'not like', $item);
                 }
             }
         }
         foreach ($domains as $domain) {
             if (isset($linkMasks[$domain])) {
                 foreach ($linkMasks[$domain] as $linkMask) {
-                    $modelLink->orWhere('registrar', $linkMask);
+                    $modelLink->orWhere('links.registrar', $linkMask);
                 }
             }
         }
 
-        $modelLink->where('status', ModelLink::STATUS_NOT_PROCESSED);
+        $modelLink->where('links.status', ModelLink::STATUS_NOT_PROCESSED);
 
         $result = $modelLink->first();
 
