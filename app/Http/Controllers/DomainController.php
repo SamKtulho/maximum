@@ -51,11 +51,11 @@ class DomainController extends Controller
                     foreach ($emails as $email) {
                         $emailModel = Email::where('email', $email)->first();
                         if ($emailModel) {
-                            $storedDomain = Domain::where('id', $emailModel->domain_id)->first();
-                            if ($storedDomain && $domain->tic > $storedDomain->tic) {
+                         //   $storedDomain = Domain::where('id', $emailModel->domain_id)->first(); // ТИЦ отключили пока
+                         //   if ($storedDomain && $domain->tic > $storedDomain->tic) { // ТИЦ отключили пока
                                 $emailModel->domain_id = $domain->id;
                                 $emailModel->save();
-                            }
+                         //   } // ТИЦ отключили пока
                         } else {
                             $emailModel = new Email();
                             foreach ($emailModel->getStopWords() as $stopWord) {
