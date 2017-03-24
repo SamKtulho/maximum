@@ -34,14 +34,11 @@ class Random
             }
         }
 
-        $modelLink->where('links.status', ModelLink::STATUS_NOT_PROCESSED);
+        $modelLink->where('links.status', ModelLink::STATUS_NOT_PROCESSED)->select('domains.*', 'links.*');
 
         $result = $modelLink->first();
-
         if (!empty($result)) {
             $storedDomain = Domain::where('id', $result->domain_id)->first();
-            dd($storedDomain);
-
             if (!$isSkip) {
                 $storedDomain->status = Domain::STATUS_PROCESSED;
                 $modelLink = ModelLink::find($result->id);
