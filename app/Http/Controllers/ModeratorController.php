@@ -39,14 +39,16 @@ class ModeratorController extends Controller
             }
         }
 
-        $domain = DB::table('domains')
+        $domainDB = DB::table('domains')
             ->join('links', 'domains.id', '=', 'links.domain_id')
             ->where('domains.status', Domain::STATUS_MODERATE)
             ->where('domains.type', Domain::TYPE_LINK)
             ->where('links.status', 0)
-            ->select('domains.*')
-            ->first();
+            ->select('domains.*', 'links.registrar');
 
-        return response()->json(['response' => $domain]);
+        $domain = $domainDB->first();
+        $count = $domainDB->count();
+
+        return response()->json(['response' => ['domain' => $domain, 'count' => $count]]);
     }
 }

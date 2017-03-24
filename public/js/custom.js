@@ -202,10 +202,13 @@ $( document ).ready(function() {
                 dataType: 'JSON',
                 success: function (data) {
                     if (data.response !== undefined) {
-                        $('#domain_id').val(data.response.id);
-                        $('iframe').attr("src", '//' + data.response.domain);
-                        $('#link').attr("href", '//' + data.response.domain);
-                        $('#link').html(data.response.domain);
+                        var domain = data.response.domain;
+                        var count = data.response.count;
+                        $('#domain_id').val(domain.id);
+                        $('iframe').attr("src", '//' + domain.domain);
+                        $('#link').attr("href", '//' + domain.domain);
+                        $('#link').html(domain.domain + ' (' + domain.registrar + ')');
+                        $('.hor20').html(count);
                     }
                 }
             });

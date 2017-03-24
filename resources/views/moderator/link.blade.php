@@ -10,7 +10,7 @@
                     {!! Form::open(['route' => 'moderator.vote']) !!}
                     <div class="form-group text-center">
                         {!! Form::button('Да', ['class'=>'btn btn-success btn-lg', 'value' => 1]) !!}
-                        <span class="hor20"></span>
+                        <span class="hor20 text-muted"></span>
                         {!! Form::button('Нет', ['class'=>'btn btn-danger btn-lg', 'value' => 2]) !!}
                     </div>
                     <div class="form-group text-center">
