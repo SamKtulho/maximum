@@ -39,7 +39,7 @@ class Random
         $result = $modelLink->first();
 
         if (!empty($result)) {
-            dd($result);
+            dd($result->domain_id);
             $storedDomain = Domain::where('id', $result->domain_id)->first();
             if (!$isSkip) {
                 $storedDomain->status = Domain::STATUS_PROCESSED;
