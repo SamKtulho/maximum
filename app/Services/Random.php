@@ -105,7 +105,7 @@ class Random
         $count = count($results);
         $results = reset($results);
 
-        if (!empty($results)) {
+        if (!empty($results) || $isSkip) {
             if (!$isSkip) {
                 $storedDomain = Domain::where('domain', $results->domain)->first();
                 $storedDomain->status = Domain::STATUS_PROCESSED;
