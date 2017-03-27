@@ -34,7 +34,7 @@ class Random
             }
         }
 
-        $modelLink->where('links.status', ModelLink::STATUS_NOT_PROCESSED);
+        $modelLink->where('links.status', ModelLink::STATUS_NOT_PROCESSED)->select('domains.*', 'links.*');
 
         $result = $modelLink->first();
 
@@ -43,10 +43,8 @@ class Random
             if (!$isSkip) {
                 $storedDomain->status = Domain::STATUS_PROCESSED;
                 $modelLink = ModelLink::find($result->id);
-                if ($modelLink) {
-                    $modelLink->status = ModelLink::STATUS_PROCESSED;
-                    $modelLink->save();
-                }
+                $modelLink->status = ModelLink::STATUS_PROCESSED;
+                $modelLink->save();
                 $storedDomain->save();
             }
 
@@ -54,7 +52,7 @@ class Random
             $emailRand = new TextRandomizer($email, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
             $tRand = new TextRandomizer($text, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
             $titleRand = null;
-            if (!$isSkip && ($result->registrar !== 'nic.ru' && $result->registrar !== 'reg.ru')) {
+            if ($result->registrar !== 'nic.ru' && $result->registrar !== 'reg.ru') {
                 $titleRand = new TextRandomizer($title, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
             }
 
@@ -67,7 +65,7 @@ class Random
                 $shortUrl->save();
             }
 
-            $link = $isSkip ? 'https://www.nic.ru/cgi/whois_webmail.cgi?domain=' . date('dmY') . '.com' : $result->link;
+            $link = $result->registrar === 'nic.ru' ? 'https://www.nic.ru/cgi/whois_webmail.cgi?domain=' . ($isSkip ? date('dmY') . '.com' : $storedDomain->domain) : $result->link;
 
             return ([$fioRand->getText(), $emailRand->getText(), $tRand->getText(), ($titleRand ? $titleRand->getText() : ''), $link, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain)]);
         }
@@ -107,7 +105,7 @@ class Random
         $count = count($results);
         $results = reset($results);
 
-        if (!empty($results) || $isSkip) {
+        if (!empty($results)) {
             if (!$isSkip) {
                 $storedDomain = Domain::where('domain', $results->domain)->first();
                 $storedDomain->status = Domain::STATUS_PROCESSED;
