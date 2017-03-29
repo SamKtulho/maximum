@@ -26,6 +26,11 @@ class ModeratorController extends Controller
         return view('moderator.link');
     }
 
+    public function email()
+    {
+        return view('moderator.email');
+    }
+
     public function vote(Request $request)
     {
         $vote = (int) $request->get('vote');
@@ -45,6 +50,32 @@ class ModeratorController extends Controller
             ->where('domains.type', Domain::TYPE_LINK)
             ->where('links.status', 0)
             ->select('domains.*', 'links.registrar');
+
+        $domain = $domainDB->first();
+        $count = $domainDB->count();
+
+        return response()->json(['response' => ['domain' => $domain, 'count' => $count]]);
+    }
+
+    public function voteEmail(Request $request)
+    {
+        $vote = (int) $request->get('vote');
+        $domainId = (int) $request->get('domain_id');
+
+        if ($vote && $domainId) {
+            $domain = Domain::find($domainId);
+            if ($domain) {
+                $domain->status = $vote === self::VOTE_YES ? Domain::STATUS_NOT_PROCESSED : Domain::STATUS_BAD;
+                $domain->save();
+            }
+        }
+
+        $domainDB = DB::table('domains')
+            ->join('emails', 'domains.id', '=', 'emails.domain_id')
+            ->where('domains.status', Domain::STATUS_MODERATE)
+            ->where('domains.type', Domain::TYPE_EMAIL)
+            ->where('emails.is_valid', 1)
+            ->select('domains.*', 'emails.email');
 
         $domain = $domainDB->first();
         $count = $domainDB->count();

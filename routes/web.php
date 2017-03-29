@@ -21,7 +21,9 @@ Route::get('/home', 'HomeController@index');
 Route::get('/random/email', ['as' => 'random.email', 'uses' => 'RandomController@email']);
 
 Route::get('/moderator/links', ['uses' => 'ModeratorController@link']);
+Route::get('/moderator/emails', ['uses' => 'ModeratorController@email']);
 Route::post('/moderator/vote', ['as' => 'moderator.vote', 'uses' => 'ModeratorController@vote']);
+Route::post('/moderator/vote_email', ['as' => 'moderator.voteEmail', 'uses' => 'ModeratorController@voteEmail']);
 
 Route::post('/random/email/store', ['as' => 'random.email.store', 'uses' => 'RandomController@emailStore']);
 Route::get('/random/link', ['as' => 'random.link', 'uses' => 'RandomController@link']);
