@@ -5,8 +5,8 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('tic') !!} (указать ТИЦ домена)
-    {!! Form::text('tic', null, ['class'=>'form-control'] ) !!}
+    {!! Form::label('source') !!} (указать источник доменов)
+    {!! Form::text('source', null, ['class'=>'form-control', 'placeholder' => 'Serp mp3'] ) !!}
 </div>
 
 <div class="form-group">

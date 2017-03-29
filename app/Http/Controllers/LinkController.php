@@ -24,9 +24,11 @@ class LinkController extends Controller
     {
         $this->validate($request, [
             'content' => 'required',
+            'source' => 'required',
         ]);
 
         $content = $request->get('content', null);
+        $source = $request->get('source', null);
 
         $content = explode(PHP_EOL, $content);
         $errorsCount = $successCount = 0;
@@ -43,6 +45,7 @@ class LinkController extends Controller
             $domain = new Domain;
             $domain->domain = $data[1];
             $domain->tic = 10;
+            $domain->source = $source;
             $domain->status = Domain::STATUS_NOT_PROCESSED;
 
             try {

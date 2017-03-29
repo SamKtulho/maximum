@@ -44,6 +44,7 @@ class DomainController extends Controller
             $domain = new Domain;
             $domain->domain = $domainString;
             $domain->tic = (int) $request->get('tic', 10);
+            $domain->source = $request->get('source', null);
             $domain->status = Domain::STATUS_NOT_PROCESSED;
 
             try {
