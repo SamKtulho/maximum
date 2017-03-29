@@ -207,8 +207,9 @@ $( document ).ready(function() {
                         $('#domain_id').val(domain.id);
                         $('iframe').attr("src", '//' + domain.domain);
                         $('#link').attr("href", '//' + domain.domain);
-                        $('#link').html(domain.domain + ' (' + domain.registrar + ')');
-                        $('.hor20').html(count);
+                        $('#link').html(domain.domain);
+                        $('.counter').html(count);
+                        $('.registrar').html('(' + domain.registrar + ')');
                     }
                 }
             });

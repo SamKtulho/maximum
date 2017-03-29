@@ -10,8 +10,10 @@
                     {!! Form::open(['route' => 'moderator.vote']) !!}
                     <div class="form-group text-center">
                         {!! Form::button('Да', ['class'=>'btn btn-success btn-lg', 'value' => 1]) !!}
-                        <span class="hor20 text-muted"></span>
+                        <span class="hor20 text-muted counter"></span>
                         {!! Form::button('Нет', ['class'=>'btn btn-danger btn-lg', 'value' => 2]) !!}
+                        <span class="text-muted registrar"></span>
+
                     </div>
                     <div class="form-group text-center">
                         <a target="_blank" href="" id="link"></a>
