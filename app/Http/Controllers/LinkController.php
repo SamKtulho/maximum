@@ -46,7 +46,7 @@ class LinkController extends Controller
             $domain->domain = $data[1];
             $domain->tic = 10;
             $domain->source = $source;
-            $domain->status = Domain::STATUS_NOT_PROCESSED;
+            $domain->status = Domain::STATUS_MODERATE;
 
             try {
                 $domain->save();
