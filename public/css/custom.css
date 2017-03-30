@@ -7,5 +7,5 @@ table {
     word-break: break-all;
 }
 
-.moderator .btn-lg {padding: 15px 45px;}
+.moderator .btn-lg, .moderator_email .btn-lg {padding: 15px 45px;}
 .moderator .registrar, .moderator_email .email {position: absolute; margin: 15px 20px;}
