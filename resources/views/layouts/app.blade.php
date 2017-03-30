@@ -15,6 +15,7 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 
+    <script src="{{ asset('js/app.js') }}"></script>
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -145,7 +146,6 @@
 
     </div>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
 
     <script src="{{ asset('js/datatables.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>

@@ -99,4 +99,6 @@
         </div>
     </div>
 
+    <script src="{{ asset('js/random_link.js') }}"></script>
+
 @endsection

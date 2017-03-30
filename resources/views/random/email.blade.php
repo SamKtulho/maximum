@@ -89,4 +89,7 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('js/random_email.js') }}"></script>
+
 @endsection
