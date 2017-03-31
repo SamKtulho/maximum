@@ -58,6 +58,7 @@ class ParseLinks extends Command
                     );
                 } catch (\GuzzleHttp\Exception\ConnectException $e) {
                     $url->status = Link::STATUS_DELAYED;
+                    $url->save();
                     continue;
                 } catch (\Exception $e) {
                     continue;
