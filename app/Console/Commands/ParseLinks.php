@@ -53,7 +53,7 @@ class ParseLinks extends Command
                             'referer'         => true,
                             'track_redirects' => true
                         ],
-                            'connect_timeout' => 7
+                            'connect_timeout' => 15
                         ]
                     );
                 } catch (\GuzzleHttp\Exception\ConnectException $e) {
