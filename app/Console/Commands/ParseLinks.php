@@ -42,6 +42,7 @@ class ParseLinks extends Command
     {
         Link::where('registrar', null)->where('status', Link::STATUS_NOT_PROCESSED)->chunk(200, function ($urls) {
             foreach ($urls as $url) {
+                $this->info($url->link);
 
                 $client = new Client();
                 try {
@@ -52,11 +53,12 @@ class ParseLinks extends Command
                             'referer'         => true,
                             'track_redirects' => true
                         ],
-                            'connect_timeout' => 5
+                            'connect_timeout' => 7
                         ]
                     );
                 } catch (\GuzzleHttp\Exception\ConnectException $e) {
-                    dd($e);
+                    $url->status = Link::STATUS_DELAYED;
+                    continue;
                 } catch (\Exception $e) {
                     continue;
                 }
@@ -75,7 +77,7 @@ class ParseLinks extends Command
                     preg_match('`(http[s]?://)(www.)?([A-Za-z\.0-9-а-я\_]+)/.*`', $redirects, $result);
                     if (!empty($result[3])) {
                         $url->registrar = $result[3];
-                        $this->info($url->link . ' ' .$result[3]);
+                        $this->info(' ...' .$result[3]);
                     }
                 }
                 if (!empty($url->registrar)) {
