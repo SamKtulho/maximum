@@ -69,16 +69,16 @@ class ParseLinks extends Command
 
                 if (empty($redirects)) {
                     $url->registrar = 'reg.ru';
-                    $this->info($url->link . ' reg.ru');
+                    $this->info(' ...' . ' reg.ru');
                 } elseif (strpos($redirects, 'nic.ru/') !== false) {
                     $url->registrar = 'nic.ru';
-                    $this->info($url->link . ' nic.ru');
+                    $this->info(' ...' . ' nic.ru');
                 } else {
                     $result = [];
                     preg_match('`(http[s]?://)(www.)?([A-Za-z\.0-9-а-я\_]+)/.*`', $redirects, $result);
                     if (!empty($result[3])) {
                         $url->registrar = $result[3];
-                        $this->info(' ...' .$result[3]);
+                        $this->info(' ...' . $result[3]);
                     }
                 }
                 if (!empty($url->registrar)) {
