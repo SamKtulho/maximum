@@ -72,7 +72,7 @@ class EmailController extends Controller
                 return isset($shorturl->urlstats[0]) ? unserialize($shorturl->urlstats[0]->stat)['allTime']['shortUrlClicks'] : '?';
             })
             ->addColumn('email', function ($shorturl) {
-                return $shorturl->domain->emails[0]->email;
+                return isset($shorturl->domain->emails[0]) ? $shorturl->domain->emails[0]->email : '';
             })
           /*  ->addColumn('user', function ($shorturl) {
                 return $shorturl->user->name;
