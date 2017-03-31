@@ -51,9 +51,12 @@ class ParseLinks extends Command
                             'strict'          => true,
                             'referer'         => true,
                             'track_redirects' => true
-                        ]]
+                        ],
+                         //   'connect_timeout' => 3.14
+                        ]
                     );
                 } catch (\Exception $e) {
+                    dd($e);
                     continue;
                 }
 
