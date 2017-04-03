@@ -18,21 +18,25 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/random/email', ['as' => 'random.email', 'uses' => 'RandomController@email']);
 
 Route::get('/moderator/links', ['uses' => 'ModeratorController@link']);
 Route::get('/moderator/emails', ['uses' => 'ModeratorController@email']);
 Route::post('/moderator/vote', ['as' => 'moderator.vote', 'uses' => 'ModeratorController@vote']);
 Route::post('/moderator/vote_email', ['as' => 'moderator.voteEmail', 'uses' => 'ModeratorController@voteEmail']);
 
+Route::get('/random/email', ['as' => 'random.email', 'uses' => 'RandomController@email']);
 Route::post('/random/email/store', ['as' => 'random.email.store', 'uses' => 'RandomController@emailStore']);
 Route::get('/random/link', ['as' => 'random.link', 'uses' => 'RandomController@link']);
 Route::post('/random/link/store', ['as' => 'random.link.store', 'uses' => 'RandomController@linkStore']);
+
 Route::get('/email/statistic', 'EmailController@statistic');
 Route::post('/email/statistic/data', 'EmailController@data');
 Route::get('/email/count', 'EmailController@count');
+
 Route::get('/link/statistic', 'LinkController@statistic');
 Route::get('/link/count', 'LinkController@count');
+
+Route::post('/domain/back', 'DomainController@back')->name('domainBack');
 
 $router->resource('domain', 'DomainController');
 $router->resource('email', 'EmailController');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Domain;
+use App\Models\Link;
 use App\Models\Email;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -85,5 +86,21 @@ class DomainController extends Controller
         }
 
         return redirect('/domain/create');
+    }
+    
+    public function back(Request $request)
+    {
+        $domain = $request->get('domain');
+        if (empty($domain) || !($domain = Domain::where('domain', $domain)->first())) {
+            return response()->json(['error' => 'Такого домена не существует']);
+        }
+        $domain->status = Domain::STATUS_NOT_PROCESSED;
+        $domain->save();
+        $link = $domain->links()->first();
+        $link->status = Link::STATUS_NOT_PROCESSED;
+        $link->save();
+
+        return response()->json(['response' => 'Домен успешно помечен как необработанный']);
+
     }
 }

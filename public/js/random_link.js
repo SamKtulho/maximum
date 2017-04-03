@@ -44,6 +44,20 @@ $( document ).ready(function() {
         });
     });
 
+    $('.back-button').click(function () {
+        var data = $( "form" ).serializeArray();
+        data.push({'name':'domain', 'value':$('#domain').html()});
+        $.post( "/domain/back", data, function( data ) {
+            if (data.error !== undefined) {
+                $ ('.flash-message').addClass('alert alert-danger');
+                $( ".flash-message p" ).html( data.error +  '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
+            } else {
+                $("#tooltip").attr('title', data.response).tooltip('show');
+                setTimeout(function(){$("#tooltip").tooltip('hide')}, 1000);
+            }
+        });
+    });
+
 
     function getTotalLinks() {
         $.get( "/link/count", function( data ) {

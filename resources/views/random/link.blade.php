@@ -78,6 +78,8 @@
                     <span id="counter" style="margin-left: 20px;"></span>
                     <div id="tooltip" class="pull-right"></div>
                     {!! Form::button('Сохранить шаблон', ['class'=>'btn save-button pull-right', 'id'=>'save-button']) !!}
+                    {!! Form::button('Вернуть', ['class'=>'btn btn-info back-button pull-right', 'id'=>'back-button']) !!}
+
                 </div>
                 {!! Form::close()!!}
 
