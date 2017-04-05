@@ -33,6 +33,16 @@ class RandomController extends Controller
         return view('random.link', ['template' => $template]);
     }
 
+    public function manual(Request $request)
+    {
+        $linkTemplate = Template::where('type', Template::TYPE_MANUAL)->first();
+        $template = [];
+        if ($linkTemplate) {
+            $template = unserialize($linkTemplate->template);
+        }
+        return view('random.manual', ['template' => $template]);
+    }
+
     public function emailStore(Request $request)
     {
         $title = $request->get('title');

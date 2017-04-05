@@ -54,6 +54,9 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
+                                        <a href="/random/manual">Поиск контактов</a>
+                                    </li>
+                                    <li>
                                         <a href="/random/email">Письма</a>
                                     </li>
                                     <li>

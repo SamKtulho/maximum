@@ -25,6 +25,8 @@ class AddDomainSourceField extends Migration
      */
     public function down()
     {
-
+        Schema::table('domains', function (Blueprint $table) {
+            $table->dropColumn('source');
+        });
     }
 }

@@ -26,6 +26,8 @@ class AddDomainTypeField extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('domains', function (Blueprint $table) {
+            $table->dropColumn('type');
+        });
     }
 }

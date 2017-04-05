@@ -15,6 +15,8 @@ class Domain extends Model
     const TYPE_EMAIL = 0;
     const TYPE_LINK = 1;
 
+    protected $fillable = ['domain', 'type', 'tic', 'status', 'source'];
+
     //
     public function prepareData($content)
     {
