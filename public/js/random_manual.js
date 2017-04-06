@@ -85,7 +85,7 @@ $( document ).ready(function() {
     $('.save-button').click(function () {
         var data = $( "form" ).serializeArray();
         data.push({'name':'saveTemplate', 'value':true});
-        $.post( "/random/manual/store", data, function( data ) {
+        $.post( "/random/manualDomain", data, function( data ) {
             if (data.error !== undefined) {
                 $ ('.flash-message').addClass('alert alert-danger');
                 $( ".flash-message p" ).html( data.error +  '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
