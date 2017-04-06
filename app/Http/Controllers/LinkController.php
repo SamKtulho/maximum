@@ -45,6 +45,7 @@ class LinkController extends Controller
             $domain = new Domain;
             $domain->domain = $data[1];
             $domain->tic = 10;
+            $domain->type = Domain::TYPE_LINK;
             $domain->source = $source;
             $domain->status = Domain::STATUS_MODERATE;
 

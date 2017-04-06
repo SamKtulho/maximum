@@ -100,7 +100,8 @@
                     <div id="link"></div>
                     <p><div id="domain"></div></p>
                     <p><div id="fio"></div></p>
-                    <div id="email"></div>
+                    <p><div id="email"></div></p>
+                    <div id="link"></div>
                     <hr>
                     <h4></h4>
                     <p>
