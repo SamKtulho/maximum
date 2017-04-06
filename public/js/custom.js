@@ -60,12 +60,20 @@ $( document ).ready(function() {
         $('#example').DataTable( {
             'iDisplayLength': 100,
             "order": [[ 4, "desc" ]],
+            serverSide: true,
+            processing: true,
+            ajax: {
+                "url": "/link/statistic/data",
+                "type": "POST"
+            },
             columns: [
-                { width: '15%' },
-                { width: '7%' },
-                { width: '35%' },
-                { width: '10%' },
-                { width: '15%' }
+                { data: 'url', width: '15%' },
+                { data: 'stat', width: '7%' },
+                { data: 'domain.domain', width: '35%' , render: function(d) {
+                    return '<a target="_blank" href="//' + d + '">' + d + '</a>';
+                }},
+                { data: 'user.name', width: '10%' },
+                { data: 'created_at', width: '15%' }
             ],
             drawCallback: function () {
                 var api = this.api();

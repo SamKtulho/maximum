@@ -2,13 +2,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container manual-link">
+    <div class="container random-manual">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="flash-message">
                     <p class=""> </p>
                 </div> <!-- end .flash-message -->
-                {!! Form::open(['route' => 'random.manual.store']) !!}
+                {!! Form::open(['route' => 'random.manualDomain']) !!}
                 <div class="vert25">
                     {!! Form::label('Настройки письма:') !!}
                     {!! Form::button('Показать', ['class'=>'btn btn-sm show-button']) !!}
@@ -74,14 +74,27 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::button('Submit', ['class'=>'btn btn-primary btn-main main-button']) !!}
+                    {!! Form::button('Следующий домен', ['class'=>'btn btn-primary btn-main main-button']) !!}
                     <span id="counter" style="margin-left: 20px;"></span>
                     <div id="tooltip" class="pull-right"></div>
                     {!! Form::button('Сохранить шаблон', ['class'=>'btn save-button pull-right', 'id'=>'save-button']) !!}
-                    {!! Form::button('Вернуть', ['class'=>'btn btn-info back-button pull-right', 'id'=>'back-button']) !!}
 
                 </div>
                 {!! Form::close()!!}
+
+                <div id="preresult">
+                    <div class="form-group text-center">
+                        <p><div id="domain_link"></div></p>
+                    </div>
+                    <div class="form-group text-center action-buttons hide">
+                        {!! Form::button('Контакты не найдены', ['class'=>'btn btn-danger btn-not-found', 'value' => 1]) !!}
+                        {!! Form::hidden('domain_id', null, ['id' => 'domain_id']) !!}
+                        <span class="hor20 text-muted counter"></span>
+                        {!! Form::button('Создать текст письма', ['class'=>'btn btn-success btn-text-gen', 'value' => 2]) !!}
+                        <span class="text-muted registrar"></span>
+
+                    </div>
+                </div>
 
                 <div id="result">
                     <div id="link"></div>
@@ -101,6 +114,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/random_link.js') }}"></script>
+    <script src="{{ asset('js/random_manual.js') }}"></script>
 
 @endsection

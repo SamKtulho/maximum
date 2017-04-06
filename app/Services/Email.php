@@ -40,20 +40,21 @@ class Email
         $result = [];
         $count = 0;
         foreach (self::$masks as $title => $masks) {
-            $i = 0;
-            $model = \App\Models\Email::where('is_valid', 1)->where('email', 'like', '%' . array_shift($masks));
-            if (!empty($masks)) {
-                foreach ($masks as $mask) {
-                    $model->orWhere('email', 'like', '%' . $mask);
-                }
-            }
-            foreach ($model->get() as $item) {
-                if ((int) $item->domain->status === Domain::STATUS_NOT_PROCESSED) {
-                    ++$i;
-                }
-            }
-            $result[$title] = $i;
-            $count += $i;
+            $model = DB::table('emails')
+                ->join('domains', 'domains.id', '=', 'emails.domain_id')
+                ->where('domains.status', Domain::STATUS_NOT_PROCESSED)
+                ->where('domains.type', Domain::TYPE_EMAIL)
+                ->where('emails.is_valid', 1)
+                ->where(function ($query) use ($masks) {
+                    foreach ($masks as $mask) {
+                        $query->orWhere('email', 'like', '%' . $mask);
+                    }
+                })
+                ->select('emails.id');
+
+            $countByMask = $model->count();
+            $result[$title] = $countByMask;
+            $count += $countByMask;
         }
 
         $result['other'] = $allCount - $count;

@@ -10,6 +10,68 @@ use Illuminate\Support\Facades\Auth;
 
 class Random
 {
+    public static function manualGenText($fio, $email, $title, $text, $domainId, $isSkip = false)
+    {
+        $storedDomain = $isSkip ? '' : Domain::find($domainId);
+        if (!$isSkip) {
+            $storedDomain->status = Domain::STATUS_PROCESSED;
+            $modelLink = ModelLink::where('domain_id', $storedDomain->id)->first();
+            $modelLink->status = ModelLink::STATUS_PROCESSED;
+            $modelLink->save();
+            $storedDomain->save();
+        }
+
+        $fioRand = new TextRandomizer($fio, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
+        $emailRand = new TextRandomizer($email, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
+        $tRand = new TextRandomizer($text, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
+        $titleRand = new TextRandomizer($title, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
+
+
+        if (!$isSkip && !empty($storedDomain)) {
+            $shortUrl = new Shorturl();
+            $shortUrl->url = $tRand->getShortUrl();
+            $shortUrl->domain_id = $storedDomain->id;
+            $shortUrl->type = Shorturl::TYPE_REGISTRAR;
+            $shortUrl->user_id = Auth::user()->id;
+            $shortUrl->save();
+        }
+
+        return (['fio' => $fioRand->getText(), 'email' => $emailRand->getText(), 'text' => $tRand->getText(), 'title' => ($titleRand ? $titleRand->getText() : ''), 'domain' => ($isSkip ? date('dmY') . '.com' : $storedDomain->domain)]);
+    }
+    
+    public static function getNextDomain($domains, $isSkip = false)
+    {
+        $linkMasks = Link::getMasks();
+        $modelManual = DB::table('links')
+            ->join('domains', 'domains.id', '=', 'links.domain_id')
+            ->where('domains.status', Domain::STATUS_MANUAL_CHECK);
+        $domains = empty($domains) && $isSkip ? (array) key(Email::getMasks()) : $domains;
+
+        $modelManual->where(function ($query) use ($domains, $linkMasks) {
+            if (in_array('other', $domains, true)) {
+                foreach ($linkMasks as $linkMask) {
+                    foreach ($linkMask as $item) {
+                        $query->where('links.registrar', 'not like', $item);
+                    }
+                }
+            }
+            foreach ($domains as $domain) {
+                if (isset($linkMasks[$domain])) {
+                    foreach ($linkMasks[$domain] as $linkMask) {
+                        $query->orWhere('links.registrar', $linkMask);
+                    }
+                }
+            }
+        });
+
+        $modelManual->where('links.status', ModelLink::STATUS_NOT_PROCESSED)->select('domains.*');
+        $result = $modelManual->first();
+        if (empty($result)) {
+            return [];
+        }
+        return ['id' => $result->id, 'domain' => $result->domain];
+    }
+
     public static function linkPrepareData($fio, $email, $title, $text, $domains, $isSkip = false)
     {
         $linkMasks = Link::getMasks();
@@ -18,21 +80,22 @@ class Random
         ->where('domains.status', Domain::STATUS_NOT_PROCESSED);
         $domains = empty($domains) && $isSkip ? (array) key(Email::getMasks()) : $domains;
 
-
-        if (in_array('other', $domains, true)) {
-            foreach ($linkMasks as $linkMask) {
-                foreach ($linkMask as $item) {
-                    $modelLink->where('links.registrar', 'not like', $item);
+        $modelLink->where(function ($query) use ($domains, $linkMasks) {
+            if (in_array('other', $domains, true)) {
+                foreach ($linkMasks as $linkMask) {
+                    foreach ($linkMask as $item) {
+                        $query->where('links.registrar', 'not like', $item);
+                    }
                 }
             }
-        }
-        foreach ($domains as $domain) {
-            if (isset($linkMasks[$domain])) {
-                foreach ($linkMasks[$domain] as $linkMask) {
-                    $modelLink->orWhere('links.registrar', $linkMask);
+            foreach ($domains as $domain) {
+                if (isset($linkMasks[$domain])) {
+                    foreach ($linkMasks[$domain] as $linkMask) {
+                        $query->orWhere('links.registrar', $linkMask);
+                    }
                 }
             }
-        }
+        });
 
         $modelLink->where('links.status', ModelLink::STATUS_NOT_PROCESSED)->select('domains.*', 'links.*');
 
@@ -74,36 +137,36 @@ class Random
 
     public static function emailPrepareData($text, $title, $edomain, $tic, $isSkip)
     {
-        $pattern = '';
         $emailMasks = Email::getMasks();
+
+        $modelEmail = DB::table('emails')
+            ->join('domains', 'domains.id', '=', 'emails.domain_id')
+            ->where('domains.status', Domain::STATUS_NOT_PROCESSED)
+            ->where('domains.type', Domain::TYPE_EMAIL)
+            ->where('emails.is_valid', \App\Models\Email::STATUS_VALID);
+
         $edomain = empty($edomain) && $isSkip ? (array) key(Email::getMasks()) : $edomain;
 
-        foreach ($edomain as $domain) {
-            if (isset($emailMasks[$domain])) {
-                foreach ($emailMasks[$domain] as $pat)
-                    $pattern .= 'LIKE \'%' . $pat . '\' OR e.email ';
-            }
-            if ($domain === 'other') {
-                $need = false;
-                if (!empty($pattern)) {
-                    $pattern = substr($pattern, 0, -12);
-                    $pattern .= ' OR (e.email ';
-                    $need = true;
-                }
-                foreach ($emailMasks as $pat)
-                    foreach ($pat as $p) {
-                        $pattern .= 'NOT LIKE \'%' . $p . '\' AND e.email ';
+        $modelEmail->where(function ($query) use ($edomain, $emailMasks) {
+            if (in_array('other', $edomain, true)) {
+                foreach ($emailMasks as $emailMask) {
+                    foreach ($emailMask as $item) {
+                        $query->where('emails.email', 'not like', '%' . $item);
                     }
-                $pattern = substr($pattern, 0, -13);
-                if ($need) $pattern .= ')';
-
+                }
             }
-        }
-        if (!empty($pattern) && !in_array('other', $edomain)) $pattern = substr($pattern, 0, -12);
+            foreach ($edomain as $domain) {
+                if (isset($emailMasks[$domain])) {
+                    foreach ($emailMasks[$domain] as $emailMask) {
+                        $query->orWhere('emails.email', 'like', '%' . $emailMask);
+                    }
+                }
+            }
+        });
 
-        $results = DB::select('SELECT d.status, e.email, d.domain from domains as d RIGHT JOIN emails as e ON d.id = e.domain_id WHERE e.is_valid = 1 AND d.tic ' . ($tic > 1 ? ' = ' : ' > ') . ' ? AND d.status = 0 AND (e.email ' . $pattern . ');', [$tic]);
-        $count = count($results);
-        $results = reset($results);
+
+        $count = count($modelEmail->count());
+        $results = $modelEmail->first();;
 
         if (!empty($results) || $isSkip) {
             if (!$isSkip) {

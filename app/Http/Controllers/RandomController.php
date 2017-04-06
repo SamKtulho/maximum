@@ -102,4 +102,53 @@ class RandomController extends Controller
 
         return response()->json(['response' => $data]);
     }
+
+    public function manualDomain(Request $request)
+    {
+        $title = $request->get('title');
+        $content = $request->get('content');
+        $domain = $request->get('ldomain');
+        $fio = $request->get('fio');
+        $email = $request->get('email');
+        $isSkip = (bool) $request->get('skip', false);
+        $isSave = (bool) $request->get('saveTemplate', false);
+
+        if ($isSave) {
+            $linkTemplate = Template::where('type', Template::TYPE_MANUAL)->first();
+            if (!$linkTemplate) {
+                $linkTemplate = new Template();
+                $linkTemplate->type = Template::TYPE_MANUAL;
+            }
+            $linkTemplate->template = serialize(['title' => $title, 'content' => $content, 'fio' => $fio, 'email' => $email]);
+            $linkTemplate->save();
+            return response()->json(['response' => 'Сохранено']);
+        }
+
+        if ((!$domain && !$isSkip)) {
+            return response()->json(['error' => 'Выберите хотябы 1 регистратора!']);
+        }
+
+        $data = Random::getNextDomain($domain, $isSkip);
+
+        return response()->json(['response' => $data]);
+    }
+
+    public function manualStore(Request $request)
+    {
+        $title = $request->get('title');
+        $content = $request->get('content');
+        $domain = $request->get('ldomain');
+        $fio = $request->get('fio');
+        $email = $request->get('email');
+        $isSkip = (bool) $request->get('skip', false);
+        $domainId = $request->get('id', null);
+
+        if (!$title || !$content || !$fio || !$email || (!$domain && !$isSkip)) {
+            return response()->json(['error' => 'Введите заголовок, текст письма, ФИО, email и хотябы 1 регистратор!']);
+        }
+
+        $data = Random::manualGenText($fio, $email, $title, $content, $domainId, $isSkip);
+
+        return response()->json(['response' => $data]);
+    }
 }

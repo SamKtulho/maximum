@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Link;
 use App\Models\Domain;
 use App\Models\Shorturl;
-
+use Yajra\Datatables\Datatables;
 
 class LinkController extends Controller
 {
@@ -65,10 +65,21 @@ class LinkController extends Controller
         $request->session()->flash('alert-success', 'Готово. Успешно ' . $successCount . ' линков. С ошибкой ' . $errorsCount . ' линков.');
         return redirect('/link/create');
     }
+    
+    public function data(Datatables $datatables)
+    {
+        $query = Shorturl::with('user')->with('domain')->with('urlstats')->select('shorturls.*')->where('type', Shorturl::TYPE_REGISTRAR);
+
+        return $datatables->eloquent($query)
+            ->addColumn('stat', function ($shorturl) {
+                return isset($shorturl->urlstats[0]) ? unserialize($shorturl->urlstats[0]->stat)['allTime']['shortUrlClicks'] : '?';
+            })
+            ->make(true);
+    }
+
     public function statistic()
     {
-        $shortUrls = Shorturl::where('type', Shorturl::TYPE_REGISTRAR)->get();
-        return view('link.statistic', ['shortUrls' => $shortUrls]);
+        return view('link.statistic', ['shortUrls' => []]);
     }
 
     public function count()

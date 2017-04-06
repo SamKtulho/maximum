@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Link;
 use Illuminate\Http\Request;
 use App\Models\Domain;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,7 @@ class ModeratorController extends Controller
         if ($vote && $domainId) {
             $domain = Domain::find($domainId);
             if ($domain) {
-                $domain->status = $vote === self::VOTE_YES ? Domain::STATUS_NOT_PROCESSED : Domain::STATUS_BAD;
+                $domain->status = $vote === self::VOTE_YES ? Domain::STATUS_MANUAL_CHECK : Domain::STATUS_BAD;
                 $domain->save();
             }
         }
@@ -48,7 +49,8 @@ class ModeratorController extends Controller
             ->join('links', 'domains.id', '=', 'links.domain_id')
             ->where('domains.status', Domain::STATUS_MODERATE)
             ->where('domains.type', Domain::TYPE_LINK)
-            ->where('links.status', 0)
+            ->where('links.status', Link::STATUS_NOT_PROCESSED)
+            ->whereNotNull('links.registrar')
             ->select('domains.*', 'links.registrar');
 
         $domain = $domainDB->first();

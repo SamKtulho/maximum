@@ -5,27 +5,14 @@ namespace App\Services;
 use App\Models\Domain;
 use Illuminate\Support\Facades\DB;
 
-class Link
+class Manual
 {
-    private static $masks = [
-        'regru' => ['reg.ru'],
-        'nicru' => ['nic.ru'],
-    ];
-
-    /**
-     * @return array
-     */
-    public static function getMasks()
-    {
-        return self::$masks;
-    }
-
     public static function getLinksCount()
     {
         $allCount = 0;
 
         $allLinks = \App\Models\Link::where('status', \App\Models\Link::STATUS_NOT_PROCESSED)->whereNotNull('registrar')->with(['domain'=> function ($query) {
-            $query->where('status', Domain::STATUS_NOT_PROCESSED);
+            $query->where('status', Domain::STATUS_MANUAL_CHECK);
         }])->get();
 
         foreach ($allLinks as $link) {
@@ -36,10 +23,10 @@ class Link
 
         $result = [];
         $count = 0;
-        foreach (self::$masks as $title => $masks) {
+        foreach (\App\Services\Link::getMasks() as $title => $masks) {
             $model = DB::table('links')
                 ->join('domains', 'domains.id', '=', 'links.domain_id')
-                ->where('domains.status', Domain::STATUS_NOT_PROCESSED)
+                ->where('domains.status', Domain::STATUS_MANUAL_CHECK)
                 ->where('domains.type', Domain::TYPE_LINK)
                 ->where('links.status', \App\Models\Link::STATUS_NOT_PROCESSED)
                 ->where(function ($query) use ($masks) {
