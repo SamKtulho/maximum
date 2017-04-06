@@ -101,7 +101,7 @@
                     <p><div id="domain"></div></p>
                     <p><div id="fio"></div></p>
                     <p><div id="email"></div></p>
-                    <div id="link"></div>
+                    <div id="our_link"></div>
                     <hr>
                     <h4></h4>
                     <p>

@@ -43,7 +43,7 @@ $( document ).ready(function() {
                 $( "#result #fio" ).html( clear ? '' : data.response.fio );
                 $( "#result #domain" ).html( clear ? '' : data.response.domain );
                 $( "#result #email" ).html( clear ? '' : data.response.email );
-                $( "#result #link" ).html( clear ? '' : 'http://wapmaximum.ru' );
+                $( "#result #our_link" ).html( clear ? '' : 'http://wapmaximum.ru' );
                 $( "#result h4" ).html( clear ? '' : data.response.title );
                 $( "#result #body" ).html( clear ? '' : data.response.text );
             }
@@ -77,7 +77,7 @@ $( document ).ready(function() {
                 $( "#result #fio" ).html('');
                 $( "#result #domain" ).html('');
                 $( "#result #email" ).html('');
-                $( "#result #link" ).html('');
+                $( "#result #our_link" ).html('');
                 $( "#result h4" ).html('');
                 $( "#result #body" ).html('');
             }
