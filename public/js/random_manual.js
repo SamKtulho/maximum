@@ -64,22 +64,19 @@ $( document ).ready(function() {
             } else {
                 $('.flash-message').removeClass('alert alert-danger');
                 $(".flash-message p" ).html('');
-
                 if (data.response.domain != undefined) {
                     $('#preresult .action-buttons').removeClass('hide');
                     $('#preresult #domain_id').val(data.response.id);
                     $("#preresult #domain_link" ).html( '<a target="_blank" href="//' + data.response.domain + '">' + data.response.domain + '</a>' );
                 } else {
                     $("#preresult #domain_link" ).html('');
-
                 }
-
-                $( "#result #fio" ).html('');
-                $( "#result #domain" ).html('');
-                $( "#result #email" ).html('');
-                $( "#result #our_link" ).html('');
-                $( "#result h4" ).html('');
-                $( "#result #body" ).html('');
+                var clear = !data.response.fio;
+                $( "#result #fio" ).html( clear ? '' : data.response.fio );
+                $( "#result #domain" ).html( clear ? '' : data.response.domain );
+                $( "#result #email" ).html( clear ? '' : data.response.email );
+                $( "#result h4" ).html( clear ? '' : data.response.title );
+                $( "#result #body" ).html( clear ? '' : data.response.text );
             }
         });
     }

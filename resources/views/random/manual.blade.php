@@ -66,7 +66,7 @@
                         </label>
                         <span style="margin-left: 20px;"></span>
 
-                        <label class="form-check-label">
+                        <label class="form-check-label hide">
                             {!! Form::checkbox('skip', 'skip', false, ['class' => 'form-check-input']) !!}
                             Холостой прогон
                         </label>
@@ -89,8 +89,6 @@
                     <div class="form-group text-center action-buttons hide">
                         {!! Form::button('Контакты не найдены', ['class'=>'btn btn-danger btn-not-found', 'value' => 1]) !!}
                         {!! Form::hidden('domain_id', null, ['id' => 'domain_id']) !!}
-                        <span class="hor20 text-muted counter"></span>
-                        {!! Form::button('Создать текст письма', ['class'=>'btn btn-success btn-text-gen', 'value' => 2]) !!}
                         <span class="text-muted registrar"></span>
 
                     </div>
@@ -100,8 +98,7 @@
                     <div id="link"></div>
                     <p><div id="domain"></div></p>
                     <p><div id="fio"></div></p>
-                    <p><div id="email"></div></p>
-                    <div id="our_link"></div>
+                    <div id="email"></div>
                     <hr>
                     <h4></h4>
                     <p>

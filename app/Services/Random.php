@@ -10,8 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class Random
 {
-    public static function manualGenText($fio, $email, $title, $text, $domainId, $isSkip = false)
+    public static function manualGenText($fio, $email, $title, $text, $domains, $isSkip = false)
     {
+        list($domainId, $domain) = self::getNextDomain($domains, $isSkip);
+
+        if (!$domainId) {
+            return [];
+        }
         $storedDomain = $isSkip ? '' : Domain::find($domainId);
         if (!$isSkip) {
             $storedDomain->status = Domain::STATUS_PROCESSED;
@@ -21,10 +26,10 @@ class Random
             $storedDomain->save();
         }
 
-        $fioRand = new TextRandomizer($fio, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
-        $emailRand = new TextRandomizer($email, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
-        $tRand = new TextRandomizer($text, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
-        $titleRand = new TextRandomizer($title, ($isSkip ? date('dmY') . '.com' : $storedDomain->domain));
+        $fioRand = new TextRandomizer($fio, ($isSkip ? date('dmY') . '.com' : $domain));
+        $emailRand = new TextRandomizer($email, ($isSkip ? date('dmY') . '.com' : $domain));
+        $tRand = new TextRandomizer($text, ($isSkip ? date('dmY') . '.com' : $domain));
+        $titleRand = new TextRandomizer($title, ($isSkip ? date('dmY') . '.com' : $domain));
 
 
         if (!$isSkip && !empty($storedDomain)) {
@@ -36,7 +41,7 @@ class Random
             $shortUrl->save();
         }
 
-        return (['fio' => $fioRand->getText(), 'email' => $emailRand->getText(), 'text' => $tRand->getText(), 'title' => ($titleRand ? $titleRand->getText() : ''), 'domain' => ($isSkip ? date('dmY') . '.com' : $storedDomain->domain)]);
+        return (['fio' => $fioRand->getText(), 'email' => $emailRand->getText(), 'text' => $tRand->getText(), 'title' => ($titleRand ? $titleRand->getText() : ''), 'domain' => ($isSkip ? date('dmY') . '.com' : $domain), 'id' => $domainId]);
     }
     
     public static function getNextDomain($domains, $isSkip = false)
@@ -67,9 +72,9 @@ class Random
         $modelManual->where('links.status', ModelLink::STATUS_NOT_PROCESSED)->select('domains.*');
         $result = $modelManual->first();
         if (empty($result)) {
-            return [];
+            return [0, ''];
         }
-        return ['id' => $result->id, 'domain' => $result->domain];
+        return [$result->id, $result->domain];
     }
 
     public static function linkPrepareData($fio, $email, $title, $text, $domains, $isSkip = false)

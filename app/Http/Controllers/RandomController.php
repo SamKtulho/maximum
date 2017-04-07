@@ -123,12 +123,11 @@ class RandomController extends Controller
             $linkTemplate->save();
             return response()->json(['response' => 'Сохранено']);
         }
-
-        if ((!$domain && !$isSkip)) {
-            return response()->json(['error' => 'Выберите хотябы 1 регистратора!']);
+        if (!$title || !$content || !$fio || !$email || (!$domain && !$isSkip)) {
+            return response()->json(['error' => 'Введите заголовок, текст письма, ФИО, email и хотябы 1 регистратор!']);
         }
 
-        $data = Random::getNextDomain($domain, $isSkip);
+        $data = Random::manualGenText($fio, $email, $title, $content, $domain, $isSkip);
 
         return response()->json(['response' => $data]);
     }
