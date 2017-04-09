@@ -134,6 +134,8 @@ class ProcessDomain extends Command
                         continue;
                     }
                 } elseif ($isSubdomainExclude || substr_count($domainModel->domain, '.') === 1) {
+                    $domainModel->type = Domain::TYPE_EMAIL;
+
                     $result = [];
                     $client = new Client();
                     try {
@@ -179,18 +181,16 @@ class ProcessDomain extends Command
                         $emailModel->is_valid = Email::STATUS_VALID;
                         try {
                             $emailModel->save();
-                            $domainModel->type = Domain::TYPE_EMAIL;
-                            $domainModel->save();
                             $this->info('Email ' . $email);
 
                         } catch (\Exception $e) {
                             continue;
                         }
                     } elseif (!$email) {
-                        $domainModel->type = Domain::TYPE_EMAIL;
                         $domainModel->status = Domain::STATUS_EMAIL_NOT_FOUND;
-                        $domainModel->save();
                     }
+                    $domainModel->save();
+
                 } else {
                     try {
                         $domainModel->type = Domain::TYPE_SUBDOMAIN;
