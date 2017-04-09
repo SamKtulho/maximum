@@ -98,7 +98,7 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="/moderator/emails">Модератор</a>
+                                        <a href="/moderator/links">Модератор</a>
                                     </li>
                                     <li>
                                         <a href="/random/manual">Поиск контактов</a>
