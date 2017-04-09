@@ -55,15 +55,22 @@ class ProcessDomain extends Command
         'registry@vegatele.com'
     ];
 
-    private $excludeForSudomains = [
+    private $subdomainToEmail = [
         '\.com\.ru',
+        '\.nov\.ru',
     ];
+
+    private $subdomainToLink = [
+        '\.net\.ru',
+        '\.org\.ru',
+    ];
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'domain:process';
+    protected $signature = 'domains:process';
 
     /**
      * The console command description.
@@ -90,17 +97,25 @@ class ProcessDomain extends Command
     public function handle()
     {
         Domain::where('type', Domain::TYPE_UNKNOWN)->chunk(200, function ($domains) {
-            $excludeSubdomainsPattern = '~';
-            foreach ($this->excludeForSudomains as $id => $pattern) {
-                $excludeSubdomainsPattern .= $id ? '|(' . $pattern . ')' : '(' . $pattern . ')';
+            $subdomainToEmailPattern = '~';
+            foreach ($this->subdomainToEmail as $id => $pattern) {
+                $subdomainToEmailPattern .= $id ? '|(' . $pattern . ')' : '(' . $pattern . ')';
             }
-            $excludeSubdomainsPattern .= '~';
+            $subdomainToEmailPattern .= '~';
+
+            $subdomainToLinkPattern = '~';
+            foreach ($this->subdomainToLink as $id => $pattern) {
+                $subdomainToLinkPattern .= $id ? '|(' . $pattern . ')' : '(' . $pattern . ')';
+            }
+            $subdomainToLinkPattern .= '~';
 
             foreach ($domains as $domainModel) {
                 $this->info($domainModel->domain);
                 $isSubdomainExclude = false;
-                if (preg_match('~(\.ru)$|(\.рф)$~', $domainModel->domain)
-                    && !($isSubdomainExclude = preg_match($excludeSubdomainsPattern, $domainModel->domain))
+                if ((substr_count($domainModel->domain, '.') === 1
+                        || preg_match($subdomainToLinkPattern, $domainModel->domain))
+                    && preg_match('~(\.ru)$|(\.рф)$~', $domainModel->domain)
+                    && !($isSubdomainExclude = preg_match($subdomainToEmailPattern, $domainModel->domain))
                 ) {
                     $link = new Link();
                     $link->link = 'https://www.reg.ru/whois/admin_contact?dname=' . urlencode(iconv('utf-8', 'windows-1251', $domainModel->domain));
