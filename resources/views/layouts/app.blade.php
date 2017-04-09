@@ -68,7 +68,7 @@
                                         <a href="/moderator/emails">Модератор</a>
                                     </li>
                                     <li>
-                                        <a href="/random/email">Генератор</a>
+                                        <a href="/random/email">Отправка</a>
                                     </li>
                                     <li>
                                         <a href="/email/statistic">Статистика</a>
@@ -104,7 +104,7 @@
                                         <a href="/random/manual">Поиск контактов</a>
                                     </li>
                                     <li>
-                                        <a href="/random/link">Генератор</a>
+                                        <a href="/random/link">Отправка</a>
                                     </li>
                                     <li>
                                         <a href="/link/statistic">Статистика</a>
