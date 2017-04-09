@@ -54,6 +54,7 @@ class ProcessDomain extends Command
         'contact@privacyprotect.org',
         'registry@vegatele.com',
         '@contact.gand',
+        '@private.desi',
     ];
 
     private $subdomainToEmail = [
