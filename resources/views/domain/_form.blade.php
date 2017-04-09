@@ -1,7 +1,7 @@
 
 <div class="form-group">
-    {!! Form::label('content') !!} (добавлять в формате example.com mail@mail.ru,mail2@gamil.com)
-    {!! Form::textarea('content', null, ['class'=>'form-control', 'placeholder' => "example.com mail@mail.ru,mail2@gamil.com\ndomen2.com vasya@pupkin.net"] ) !!}
+    {!! Form::label('content') !!} (добавлять в формате example.com)
+    {!! Form::textarea('content', null, ['class'=>'form-control', 'placeholder' => "example.com \ndomen2.com"] ) !!}
 </div>
 
 <div class="form-group">

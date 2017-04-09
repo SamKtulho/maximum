@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\GetStatistic::class,
         Commands\ParseLinks::class,
         Commands\AddDomainType::class,
+        Commands\ProcessDomain::class,
     ];
 
     /**

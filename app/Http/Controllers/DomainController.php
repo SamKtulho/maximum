@@ -37,6 +37,47 @@ class DomainController extends Controller
 
         $errorsCount = $successCount = 0;
         foreach ($content as $string) {
+            $domainString = trim($string);
+            if (!$domainString) continue;
+            $domain = new Domain;
+            $domain->domain = $domainString;
+            $domain->tic = (int) $request->get('tic', 10);
+            $domain->source = $request->get('source', null);
+            $domain->status = Domain::STATUS_MODERATE;
+            $domain->type = Domain::TYPE_UNKNOWN;
+
+            try {
+                if ($domain->save()) {
+                    ++$successCount;
+                }
+            } catch (\Exception $e) {
+                ++$errorsCount;
+                continue;
+            }
+        }
+
+        if ($successCount) {
+            $request->session()->flash('alert-success', 'Успешно добавлено ' . $successCount . ' доменов.');
+        }
+
+        if ($errorsCount) {
+            $request->session()->flash('alert-danger', 'С ошибкой ' . $errorsCount . ' доменов.');
+        }
+
+        return redirect('/domain/create');
+    }
+
+    public function _OLD_store(Request $request)
+    {
+        $content = $request->get('content', null);
+        if (empty($content)) {
+            $request->session()->flash('alert-warning', 'Пустой контент');
+            return back();
+        }
+        $content = explode(PHP_EOL, $content);
+
+        $errorsCount = $successCount = 0;
+        foreach ($content as $string) {
             $string = trim($string);
             $domainString = trim(strstr($string, ' ', true));
             if (!$domainString) continue;

@@ -46,34 +46,29 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         @if (!Auth::guest())
-
-                            <li class="dropdown {{ (Request::is('random.email') ? ' active' : '') }}">
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    Генератор<span class="caret"></span>
+                                    Домены<span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="/random/manual">Поиск контактов</a>
-                                    </li>
-                                    <li>
-                                        <a href="/random/email">Письма</a>
-                                    </li>
-                                    <li>
-                                        <a href="/random/link">Ссылки</a>
+                                        <a href="/domain/create">Добавить новые</a>
                                     </li>
                                 </ul>
                             </li>
 
-
-                            <li class="dropdown {{ (Request::is('random.email') ? ' active' : '') }}">
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Письма<span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="/domain/create">Добавить Email'ы</a>
+                                        <a href="/moderator/emails">Модератор</a>
+                                    </li>
+                                    <li>
+                                        <a href="/random/email">Генератор</a>
                                     </li>
                                     <li>
                                         <a href="/email/statistic">Статистика</a>
@@ -81,32 +76,38 @@
                                 </ul>
                             </li>
 
-                            <li class="dropdown {{ (Request::is('random.email') ? ' active' : '') }}">
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    Ссылки<span class="caret"></span>
+                                    Субдомены<span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="/link/create">Добавить ссылки</a>
+                                        <a href="/moderator/subdomains">Модератор</a>
                                     </li>
                                     <li>
-                                        <a href="/link/statistic">Статистика</a>
+                                        <a href="/random/subdomains">Поиск контактов</a>
                                     </li>
                                 </ul>
                             </li>
 
-                            <li class="dropdown {{ (Request::is('random.email') ? ' active' : '') }}">
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    Я Модератор<span class="caret"></span>
+                                    Регистраторы<span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="/moderator/emails">Письма</a>
+                                        <a href="/moderator/emails">Модератор</a>
                                     </li>
                                     <li>
-                                        <a href="/moderator/links">Ссылки</a>
+                                        <a href="/random/manual">Поиск контактов</a>
+                                    </li>
+                                    <li>
+                                        <a href="/random/link">Генератор</a>
+                                    </li>
+                                    <li>
+                                        <a href="/link/statistic">Статистика</a>
                                     </li>
                                 </ul>
                             </li>
