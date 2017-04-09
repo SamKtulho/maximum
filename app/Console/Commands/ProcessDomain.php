@@ -52,7 +52,8 @@ class ProcessDomain extends Command
         'Rating@Mail.ru',
         'info@uahosting.com',
         'contact@privacyprotect.org',
-        'registry@vegatele.com'
+        'registry@vegatele.com',
+        '@contact.gand',
     ];
 
     private $subdomainToEmail = [
