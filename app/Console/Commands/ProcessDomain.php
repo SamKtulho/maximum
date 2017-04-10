@@ -173,7 +173,7 @@ class ProcessDomain extends Command
 
                         }
                     }
-                    $email = reset($result);
+                    $email = strtolower(reset($result));
                     if ($email && !Email::where('email', $email)->first()) {
                         $emailModel = new Email();
                         $emailModel->email = $email;
