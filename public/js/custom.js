@@ -100,7 +100,7 @@ $( document ).ready(function() {
                         $('#link').attr("href", '//' + domain.domain);
                         $('#link').html(domain.domain);
                         $('.counter').html(count);
-                        $('.registrar').html('(' + domain.registrar + ')');
+                        $('.registrar').html('(' + domain.registrar + ') - ' +  domain.source);
                     }
                 }
             });
@@ -131,7 +131,7 @@ $( document ).ready(function() {
                             $('iframe').attr("src", '//' + domain.domain);
                             $('#link').attr("href", '//' + domain.domain);
                             $('#link').html(domain.domain);
-                            $('.email').html('(' + domain.email + ')');
+                            $('.email').html('(' + domain.email + ') - ' + domain.source);
                         } else {
                             $('#link').attr("href", '#');
                             $('#link').html('');
