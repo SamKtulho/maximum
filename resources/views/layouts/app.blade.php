@@ -146,6 +146,10 @@
             </div>
         </nav>
 
+        <div id="page_title">
+            {{ $title ?? '' }}
+        </div>
+
         @yield('content')
 
     </div>

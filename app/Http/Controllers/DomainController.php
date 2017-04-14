@@ -11,6 +11,7 @@ use GuzzleHttp\Psr7;
 
 class DomainController extends Controller
 {
+    private $title = 'Домены';
     /**
      * Create a new controller instance.
      *
@@ -23,7 +24,7 @@ class DomainController extends Controller
     
     public function create()
     {
-        return view('domain.create');
+        return view('domain.create', ['title' => $this->title . ' -> добавить']);
     }
 
     public function store(Request $request)
@@ -37,7 +38,7 @@ class DomainController extends Controller
 
         $errorsCount = $successCount = 0;
         foreach ($content as $string) {
-            $domainString = trim($string);
+            $domainString = trim(strtolower($string));
             if (!$domainString) continue;
             $domain = new Domain;
             $domain->domain = $domainString;

@@ -20,7 +20,7 @@ class RandomController extends Controller
         if ($emailTemplate) {
             $template = unserialize($emailTemplate->template);
         }
-        return view('random.email', ['template' => $template]);
+        return view('random.email', ['template' => $template, 'title' => 'Письма -> отправка']);
     }
 
     public function link(Request $request)
@@ -30,7 +30,7 @@ class RandomController extends Controller
         if ($linkTemplate) {
             $template = unserialize($linkTemplate->template);
         }
-        return view('random.link', ['template' => $template]);
+        return view('random.link', ['template' => $template, 'title' => 'Регистраторы -> отправка']);
     }
 
     public function manual(Request $request)
@@ -40,7 +40,7 @@ class RandomController extends Controller
         if ($linkTemplate) {
             $template = unserialize($linkTemplate->template);
         }
-        return view('random.manual', ['template' => $template]);
+        return view('random.manual', ['template' => $template, 'title' => 'Регистраторы -> поиск контактов']);
     }
 
     public function emailStore(Request $request)

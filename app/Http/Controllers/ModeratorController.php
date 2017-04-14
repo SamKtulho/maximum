@@ -26,12 +26,12 @@ class ModeratorController extends Controller
 
     public function link()
     {
-        return view('moderator.link');
+        return view('moderator.link', ['title' => 'Регистраторы -> модератор']);
     }
 
     public function email()
     {
-        return view('moderator.email');
+        return view('moderator.email', ['title' => 'Письма -> модератор']);
     }
 
     public function vote(Request $request)
