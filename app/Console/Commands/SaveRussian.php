@@ -47,6 +47,10 @@ class SaveRussian extends Command
 
                 $this->info($domainModel->domain);
 
+                if (strpos($domainModel->domain, '.ru') !== false) {
+                    continue;
+                }
+
                 $client = new Client();
                 try {
                     $response = $client->request('GET', $domainModel->domain,
