@@ -45,7 +45,7 @@ class SaveRussian extends Command
             foreach ($domains as $domainModel) {
                 file_put_contents('maxid', $domainModel->id);
 
-                $this->info($domainModel->domain);
+                $this->info($domainModel->domain = 'fungood.in');
 
                 $client = new Client();
                 try {
@@ -65,11 +65,11 @@ class SaveRussian extends Command
                 }
 
                 if ($responseBody = $request->getBody()) {
-                    if (!preg_match('~[А-Яа-я]{2,}~u', $responseBody)) {
+                    if (preg_match('~[А-Яа-я]+~u', $responseBody)) {
+                        $this->info('OK');
+                    } else {
                         $this->error('Drop!');
                         $domainModel->status = Domain::STATUS_BAD;
-                    } else {
-                        $this->info('OK');
                     }
                 }
             }
