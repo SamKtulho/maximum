@@ -45,7 +45,7 @@ class SaveRussian extends Command
             foreach ($domains as $domainModel) {
                 file_put_contents('maxid', $domainModel->id);
 
-                $this->info($domainModel->domain);
+                $this->info($domainModel->domain = 'archaeology.kiev.ua');
 
                 if (strpos($domainModel->domain, '.ru') !== false) {
                     continue;
@@ -56,11 +56,14 @@ class SaveRussian extends Command
                     $response = $client->request('GET', $domainModel->domain,
                         ['allow_redirects' => [
                             'max'             => 4,
-                            'strict'          => true,
-                            'referer'         => true,
-                            'track_redirects' => true
+                            'strict'          => false,
+                            'referer'         => false,
+                            'protocols'       => ['http', 'https'],
+                            'track_redirects' => false,
                         ],
-                            'connect_timeout' => 10
+                            'connect_timeout' => 10,
+                            //'version' => 1.0,
+                            'timeout' => 10
                         ]
                     );
                 } catch (\Exception $e) {
@@ -69,7 +72,8 @@ class SaveRussian extends Command
                 }
 
                 $header = $response->getHeader('content-type');
-//dd($header);
+dd($header);
+dd((string) $response->getBody());
                 if ($responseBody = $response->getBody()) {
                     if (strtolower(reset($header)) === 'text/html'
                         || strpos(strtolower(reset($header)), '1251') !== false
