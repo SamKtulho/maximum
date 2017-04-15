@@ -65,7 +65,7 @@ class SaveRussian extends Command
                 }
 
                 if ($responseBody = $request->getBody()) {
-                    if (!preg_match('~[а-яА-Я]+~', $responseBody)) {
+                    if (!preg_match('~[А-Яа-я]{2,}~u', $responseBody)) {
                         $this->error('Drop!');
                         $domainModel->status = Domain::STATUS_BAD;
                     } else {
