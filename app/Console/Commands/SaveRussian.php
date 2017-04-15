@@ -49,7 +49,7 @@ class SaveRussian extends Command
 
                 $client = new Client();
                 try {
-                    $request = $client->request('GET', $domainModel->domain,
+                    $response = $client->request('GET', $domainModel->domain,
                         ['allow_redirects' => [
                             'max'             => 4,
                             'strict'          => true,
@@ -64,8 +64,11 @@ class SaveRussian extends Command
                     continue;
                 }
 
-                if ($responseBody = $request->getBody()) {
-                    if (preg_match('~[А-Яа-я]+~u', $responseBody)) {
+                $header = $response->getHeader('content-type');
+                if ($responseBody = $response->getBody()) {
+                    if (strpos(strtolower(reset($header)), 'windows-1251') !== false
+                        || preg_match('~[А-Яа-я]+~u', (string) $responseBody))
+                    {
                         $this->info('OK');
                     } else {
                         $this->error('Drop!');
