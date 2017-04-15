@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\ParseLinks::class,
         Commands\AddDomainType::class,
         Commands\ProcessDomain::class,
+        Commands\SaveRussian::class,
     ];
 
     /**
