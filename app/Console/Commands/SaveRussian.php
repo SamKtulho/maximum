@@ -45,7 +45,7 @@ class SaveRussian extends Command
             foreach ($domains as $domainModel) {
                 file_put_contents('maxid', $domainModel->id);
 
-                $this->info($domainModel->domain = 'fungood.in');
+                $this->info($domainModel->domain);
 
                 $client = new Client();
                 try {
