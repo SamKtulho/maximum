@@ -79,6 +79,7 @@ class SaveRussian extends Command
                     } else {
                         $this->error('Drop!');
                         $domainModel->status = Domain::STATUS_BAD;
+                        $domainModel->save();
                     }
                 }
             }
