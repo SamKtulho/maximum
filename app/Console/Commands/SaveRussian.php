@@ -65,8 +65,10 @@ class SaveRussian extends Command
                 }
 
                 $header = $response->getHeader('content-type');
+
                 if ($responseBody = $response->getBody()) {
-                    if (strpos(strtolower(reset($header)), 'windows-1251') !== false
+                    if (strtolower(reset($header)) === 'text/html'
+                        || strpos(strtolower(reset($header)), 'windows-1251') !== false
                         || preg_match('~[А-Яа-я]+~u', (string) $responseBody))
                     {
                         $this->info('OK');
