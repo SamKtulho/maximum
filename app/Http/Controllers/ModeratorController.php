@@ -34,6 +34,11 @@ class ModeratorController extends Controller
         return view('moderator.email', ['title' => 'Письма -> модератор']);
     }
 
+    public function subdomain()
+    {
+        return view('moderator.subdomain', ['title' => 'Субдомены -> модератор']);
+    }
+
     public function vote(Request $request)
     {
         $vote = (int) $request->get('vote');
@@ -92,6 +97,35 @@ class ModeratorController extends Controller
             ->where('domains.type', Domain::TYPE_EMAIL)
             ->where('emails.is_valid', 1)
             ->select('domains.*', 'emails.email');
+
+        $domain = $domainDB->first();
+        $count = $domainDB->count();
+
+        return response()->json(['response' => ['domain' => $domain, 'count' => $count]]);
+    }
+
+    public function voteSubdomain(Request $request)
+    {
+        $vote = (int) $request->get('vote');
+        $domainId = (int) $request->get('domain_id');
+
+        if ($vote && $domainId) {
+            $domain = Domain::find($domainId);
+            if ($domain) {
+                $domain->status = $vote === self::VOTE_YES ? Domain::STATUS_MANUAL_CHECK : Domain::STATUS_BAD;
+                $domain->save();
+                $migrationLog = new ModerationLog();
+                $migrationLog->domain_id = $domainId;
+                $migrationLog->result = $vote === self::VOTE_YES ? ModerationLog::RESULT_YES : ModerationLog::RESULT_NO;
+                $migrationLog->type = ModerationLog::TYPE_SUBDOMAIN;
+                $migrationLog->user_id = Auth::user()->id;
+                $migrationLog->save();
+            }
+        }
+
+        $domainDB = DB::table('domains')
+            ->where('domains.status', Domain::STATUS_MODERATE)
+            ->where('domains.type', Domain::TYPE_SUBDOMAIN);
 
         $domain = $domainDB->first();
         $count = $domainDB->count();

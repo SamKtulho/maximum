@@ -76,16 +76,16 @@
                                 </ul>
                             </li>
 
-                            <li class="dropdown disabled">
-                                <a href="#" class="disabled dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Субдомены<span class="caret"></span>
                                 </a>
 
-                                <ul class="disabled dropdown-menu" role="menu">
+                                <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <a href="/moderator/subdomains">Модератор</a>
                                     </li>
-                                    <li>
+                                    <li class="disabled">
                                         <a href="/random/subdomains">Поиск контактов</a>
                                     </li>
                                 </ul>

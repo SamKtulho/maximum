@@ -7,8 +7,8 @@ table {
     word-break: break-all;
 }
 
-.moderator .btn-lg, .moderator_email .btn-lg {padding: 15px 45px;}
-.moderator .registrar, .moderator_email .email {position: absolute; margin: 15px 20px;}
+.moderator .btn-lg, .moderator_email .btn-lg, .moderator_subdomain .btn-lg {padding: 15px 45px;}
+.moderator .registrar, .moderator_email .email, .moderator_subdomain .registrar {position: absolute; margin: 15px 20px;}
 
 .back-button {margin-right: 15px;}
 
