@@ -41,7 +41,7 @@ class SaveRussian extends Command
     {
         $maxId = file_get_contents('maxid');
 
-        Domain::where('status', Domain::STATUS_MODERATE)->where('id', '>', $maxId)->chunk(200, function ($domains) {
+        Domain::where('status', Domain::STATUS_MODERATE)->where('id', '>', $maxId)->orderBy('id')->chunk(200, function ($domains) {
             foreach ($domains as $domainModel) {
                 file_put_contents('maxid', $domainModel->id);
 
@@ -75,10 +75,14 @@ class SaveRussian extends Command
 //dd($header);
 //dd((string) $response->getBody());
                 if ($responseBody = $response->getBody()) {
-                    if (strtolower(reset($header)) === 'text/html'
-                        || strpos(strtolower(reset($header)), '1251') !== false
-                        || preg_match('~[А-Яа-я]+~u', (string) $responseBody))
-                    {
+                    if (/*strtolower(reset($header)) === 'text/html'*/
+                        strpos(strtolower(reset($header)), '1251') !== false
+                        || preg_match('~[А-Яа-я]+~u', (string) $responseBody)
+                        || strpos((string) $responseBody, 'ws-1251') !== false
+                        || strpos((string) $responseBody, 'WS-1251') !== false
+                        || strpos((string) $responseBody, 'cp1251') !== false
+                        || strpos((string) $responseBody, 'CP1251') !== false
+                    ) {
                         $this->info('OK');
                     } else {
                         $this->error('Drop!');
