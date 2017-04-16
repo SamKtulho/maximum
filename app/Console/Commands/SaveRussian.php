@@ -45,7 +45,7 @@ class SaveRussian extends Command
             foreach ($domains as $domainModel) {
                 file_put_contents('maxid', $domainModel->id);
 
-                $this->info($domainModel->domain);
+                $this->info($domainModel->id . ' ' . $domainModel->domain . ' ' . $domainModel->source);
 
                 if (strpos($domainModel->domain, '.ru') !== false) {
                     continue;
