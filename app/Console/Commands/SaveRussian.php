@@ -82,6 +82,7 @@ class SaveRussian extends Command
                         || strpos((string) $responseBody, 'WS-1251') !== false
                         || strpos((string) $responseBody, 'cp1251') !== false
                         || strpos((string) $responseBody, 'CP1251') !== false
+                        || strpos((string) $responseBody, 'koi8-') !== false
                     ) {
                         $this->info('OK');
                     } else {
