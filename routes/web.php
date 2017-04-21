@@ -30,9 +30,11 @@ Route::get('/random/email', ['as' => 'random.email', 'uses' => 'RandomController
 Route::post('/random/email/store', ['as' => 'random.email.store', 'uses' => 'RandomController@emailStore']);
 Route::get('/random/link', ['as' => 'random.link', 'uses' => 'RandomController@link']);
 Route::post('/random/link/store', ['as' => 'random.link.store', 'uses' => 'RandomController@linkStore']);
-Route::get('/random/manual', ['as' => 'random.manual', 'uses' => 'RandomController@manual']);
-Route::post('/random/manualDomain', ['as' => 'random.manualDomain', 'uses' => 'RandomController@manualDomain']);
-Route::post('/random/manualStore', ['as' => 'random.manualStore', 'uses' => 'RandomController@manualStore']);
+Route::get('/random/manualDomain', ['as' => 'random.manualDomain', 'uses' => 'RandomController@manualDomain']);
+
+Route::post('/random/manualDomain/store', ['as' => 'random.manualDomain.store', 'uses' => 'RandomController@manualDomainStore']);
+Route::get('/random/manualSubdomain', ['as' => 'random.manualSubdomain', 'uses' => 'RandomController@manualSubdomain']);
+Route::post('/random/manualSubdomain/store', ['as' => 'random.manualSubdomain.store', 'uses' => 'RandomController@manualSubdomainStore']);
 
 Route::get('/email/statistic', 'EmailController@statistic');
 Route::post('/email/statistic/data', 'EmailController@data');
@@ -43,7 +45,11 @@ Route::post('/link/statistic/data', 'LinkController@data');
 Route::get('/link/count', 'LinkController@count');
 
 Route::get('/manual/count', 'ManualController@count');
+Route::get('/manualSubdomain/count', 'ManualController@subdomainCount');
 Route::post('/manual/notFound', 'ManualController@notFound');
+
+Route::get('/subdomain/statistic', 'SubdomainController@statistic');
+Route::post('/subdomain/statistic/data', 'SubdomainController@data');
 
 Route::post('/domain/back', 'DomainController@back')->name('domainBack');
 

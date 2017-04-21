@@ -8,5 +8,6 @@ class Template extends Model
 {
     const TYPE_EMAIL = 1;
     const TYPE_LINK = 2;
-    const TYPE_MANUAL = 3;
+    const TYPE_MANUAL_DOMAIN = 3;
+    const TYPE_MANUAL_SUBDOMAIN = 4;
 }

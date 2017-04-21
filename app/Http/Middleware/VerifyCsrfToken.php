@@ -14,5 +14,6 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         '/email/statistic/data',
         '/link/statistic/data',
+        '/subdomain/statistic/data',
     ];
 }

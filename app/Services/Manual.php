@@ -46,4 +46,16 @@ class Manual
         return $result;
     }
 
+    public static function getSubdomainsCount()
+    {
+        $model = DB::table('domains')
+            ->where('domains.status', Domain::STATUS_MANUAL_CHECK)
+            ->where('domains.type', Domain::TYPE_SUBDOMAIN)
+            ->select('domains.id');
+
+        $count = $model->count();
+
+        return $count;
+    }
+
 }

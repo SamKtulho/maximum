@@ -26,36 +26,12 @@ $( document ).ready(function() {
         });
     });
 
-    $('.btn-text-gen').click(function () {
-        $('#preresult .action-buttons').addClass('hide');
-        var data = $( "form" ).serializeArray();
-        data.push({'name': 'id', 'value': $('#preresult #domain_id').val()});
-        $.post( "/random/manualStore", data, function( data ) {
-            $('.main-button').prop('disabled', false);
-
-            if (data.error !== undefined) {
-                $ ('.flash-message').addClass('alert alert-danger');
-                $( ".flash-message p" ).html( data.error +  '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
-            } else {
-                $ ('.flash-message').removeClass('alert alert-danger');
-                $( ".flash-message p" ).html('');
-                var clear = !data.response.fio;
-                $( "#result #fio" ).html( clear ? '' : data.response.fio );
-                $( "#result #domain" ).html( clear ? '' : data.response.domain );
-                $( "#result #email" ).html( clear ? '' : data.response.email );
-                $( "#result #our_link" ).html( clear ? '' : 'http://wapmaximum.ru' );
-                $( "#result h4" ).html( clear ? '' : data.response.title );
-                $( "#result #body" ).html( clear ? '' : data.response.text );
-            }
-        });
-    });
-
     function getRandomManualData(addata) {
         var data = $( "form" ).serializeArray();
         if (addata) {
             data.push(addata);
         }
-        $.post( "/random/manualDomain", data, function( data ) {
+        $.post( "/random/manualDomain/store", data, function( data ) {
             $('.main-button').prop('disabled', false);
 
             if (data.error !== undefined) {
@@ -84,7 +60,7 @@ $( document ).ready(function() {
     $('.save-button').click(function () {
         var data = $( "form" ).serializeArray();
         data.push({'name':'saveTemplate', 'value':true});
-        $.post( "/random/manualDomain", data, function( data ) {
+        $.post( "/random/manualDomain/store", data, function( data ) {
             if (data.error !== undefined) {
                 $ ('.flash-message').addClass('alert alert-danger');
                 $( ".flash-message p" ).html( data.error +  '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');

@@ -2,13 +2,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container random-manual">
+    <div class="container random-manual-subdomain">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="flash-message">
                     <p class=""> </p>
                 </div> <!-- end .flash-message -->
-                {!! Form::open(['route' => 'random.manualDomain']) !!}
+                {!! Form::open(['route' => 'random.manualSubdomain']) !!}
                 <div class="vert25">
                     {!! Form::label('Настройки письма:') !!}
                     {!! Form::button('Показать', ['class'=>'btn btn-sm show-button']) !!}
@@ -47,24 +47,8 @@
 
                 <div class="form-group">
                     <div class="form-check">
-                        <label class="form-check-label">
-                            {!! Form::checkbox('ldomain[]', 'regru', false, ['class' => 'form-check-input']) !!}
-                            reg.ru
-                            <span title="Осталось" id="regru_count"></span>
-                        </label>
-                        <span style="margin-left: 12px;"></span>
-                        <label class="form-check-label">
-                            {!! Form::checkbox('ldomain[]', 'nicru', false, ['class' => 'form-check-input']) !!}
-                            nic.ru
-                            <span title="Осталось" id="nicru_count"></span>
-                        </label>
-                        <span style="margin-left: 12px;"></span>
-                        <label class="form-check-label">
-                            {!! Form::checkbox('ldomain[]', 'other', false, ['class' => 'form-check-input']) !!}
-                            Остальные
-                            <span title="Осталось" id="other_count"></span>
-                        </label>
-                        <span style="margin-left: 20px;"></span>
+                        Осталось
+                        <span title="Осталось" id="count"></span>
 
                         <label class="form-check-label hide">
                             {!! Form::checkbox('skip', 'skip', false, ['class' => 'form-check-input']) !!}
@@ -87,7 +71,6 @@
                         <p><div id="domain_link"></div></p>
                     </div>
                     <div class="form-group text-center action-buttons hide">
-                        {!! Form::button('Контакты не найдены', ['class'=>'btn btn-danger btn-not-found', 'value' => 1]) !!}
                         {!! Form::hidden('domain_id', null, ['id' => 'domain_id']) !!}
                         <span class="text-muted registrar"></span>
 
@@ -112,6 +95,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/random_manual_domain.js') }}"></script>
+    <script src="{{ asset('js/random_manual_subdomain.js') }}"></script>
 
 @endsection

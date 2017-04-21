@@ -85,8 +85,11 @@
                                     <li>
                                         <a href="/moderator/subdomains">Модератор</a>
                                     </li>
-                                    <li class="disabled">
-                                        <a href="/random/subdomains">Поиск контактов</a>
+                                    <li>
+                                        <a href="/random/manualSubdomain">Поиск контактов</a>
+                                    </li>
+                                    <li>
+                                        <a href="/subdomain/statistic">Статистика</a>
                                     </li>
                                 </ul>
                             </li>
@@ -101,7 +104,7 @@
                                         <a href="/moderator/links">Модератор</a>
                                     </li>
                                     <li>
-                                        <a href="/random/manual">Поиск контактов</a>
+                                        <a href="/random/manualDomain">Поиск контактов</a>
                                     </li>
                                     <li>
                                         <a href="/random/link">Отправка</a>

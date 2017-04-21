@@ -18,6 +18,11 @@ class ManualController extends Controller
     {
         return response()->json(['response' => \App\Services\Manual::getLinksCount()]);
     }
+    
+    public function subdomainCount()
+    {
+        return response()->json(['response' => \App\Services\Manual::getSubdomainsCount()]);
+    }
 
     public function notFound(Request $request)
     {

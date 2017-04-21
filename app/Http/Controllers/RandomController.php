@@ -33,14 +33,24 @@ class RandomController extends Controller
         return view('random.link', ['template' => $template, 'title' => 'Регистраторы -> отправка']);
     }
 
-    public function manual(Request $request)
+    public function manualDomain(Request $request)
     {
-        $linkTemplate = Template::where('type', Template::TYPE_MANUAL)->first();
+        $linkTemplate = Template::where('type', Template::TYPE_MANUAL_DOMAIN)->first();
         $template = [];
         if ($linkTemplate) {
             $template = unserialize($linkTemplate->template);
         }
         return view('random.manual', ['template' => $template, 'title' => 'Регистраторы -> поиск контактов']);
+    }
+
+    public function manualSubdomain(Request $request)
+    {
+        $linkTemplate = Template::where('type', Template::TYPE_MANUAL_SUBDOMAIN)->first();
+        $template = [];
+        if ($linkTemplate) {
+            $template = unserialize($linkTemplate->template);
+        }
+        return view('random.manualSubdomain', ['template' => $template, 'title' => 'Субдомены -> поиск контактов']);
     }
 
     public function emailStore(Request $request)
@@ -103,7 +113,7 @@ class RandomController extends Controller
         return response()->json(['response' => $data]);
     }
 
-    public function manualDomain(Request $request)
+    public function manualDomainStore(Request $request)
     {
         $title = $request->get('title');
         $content = $request->get('content');
@@ -114,10 +124,10 @@ class RandomController extends Controller
         $isSave = (bool) $request->get('saveTemplate', false);
 
         if ($isSave) {
-            $linkTemplate = Template::where('type', Template::TYPE_MANUAL)->first();
+            $linkTemplate = Template::where('type', Template::TYPE_MANUAL_DOMAIN)->first();
             if (!$linkTemplate) {
                 $linkTemplate = new Template();
-                $linkTemplate->type = Template::TYPE_MANUAL;
+                $linkTemplate->type = Template::TYPE_MANUAL_DOMAIN;
             }
             $linkTemplate->template = serialize(['title' => $title, 'content' => $content, 'fio' => $fio, 'email' => $email]);
             $linkTemplate->save();
@@ -132,21 +142,30 @@ class RandomController extends Controller
         return response()->json(['response' => $data]);
     }
 
-    public function manualStore(Request $request)
+    public function manualSubdomainStore(Request $request)
     {
         $title = $request->get('title');
         $content = $request->get('content');
-        $domain = $request->get('ldomain');
         $fio = $request->get('fio');
         $email = $request->get('email');
         $isSkip = (bool) $request->get('skip', false);
-        $domainId = $request->get('id', null);
+        $isSave = (bool) $request->get('saveTemplate', false);
 
-        if (!$title || !$content || !$fio || !$email || (!$domain && !$isSkip)) {
+        if ($isSave) {
+            $linkTemplate = Template::where('type', Template::TYPE_MANUAL_SUBDOMAIN)->first();
+            if (!$linkTemplate) {
+                $linkTemplate = new Template();
+                $linkTemplate->type = Template::TYPE_MANUAL_SUBDOMAIN;
+            }
+            $linkTemplate->template = serialize(['title' => $title, 'content' => $content, 'fio' => $fio, 'email' => $email]);
+            $linkTemplate->save();
+            return response()->json(['response' => 'Сохранено']);
+        }
+        if (!$title || !$content || !$fio || !$email) {
             return response()->json(['error' => 'Введите заголовок, текст письма, ФИО, email и хотябы 1 регистратор!']);
         }
 
-        $data = Random::manualGenText($fio, $email, $title, $content, $domainId, $isSkip);
+        $data = Random::manualSubdomainGenText($fio, $email, $title, $content, $isSkip);
 
         return response()->json(['response' => $data]);
     }
