@@ -178,7 +178,7 @@ $( document ).ready(function() {
 
         voteAction();
 
-        $('.moderator .btn-lg').click(function(){
+        $('.moderator_subdomain .btn-lg').click(function(){
             $('#vote').val($(this).val());
             setTimeout(voteAction, 400);
         });
