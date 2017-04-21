@@ -94,7 +94,7 @@ class Random
         $modelManual = DB::table('links')
             ->join('domains', 'domains.id', '=', 'links.domain_id')
             ->where('domains.status', Domain::STATUS_MANUAL_CHECK)
-            ->where('domains.status', Domain::TYPE_LINK);
+            ->where('domains.type', Domain::TYPE_LINK);
         $domains = empty($domains) && $isSkip ? (array) key(Email::getMasks()) : $domains;
 
         $modelManual->where(function ($query) use ($domains, $linkMasks) {
