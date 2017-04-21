@@ -60,7 +60,7 @@ class ProcessDomain extends Command
 
     private $subdomainToEmail = [
         '\.com\.ru',
-        '\.com\.ua',
+        '\..+\.ua',
         '\.nov\.ru',
         '\.nnov\.ru',
         '\.spb\.ru',
