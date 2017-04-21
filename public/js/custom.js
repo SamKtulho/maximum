@@ -95,12 +95,14 @@ $( document ).ready(function() {
                     if (data.response !== undefined) {
                         var domain = data.response.domain;
                         var count = data.response.count;
-                        $('#domain_id').val(domain.id);
-                        $('iframe').attr("src", '//' + domain.domain);
-                        $('#link').attr("href", '//' + domain.domain);
-                        $('#link').html(domain.domain);
                         $('.counter').html(count);
-                        $('.registrar').html('(' + domain.registrar + ') - ' +  domain.source);
+                        if (domain) {
+                            $('#domain_id').val(domain.id);
+                            $('iframe').attr("src", '//' + domain.domain);
+                            $('#link').attr("href", '//' + domain.domain);
+                            $('#link').html(domain.domain);
+                            $('.registrar').html('(' + domain.registrar + ') - ' +  domain.source);
+                        }
                     }
                 }
             });
@@ -176,7 +178,7 @@ $( document ).ready(function() {
 
         voteAction();
 
-        $('.moderator_subdomain .btn-lg').click(function(){
+        $('.moderator .btn-lg').click(function(){
             $('#vote').val($(this).val());
             setTimeout(voteAction, 400);
         });
