@@ -39,7 +39,7 @@ class SaveRussian extends Command
      */
     public function handle()
     {
-        $maxId = file_get_contents('maxid');
+        $maxId = file_get_contents('/home/admin/cpazavr/maximum/maxid');
 
         Domain::where('status', Domain::STATUS_MODERATE)->where('id', '>', $maxId)->orderBy('id')->chunk(200, function ($domains) {
             foreach ($domains as $domainModel) {
