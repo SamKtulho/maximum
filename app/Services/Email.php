@@ -58,6 +58,7 @@ class Email
         }
 
         $result['other'] = $allCount - $count;
+        $result['all'] = $allCount;
 
         return $result;
     }

@@ -66,9 +66,15 @@
 
                         <label class="form-check-label">
                             {!! Form::checkbox('skip', 'skip', false, ['class' => 'form-check-input']) !!}
-                            Холостой прогон
+                            Холостой
                         </label>
                         <span style="margin-left: 20px;"></span>
+                        <nobr>
+                            <b>Всего:
+                                <span title="Всего" id="all_count"></span>
+                            </b>
+                        </nobr>
+
                     </div>
                 </div>
                 <div class="form-group">
