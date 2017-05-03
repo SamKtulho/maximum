@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Link;
 use App\Models\Domain;
 use App\Models\Shorturl;
+use App\Models\ModerationLog;
 use Yajra\Datatables\Datatables;
 
 class LinkController extends Controller
@@ -88,4 +89,17 @@ class LinkController extends Controller
         return response()->json(['response' => \App\Services\Link::getLinksCount()]);
     }
 
+    public function moderationLog()
+    {
+        return view('link.moderation_log', ['logs' => []]);
+    }
+
+    public function moderationLogData(Datatables $datatables)
+    {
+        $query = ModerationLog::with('user')->with('domain')->where('moderation_logs.type', ModerationLog::TYPE_LINK);
+
+        return $datatables->eloquent($query)
+            ->addColumn('action', 'eloquent.tables.users-action')
+            ->make(true);
+    }
 }

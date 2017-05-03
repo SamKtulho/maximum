@@ -12,5 +12,14 @@ class ModerationLog extends Model
 
     const RESULT_YES = 1;
     const RESULT_NO = 0;
-    
+
+    public function user()
+    {
+        return $this->belongsTo('\App\User')->select(['id', 'name']);
+    }
+
+    public function domain()
+    {
+        return $this->belongsTo('App\Models\Domain')->select(['id', 'domain']);
+    }
 }

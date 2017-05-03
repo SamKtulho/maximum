@@ -43,6 +43,8 @@ Route::get('/email/count', 'EmailController@count');
 Route::get('/link/statistic', 'LinkController@statistic');
 Route::post('/link/statistic/data', 'LinkController@data');
 Route::get('/link/count', 'LinkController@count');
+Route::get('/link/moderation_log', 'LinkController@moderationLog');
+Route::post('/link/moderation_log/data', 'LinkController@moderationLogData');
 
 Route::get('/manual/count', 'ManualController@count');
 Route::get('/manualSubdomain/count', 'ManualController@subdomainCount');

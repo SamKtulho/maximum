@@ -49,12 +49,12 @@ class ModeratorController extends Controller
             if ($domain) {
                 $domain->status = $vote === self::VOTE_YES ? Domain::STATUS_MANUAL_CHECK : Domain::STATUS_BAD;
                 $domain->save();
-                $migrationLog = new ModerationLog();
-                $migrationLog->domain_id = $domainId;
-                $migrationLog->result = $vote === self::VOTE_YES ? ModerationLog::RESULT_YES : ModerationLog::RESULT_NO;
-                $migrationLog->type = ModerationLog::TYPE_LINK;
-                $migrationLog->user_id = Auth::user()->id;
-                $migrationLog->save();
+                $moderationLog = new ModerationLog();
+                $moderationLog->domain_id = $domainId;
+                $moderationLog->result = $vote === self::VOTE_YES ? ModerationLog::RESULT_YES : ModerationLog::RESULT_NO;
+                $moderationLog->type = ModerationLog::TYPE_LINK;
+                $moderationLog->user_id = Auth::user()->id;
+                $moderationLog->save();
             }
         }
 
@@ -82,12 +82,12 @@ class ModeratorController extends Controller
             if ($domain) {
                 $domain->status = $vote === self::VOTE_YES ? Domain::STATUS_NOT_PROCESSED : Domain::STATUS_BAD;
                 $domain->save();
-                $migrationLog = new ModerationLog();
-                $migrationLog->domain_id = $domainId;
-                $migrationLog->result = $vote === self::VOTE_YES ? ModerationLog::RESULT_YES : ModerationLog::RESULT_NO;
-                $migrationLog->type = ModerationLog::TYPE_EMAIL;
-                $migrationLog->user_id = Auth::user()->id;
-                $migrationLog->save();
+                $moderationLog = new ModerationLog();
+                $moderationLog->domain_id = $domainId;
+                $moderationLog->result = $vote === self::VOTE_YES ? ModerationLog::RESULT_YES : ModerationLog::RESULT_NO;
+                $moderationLog->type = ModerationLog::TYPE_EMAIL;
+                $moderationLog->user_id = Auth::user()->id;
+                $moderationLog->save();
             }
         }
 
@@ -114,12 +114,12 @@ class ModeratorController extends Controller
             if ($domain) {
                 $domain->status = $vote === self::VOTE_YES ? Domain::STATUS_MANUAL_CHECK : Domain::STATUS_BAD;
                 $domain->save();
-                $migrationLog = new ModerationLog();
-                $migrationLog->domain_id = $domainId;
-                $migrationLog->result = $vote === self::VOTE_YES ? ModerationLog::RESULT_YES : ModerationLog::RESULT_NO;
-                $migrationLog->type = ModerationLog::TYPE_SUBDOMAIN;
-                $migrationLog->user_id = Auth::user()->id;
-                $migrationLog->save();
+                $moderationLog = new ModerationLog();
+                $moderationLog->domain_id = $domainId;
+                $moderationLog->result = $vote === self::VOTE_YES ? ModerationLog::RESULT_YES : ModerationLog::RESULT_NO;
+                $moderationLog->type = ModerationLog::TYPE_SUBDOMAIN;
+                $moderationLog->user_id = Auth::user()->id;
+                $moderationLog->save();
             }
         }
 

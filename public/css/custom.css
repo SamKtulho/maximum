@@ -1,6 +1,11 @@
 .vert25 {margin: 25px 0;}
 .hor20 {margin: 0 10px;}
 
+.padd25 {
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+}
+
 table {
     table-layout: fixed;
     word-wrap:break-word;
