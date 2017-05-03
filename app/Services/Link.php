@@ -55,6 +55,7 @@ class Link
         }
 
         $result['other'] = $allCount - $count;
+        $result['all'] = $allCount;
 
         return $result;
     }

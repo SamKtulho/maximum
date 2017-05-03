@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 
 class SaveRussian extends Command
 {
+    private $maxidPath = '/home/admin/cpazavr/maximum/maxid';
     /**
      * The name and signature of the console command.
      *
@@ -39,11 +40,11 @@ class SaveRussian extends Command
      */
     public function handle()
     {
-        $maxId = file_get_contents('maxid');
+        $maxId = file_get_contents($this->maxidPath);
 
         Domain::where('status', Domain::STATUS_MODERATE)->where('id', '>', $maxId)->orderBy('id')->chunk(200, function ($domains) {
             foreach ($domains as $domainModel) {
-                file_put_contents('maxid', $domainModel->id);
+                file_put_contents($this->maxidPath, $domainModel->id);
 
                 $this->info($domainModel->id . ' ' . $domainModel->domain . ' ' . $domainModel->source);
 

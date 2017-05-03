@@ -60,7 +60,10 @@ class ProcessDomain extends Command
 
     private $subdomainToEmail = [
         '\.com\.ru',
+        '\..+\.ua',
         '\.nov\.ru',
+        '\.nnov\.ru',
+        '\.spb\.ru',
     ];
 
     private $subdomainToLink = [
@@ -114,11 +117,11 @@ class ProcessDomain extends Command
 
             foreach ($domains as $domainModel) {
                 $this->info($domainModel->domain);
-                $isSubdomainExclude = false;
+                $isSubdomainExclude = preg_match($subdomainToEmailPattern, $domainModel->domain);
                 if ((substr_count($domainModel->domain, '.') === 1
                         || preg_match($subdomainToLinkPattern, $domainModel->domain))
                     && preg_match('~(\.ru)$|(\.рф)$~', $domainModel->domain)
-                    && !($isSubdomainExclude = preg_match($subdomainToEmailPattern, $domainModel->domain))
+                    && !($isSubdomainExclude)
                 ) {
                     $link = new Link();
                     $link->link = 'https://www.reg.ru/whois/admin_contact?dname=' . urlencode(iconv('utf-8', 'windows-1251', $domainModel->domain));

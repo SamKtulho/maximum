@@ -70,7 +70,12 @@
                             {!! Form::checkbox('skip', 'skip', false, ['class' => 'form-check-input']) !!}
                             Холостой прогон
                         </label>
-                        <span style="margin-left: 20px;"></span>
+                        <span style="margin-left: 10px;"></span>
+                        <nobr>
+                            <b>Всего:
+                                <span title="Всего" id="all_count"></span>
+                            </b>
+                        </nobr>
                     </div>
                 </div>
                 <div class="form-group">

@@ -42,6 +42,7 @@ class Manual
         }
 
         $result['other'] = $allCount - $count;
+        $result['all'] = $allCount;
 
         return $result;
     }
