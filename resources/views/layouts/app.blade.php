@@ -75,6 +75,9 @@
                                     <li>
                                         <a href="/email/statistic">Статистика</a>
                                     </li>
+                                    <li>
+                                        <a href="/email/moderation_log">Лог модерации</a>
+                                    </li>
                                 </ul>
                             </li>
 

@@ -39,6 +39,8 @@ Route::post('/random/manualSubdomain/store', ['as' => 'random.manualSubdomain.st
 Route::get('/email/statistic', 'EmailController@statistic');
 Route::post('/email/statistic/data', 'EmailController@data');
 Route::get('/email/count', 'EmailController@count');
+Route::get('/email/moderation_log', 'EmailController@moderationLog');
+Route::post('/email/moderation_log/data', 'EmailController@moderationLogData');
 
 Route::get('/link/statistic', 'LinkController@statistic');
 Route::post('/link/statistic/data', 'LinkController@data');

@@ -18,7 +18,7 @@ $( document ).ready(function() {
         serverSide: true,
         processing: true,
         ajax: {
-            "url": "/link/moderation_log/data",
+            "url": "/email/moderation_log/data",
             "type": "POST"
         },
         columns: [
