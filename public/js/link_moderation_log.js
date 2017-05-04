@@ -28,8 +28,8 @@ $( document ).ready(function() {
             }},
             { data: 'result', width: '35%', render: function(d) {
                 return d == 1
-                    ? '<button class="padd20 btn btn-success btn-xs" value="1" type="button">Да</button>'
-                    : '<button class="padd20 btn btn-danger btn-xs" value="1" type="button">Нет</button>';
+                    ? '<button class="btn btn-success btn-xs" value="1" type="button">Да</button>'
+                    : '<button class="btn btn-danger btn-xs" value="1" type="button">Нет</button>';
             }},
             { data: 'created_at', width: '20%' }
         ],
