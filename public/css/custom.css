@@ -11,7 +11,7 @@
     padding-right: 20px !important;
 }
 
-#example .btn-xs {
+#example .btn-success.btn-xs, #example .btn-danger.btn-xs {
     width: 50px;
 }
 

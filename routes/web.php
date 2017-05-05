@@ -25,6 +25,7 @@ Route::get('/moderator/subdomains', ['uses' => 'ModeratorController@subdomain'])
 Route::post('/moderator/vote', ['as' => 'moderator.vote', 'uses' => 'ModeratorController@vote']);
 Route::post('/moderator/vote_email', ['as' => 'moderator.voteEmail', 'uses' => 'ModeratorController@voteEmail']);
 Route::post('/moderator/vote_subdomain', ['as' => 'moderator.voteSubdomain', 'uses' => 'ModeratorController@voteSubdomain']);
+Route::post('/moderator/change_vote_link', ['uses' => 'ModeratorController@changeVoteLink']);
 
 Route::get('/random/email', ['as' => 'random.email', 'uses' => 'RandomController@email']);
 Route::post('/random/email/store', ['as' => 'random.email.store', 'uses' => 'RandomController@emailStore']);

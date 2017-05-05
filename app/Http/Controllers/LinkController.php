@@ -99,7 +99,6 @@ class LinkController extends Controller
         $query = ModerationLog::with('user')->with('domain')->where('moderation_logs.type', ModerationLog::TYPE_LINK);
 
         return $datatables->eloquent($query)
-            ->addColumn('action', 'eloquent.tables.users-action')
             ->make(true);
     }
 }

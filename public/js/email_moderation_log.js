@@ -28,13 +28,33 @@ $( document ).ready(function() {
             }},
             { data: 'result', width: '35%', render: function(d) {
                 return d == 1
-                    ? '<button class="btn btn-success btn-xs" value="1" type="button">Да</button>'
-                    : '<button class="btn btn-danger btn-xs" value="1" type="button">Нет</button>';
+                    ? '<button class="btn btn-success btn-xs main" value="1" type="button">Да</button> <button value="2" title="Изменить на НЕТ" type="button" class="btn btn-default btn-xs change_vote"> <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span></button>'
+                    : '<button class="btn btn-danger btn-xs main" value="1" type="button">Нет</button> <button value="1" title="Изменить на ДА" type="button" class="btn btn-default btn-xs change_vote"> <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span></button>';
             }},
             { data: 'created_at', width: '20%' }
         ],
         drawCallback: function () {
+            $('.change_vote').click(function (e, a) {
+                var button = this;
+                var domain = $($($(this).closest('tr').children()[1]).find('a')).attr('value');
+                var vote = $(this).val();
+                var data = [{'name': 'vote', 'value': vote}, {'name': 'domain', 'value': domain}];
 
+                $(button).prop('disabled', true);
+                $.post( "/moderator/change_vote_link", data, function( data ) {
+
+                    $(button).prop('disabled', false);
+
+                    if (data.error !== undefined) {
+
+                    } else {
+                        $($(button).closest('td').find('button.main')).addClass(vote == 1 ? 'btn-success' : 'btn-danger').removeClass(vote == 1 ? 'btn-danger' : 'btn-success').html(vote == 1 ? 'Да' : 'Heт');
+                        $(button).attr('value', vote == 1 ? 2 : 1);
+                    }
+                });
+            });
         }
     } );
+
+  
 });

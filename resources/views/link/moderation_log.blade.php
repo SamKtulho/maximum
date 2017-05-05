@@ -23,14 +23,7 @@
                     </tr>
                     </tfoot>
                     <tbody>
-                    @foreach ($logs as $log)
-                        <tr>
-                            <td> {{ $log->user->name }} </td>
-                            <td> <a target="_blank" href="//{{ $shortUrl->domain->domain }}">{{ $log->domain->domain }}</a> </td>
-                            <td> {{ $log->result }} </td>
-                            <td> {{ $log->created_at }} </td>
-                        </tr>
-                    @endforeach
+
                     </tbody>
                 </table>
 

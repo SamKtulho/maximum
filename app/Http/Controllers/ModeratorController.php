@@ -72,6 +72,26 @@ class ModeratorController extends Controller
         return response()->json(['response' => ['domain' => $domain, 'count' => $count]]);
     }
 
+    public function changeVoteLink(Request $request)
+    {
+        $vote = (int) $request->get('vote');
+        $domain = $request->get('domain');
+
+        if ($vote && $domain) {
+            $domain = Domain::where('domain', $domain)->first();
+            if ($domain) {
+                $domain->status = $vote === self::VOTE_YES ? Domain::STATUS_MANUAL_CHECK : Domain::STATUS_BAD;
+                $domain->save();
+                $moderationLog = ModerationLog::where('domain_id', $domain->id)->first();
+                $moderationLog->result = $vote === self::VOTE_YES ? ModerationLog::RESULT_YES : ModerationLog::RESULT_NO;
+                $moderationLog->save();
+                return response()->json(['response' => 'ok']);
+
+            }
+        }
+        return response()->json(['error' => 'error']);
+    }
+
     public function voteEmail(Request $request)
     {
         $vote = (int) $request->get('vote');
