@@ -41,7 +41,7 @@ $( document ).ready(function() {
                 var data = [{'name': 'vote', 'value': vote}, {'name': 'domain', 'value': domain}];
 
                 $(button).prop('disabled', true);
-                $.post( "/moderator/change_vote_link", data, function( data ) {
+                $.post( "/moderator/change_vote", data, function( data ) {
 
                     $(button).prop('disabled', false);
 

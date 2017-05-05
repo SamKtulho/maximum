@@ -24,7 +24,7 @@ $( document ).ready(function() {
         columns: [
             { data: 'user.name', width: '10%' },
             { data: 'domain.domain', width: '35%', render: function(d) {
-                return '<a target="_blank" href="//' + d + '">' + d + '</a>';
+                return '<a value="'+d+'" target="_blank" href="//' + d + '">' + d + '</a>';
             }},
             { data: 'result', width: '35%', render: function(d) {
                 return d == 1
@@ -41,7 +41,7 @@ $( document ).ready(function() {
                 var data = [{'name': 'vote', 'value': vote}, {'name': 'domain', 'value': domain}];
 
                 $(button).prop('disabled', true);
-                $.post( "/moderator/change_vote_link", data, function( data ) {
+                $.post( "/moderator/change_vote", data, function( data ) {
 
                     $(button).prop('disabled', false);
 

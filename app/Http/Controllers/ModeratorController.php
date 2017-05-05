@@ -72,7 +72,7 @@ class ModeratorController extends Controller
         return response()->json(['response' => ['domain' => $domain, 'count' => $count]]);
     }
 
-    public function changeVoteLink(Request $request)
+    public function changeVote(Request $request)
     {
         $vote = (int) $request->get('vote');
         $domain = $request->get('domain');
