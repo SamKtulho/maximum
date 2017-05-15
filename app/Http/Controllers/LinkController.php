@@ -14,6 +14,8 @@ class LinkController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('is_user');
+
     }
 
     public function create(Request $request)

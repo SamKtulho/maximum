@@ -7,6 +7,13 @@ use Yajra\Datatables\Datatables;
 
 class SubdomainController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('is_user');
+
+    }
+    
     public function data(Datatables $datatables)
     {
         $query = Shorturl::with('user')->with('domain')->with('urlstats')->select('shorturls.*')->where('shorturls.type', Shorturl::TYPE_SUBDOMAIN);

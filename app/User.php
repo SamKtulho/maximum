@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class User extends Authenticatable
 {
     const ROLE_GUEST = 0;
-    const ROLE_USER = 1;
+    const ROLE_FINDER = 1;
     const ROLE_MODERATOR = 2;
     const ROLE_ADMIN = 3;
     
@@ -38,8 +38,18 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Shorturl');
     }
 
-    public function isAdmin()
+    public static function isAdmin()
     {
-        return Auth::user() && Auth::user()->role === self::ROLE_ADMIN;
+        return Auth::user() && Auth::user()->role == self::ROLE_ADMIN;
+    }
+
+    public static function isModerator()
+    {
+        return Auth::user() && (Auth::user()->role == self::ROLE_MODERATOR || Auth::user()->role == self::ROLE_ADMIN);
+    }
+
+    public static function isExternalUser()
+    {
+        return Auth::user() && (Auth::user()->role == self::ROLE_FINDER || Auth::user()->role == self::ROLE_ADMIN);
     }
 }

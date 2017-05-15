@@ -22,6 +22,8 @@ class ModeratorController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('is_user');
+
     }
 
     public function link()
