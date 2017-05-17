@@ -9,6 +9,10 @@
 
                     {!! Form::open(['route' => 'moderator.vote']) !!}
                     <div class="form-group text-center">
+                        <label class="form-check-label moderator-open-site">
+                            {!! Form::checkbox('is_active', '1', false, ['class' => 'form-check-input', 'id' => 'is_active']) !!}
+                            открывать сайт
+                        </label>
                         {!! Form::button('Да', ['class'=>'btn btn-success btn-lg', 'value' => 1]) !!}
                         <span class="hor20 text-muted counter"></span>
                         {!! Form::button('Нет', ['class'=>'btn btn-danger btn-lg', 'value' => 2]) !!}
