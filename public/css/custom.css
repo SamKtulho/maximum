@@ -33,6 +33,11 @@ table {
     font-size: smaller;
 }
 
+.moderator-open-site {
+    position: absolute;
+    margin: 15px 0 0 -150px;
+}
+
 @media screen and (min-device-width: 700px) {
     #page_title {
         position: absolute;
