@@ -15,6 +15,20 @@ class ModerationLog extends Model
 
     const IS_SKIPPED = 1;
     const IS_NO_SKIPPED = 0;
+    
+    private static $typeMap = [
+        self::TYPE_EMAIL => 'Почта',
+        self::TYPE_LINK => 'Регистраторы',
+        self::TYPE_SUBDOMAIN => 'Субдомены'
+    ];
+
+    /**
+     * @return array
+     */
+    public static function getTypeMap()
+    {
+        return self::$typeMap;
+    }
 
     public function user()
     {

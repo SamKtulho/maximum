@@ -26,6 +26,7 @@ Route::post('/moderator/vote', ['as' => 'moderator.vote', 'uses' => 'ModeratorCo
 Route::post('/moderator/vote_email', ['as' => 'moderator.voteEmail', 'uses' => 'ModeratorController@voteEmail'])->middleware('is_moderator');
 Route::post('/moderator/vote_subdomain', ['as' => 'moderator.voteSubdomain', 'uses' => 'ModeratorController@voteSubdomain']);
 Route::post('/moderator/change_vote', ['uses' => 'ModeratorController@changeVote']);
+Route::get('/moderator/report', ['uses' => 'ModeratorController@report'])->middleware('is_admin');
 
 Route::get('/random/email', ['as' => 'random.email', 'uses' => 'RandomController@email'])->middleware('is_moderator');
 Route::post('/random/email/store', ['as' => 'random.email.store', 'uses' => 'RandomController@emailStore'])->middleware('is_moderator');

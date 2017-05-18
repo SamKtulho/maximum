@@ -174,4 +174,16 @@ class ModeratorController extends Controller
 
         return response()->json(['response' => ['domain' => $domain, 'count' => $count, 'user_count' => $statDB->count()]]);
     }
+    
+    public function report()
+    {
+        $statDB = DB::table('moderation_logs')
+            ->join('users', 'users.id', '=', 'moderation_logs.user_id')
+            ->select('user_id', 'type', 'users.name', DB::raw('count(*) as total'))
+            ->groupBy('user_id')
+            ->groupBy('type')
+            ->get();
+
+        return view('moderator.report', ['report' => $statDB]);
+    }
 }
