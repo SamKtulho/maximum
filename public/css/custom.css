@@ -22,7 +22,13 @@ table {
 }
 
 .moderator .btn-lg, .moderator_email .btn-lg, .moderator_subdomain .btn-lg {padding: 15px 45px;}
-.moderator .registrar, .moderator_email .email, .moderator_subdomain .registrar {position: absolute; margin: 15px 20px;}
+.moderator .registrar, .moderator_email .email, .moderator_subdomain .registrar {display: inline-table;}
+.moderator .user-stat, .moderator_email .user-stat, .moderator_subdomain .user-stat {margin-left: 5px; font-size: 18px; display: inline-table;}
+
+.additional-fields {
+    display: inline;
+    margin: 0 0 0 25px;
+}
 
 .back-button {margin-right: 15px;}
 
@@ -34,8 +40,7 @@ table {
 }
 
 .moderator-open-site {
-    position: absolute;
-    margin: 15px 0 0 -160px;
+    margin: 0 15px 0 0;
 }
 
 #example .skipped {

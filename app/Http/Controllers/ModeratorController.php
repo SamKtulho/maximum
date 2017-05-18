@@ -73,7 +73,12 @@ class ModeratorController extends Controller
         $domain = $domainDB->first();
         $count = $domainDB->count();
 
-        return response()->json(['response' => ['domain' => $domain, 'count' => $count]]);
+        $statDB = DB::table('moderation_logs')
+            ->where('user_id', Auth::user()->id)
+            ->where('type', ModerationLog::TYPE_LINK);
+
+
+        return response()->json(['response' => ['domain' => $domain, 'count' => $count, 'user_count' => $statDB->count()]]);
     }
 
     public function changeVote(Request $request)
@@ -127,7 +132,12 @@ class ModeratorController extends Controller
         $domain = $domainDB->first();
         $count = $domainDB->count();
 
-        return response()->json(['response' => ['domain' => $domain, 'count' => $count]]);
+        $statDB = DB::table('moderation_logs')
+            ->where('user_id', Auth::user()->id)
+            ->where('type', ModerationLog::TYPE_EMAIL);
+
+
+        return response()->json(['response' => ['domain' => $domain, 'count' => $count, 'user_count' => $statDB->count()]]);
     }
 
     public function voteSubdomain(Request $request)
@@ -158,6 +168,10 @@ class ModeratorController extends Controller
         $domain = $domainDB->first();
         $count = $domainDB->count();
 
-        return response()->json(['response' => ['domain' => $domain, 'count' => $count]]);
+        $statDB = DB::table('moderation_logs')
+            ->where('user_id', Auth::user()->id)
+            ->where('type', ModerationLog::TYPE_SUBDOMAIN);
+
+        return response()->json(['response' => ['domain' => $domain, 'count' => $count, 'user_count' => $statDB->count()]]);
     }
 }

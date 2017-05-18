@@ -110,9 +110,13 @@ $( document ).ready(function() {
                     if (data.response !== undefined) {
                         var domain = data.response.domain;
                         var count = data.response.count;
+                        var userCount = data.response.user_count;
+
                         var url = '';
 
                         $('.counter').html(count);
+                        $('.user-stat').html(userCount);
+
                         if (domain) {
                             $('#domain_id').val(domain.id);
                             if ($('#is_active').prop('checked')) {
@@ -152,9 +156,12 @@ $( document ).ready(function() {
                     if (data.response !== undefined) {
                         var domain = data.response.domain;
                         var count = data.response.count;
+                        var userCount = data.response.user_count;
                         var url = '';
 
                         $('.counter').html(count);
+                        $('.user-stat').html(userCount);
+
                         if (domain) {
                             $('#domain_id').val(domain.id);
                             if ($('#is_active').prop('checked')) {
@@ -198,6 +205,7 @@ $( document ).ready(function() {
                     if (data.response !== undefined) {
                         var domain = data.response.domain;
                         var count = data.response.count;
+                        var userCount = data.response.user_count;
                         var url = '';
 
                         $('#domain_id').val(domain.id);
@@ -207,6 +215,8 @@ $( document ).ready(function() {
                         $('#link').attr("href", '//' + domain.domain);
                         $('#link').html(domain.domain);
                         $('.counter').html(count);
+                        $('.user-stat').html(userCount);
+
                         $('.registrar').html('(' + domain.source + ')');
                         setDomainToFrame(url);
                     }

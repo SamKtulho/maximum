@@ -5,7 +5,7 @@
     <div class="moderator_email">
         <div class="container">
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-10 col-md-offset-1">
 
                     {!! Form::open(['route' => 'moderator.voteEmail']) !!}
 
@@ -17,7 +17,10 @@
                         {!! Form::button('Да', ['class'=>'btn btn-success btn-lg', 'value' => 1]) !!}
                         <span class="hor20 text-muted counter"></span>
                         {!! Form::button('Нет', ['class'=>'btn btn-danger btn-lg', 'value' => 2]) !!}
-                        <span class="text-muted email"></span>
+                        <div class="additional-fields">
+                            <span class="text-muted email"></span>
+                            <span title="Всего промодерировано пользователем" class="text-success user-stat"></span>
+                        </div>
 
                     </div>
                     <div class="form-group text-center">
