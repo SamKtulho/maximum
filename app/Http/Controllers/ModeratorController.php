@@ -45,7 +45,8 @@ class ModeratorController extends Controller
     {
         $vote = (int) $request->get('vote');
         $domainId = (int) $request->get('domain_id');
-        
+        $isSkipped = (int) !$request->get('is_active');
+
         if ($vote && $domainId) {
             $domain = Domain::find($domainId);
             if ($domain) {
@@ -56,6 +57,7 @@ class ModeratorController extends Controller
                 $moderationLog->result = $vote === self::VOTE_YES ? ModerationLog::RESULT_YES : ModerationLog::RESULT_NO;
                 $moderationLog->type = ModerationLog::TYPE_LINK;
                 $moderationLog->user_id = Auth::user()->id;
+                $moderationLog->is_skipped = $isSkipped;
                 $moderationLog->save();
             }
         }
@@ -98,6 +100,7 @@ class ModeratorController extends Controller
     {
         $vote = (int) $request->get('vote');
         $domainId = (int) $request->get('domain_id');
+        $isSkipped = (int) !$request->get('is_active');
 
         if ($vote && $domainId) {
             $domain = Domain::find($domainId);
@@ -109,6 +112,7 @@ class ModeratorController extends Controller
                 $moderationLog->result = $vote === self::VOTE_YES ? ModerationLog::RESULT_YES : ModerationLog::RESULT_NO;
                 $moderationLog->type = ModerationLog::TYPE_EMAIL;
                 $moderationLog->user_id = Auth::user()->id;
+                $moderationLog->is_skipped = $isSkipped;
                 $moderationLog->save();
             }
         }
@@ -130,6 +134,7 @@ class ModeratorController extends Controller
     {
         $vote = (int) $request->get('vote');
         $domainId = (int) $request->get('domain_id');
+        $isSkipped = (int) !$request->get('is_active');
 
         if ($vote && $domainId) {
             $domain = Domain::find($domainId);
@@ -141,6 +146,7 @@ class ModeratorController extends Controller
                 $moderationLog->result = $vote === self::VOTE_YES ? ModerationLog::RESULT_YES : ModerationLog::RESULT_NO;
                 $moderationLog->type = ModerationLog::TYPE_SUBDOMAIN;
                 $moderationLog->user_id = Auth::user()->id;
+                $moderationLog->is_skipped = $isSkipped;
                 $moderationLog->save();
             }
         }

@@ -99,7 +99,12 @@ $( document ).ready(function() {
             $.ajax({
                 url: '/moderator/vote',
                 type: 'POST',
-                data: {'domain_id': $('#domain_id').val(), 'vote': $('#vote').val(), '_token': $('input[name=_token]').val()},
+                data: {
+                    'domain_id': $('#domain_id').val(),
+                    'vote': $('#vote').val(),
+                    'is_active': $('#is_active').prop('checked') ? 1 : 0,
+                    '_token': $('input[name=_token]').val()
+                },
                 dataType: 'JSON',
                 success: function (data) {
                     if (data.response !== undefined) {
@@ -136,7 +141,12 @@ $( document ).ready(function() {
             $.ajax({
                 url: '/moderator/vote_email',
                 type: 'POST',
-                data: {'domain_id': $('#domain_id').val(), 'vote': $('#vote').val(), '_token': $('input[name=_token]').val()},
+                data: {
+                    'domain_id': $('#domain_id').val(),
+                    'vote': $('#vote').val(),
+                    'is_active': $('#is_active').prop('checked') ? 1 : 0,
+                    '_token': $('input[name=_token]').val()
+                },
                 dataType: 'JSON',
                 success: function (data) {
                     if (data.response !== undefined) {
@@ -177,7 +187,12 @@ $( document ).ready(function() {
             $.ajax({
                 url: '/moderator/vote_subdomain',
                 type: 'POST',
-                data: {'domain_id': $('#domain_id').val(), 'vote': $('#vote').val(), '_token': $('input[name=_token]').val()},
+                data: {
+                    'domain_id': $('#domain_id').val(),
+                    'vote': $('#vote').val(),
+                    'is_active': $('#is_active').prop('checked') ? 1 : 0,
+                    '_token': $('input[name=_token]').val()
+                },
                 dataType: 'JSON',
                 success: function (data) {
                     if (data.response !== undefined) {

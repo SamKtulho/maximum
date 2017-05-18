@@ -38,6 +38,10 @@ table {
     margin: 15px 0 0 -150px;
 }
 
+#example .skipped {
+    background-color: #ffb9b9;
+}
+
 @media screen and (min-device-width: 700px) {
     #page_title {
         position: absolute;

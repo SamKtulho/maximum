@@ -33,6 +33,11 @@ $( document ).ready(function() {
             }},
             { data: 'created_at', width: '20%' }
         ],
+        createdRow: function( row, data, dataIndex ) {
+            if ( data.is_skipped == 1 ) {
+                $(row).addClass( 'skipped' );
+            }
+        },
         drawCallback: function () {
             $('.change_vote').click(function (e, a) {
                 var button = this;

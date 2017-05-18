@@ -11,7 +11,7 @@
                     <div class="form-group text-center">
                         <label class="form-check-label moderator-open-site">
                             {!! Form::checkbox('is_active', '1', false, ['class' => 'form-check-input', 'id' => 'is_active']) !!}
-                            открывать сайт
+                            начать модерацию
                         </label>
                         {!! Form::button('Да', ['class'=>'btn btn-success btn-lg', 'value' => 1]) !!}
                         <span class="hor20 text-muted counter"></span>
