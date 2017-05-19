@@ -5,7 +5,7 @@
     <div class="moderator_report">
         <div class="container">
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-11">
                     <h2>Отчет по датам</h2>
                     <table class="table table-striped">
                         <thead>
