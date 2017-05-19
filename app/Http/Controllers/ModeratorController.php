@@ -177,13 +177,48 @@ class ModeratorController extends Controller
     
     public function report()
     {
-        $statDB = DB::table('moderation_logs')
+        $daysBefore = 7;
+        $range = [];
+        for ($i = 0; $i < $daysBefore; ++$i) {
+            $range[] = strtotime(date('Y-m-d', strtotime('-' . $i . ' days')));
+        }
+
+        $statDBUser = DB::table('moderation_logs')
             ->join('users', 'users.id', '=', 'moderation_logs.user_id')
             ->select('user_id', 'type', 'users.name', DB::raw('count(*) as total'))
             ->groupBy('user_id')
             ->groupBy('type')
             ->get();
 
-        return view('moderator.report', ['report' => $statDB]);
+        $statDBDate = DB::table('moderation_logs')
+            ->where('created_at', '>', date('Y-m-d', strtotime('-'. $daysBefore . ' days')))
+            ->select('type', 'created_at', DB::raw('count(*) as total'))
+            ->groupBy('type')
+            ->groupBy('created_at')
+            ->get()->toArray();
+
+        $resultByDate = [];
+
+        foreach ($statDBDate as $stat) {
+            $statDate = strtotime(str_limit($stat->created_at, 10, ''));
+            $resultByDate[$stat->type][$statDate] =
+                isset($resultByDate[$stat->type][$statDate])
+                    ? $resultByDate[$stat->type][$statDate] + $stat->total
+                    : $stat->total;
+        }
+
+
+        foreach ($resultByDate as &$result) {
+            foreach ($range as $date) {
+                if (!isset($result[$date])) {
+                    $result[$date] = 0;
+                }
+             }
+            krsort($result);
+        }
+
+        unset($result);
+
+        return view('moderator.report', ['reportByUser' => $statDBUser, 'reportByDate' => $resultByDate]);
     }
 }
