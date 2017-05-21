@@ -73,7 +73,7 @@
                         <a href="{{ url('/random/email') }}">Home</a>
                     @else
                         <a href="{{ url('/login') }}">Login</a>
-                       {{-- <a href="{{ url('/register') }}">Register</a>--}}
+                        <a href="{{ url('/register') }}">Register</a>
                     @endif
                 </div>
             @endif

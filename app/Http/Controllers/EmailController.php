@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Email;
 use App\Models\Shorturl;
+use App\Models\ModerationLog;
 use Yajra\Datatables\Datatables;
 
 class EmailController extends Controller
@@ -17,6 +18,8 @@ class EmailController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('is_user');
+        $this->middleware('is_moderator');
     }
 
     public function create()
@@ -82,5 +85,18 @@ class EmailController extends Controller
     public function count()
     {
         return response()->json(['response' => \App\Services\Email::getEmailsCount()]);
+    }
+
+    public function moderationLog()
+    {
+        return view('email.moderation_log', ['logs' => []]);
+    }
+
+    public function moderationLogData(Datatables $datatables)
+    {
+        $query = ModerationLog::with('user')->with('domain')->where('moderation_logs.type', ModerationLog::TYPE_EMAIL);
+
+        return $datatables->eloquent($query)
+            ->make(true);
     }
 }

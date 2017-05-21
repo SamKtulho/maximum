@@ -16,6 +16,8 @@
     <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -45,36 +47,44 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        @if (!Auth::guest())
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    Домены<span class="caret"></span>
-                                </a>
+                        @if (!Auth::guest() && Auth::user()->role > \App\User::ROLE_GUEST)
+                            @if (\App\User::isAdmin())
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        Домены<span class="caret"></span>
+                                    </a>
 
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="/domain/create">Добавить новые</a>
-                                    </li>
-                                </ul>
-                            </li>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="/domain/create">Добавить новые</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endif
 
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    Письма<span class="caret"></span>
-                                </a>
+                            @if (\App\User::isAdmin())
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        Письма<span class="caret"></span>
+                                    </a>
 
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="/moderator/emails">Модератор</a>
-                                    </li>
-                                    <li>
-                                        <a href="/random/email">Отправка</a>
-                                    </li>
-                                    <li>
-                                        <a href="/email/statistic">Статистика</a>
-                                    </li>
-                                </ul>
-                            </li>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="/moderator/emails">Модератор</a>
+                                        </li>
+                                        <li>
+                                            <a href="/random/email">Отправка</a>
+                                        </li>
+                                        <li>
+                                            <a href="/email/statistic">Статистика</a>
+                                        </li>
+                                        <li>
+                                            <a href="/email/moderation_log">Лог модерации</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endif
+
 
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -82,15 +92,22 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="/moderator/subdomains">Модератор</a>
-                                    </li>
-                                    <li>
-                                        <a href="/random/manualSubdomain">Поиск контактов</a>
-                                    </li>
-                                    <li>
-                                        <a href="/subdomain/statistic">Статистика</a>
-                                    </li>
+                                    @if (\App\User::isModerator())
+
+                                        <li>
+                                            <a href="/moderator/subdomains">Модератор</a>
+                                        </li>
+                                    @endif
+                                    @if (\App\User::isExternalUser())
+
+                                        <li>
+                                            <a href="/random/manualSubdomain">Поиск контактов</a>
+                                        </li>
+                                        <li>
+                                            <a href="/subdomain/statistic">Статистика</a>
+                                        </li>
+                                    @endif
+
                                 </ul>
                             </li>
 
@@ -100,20 +117,44 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="/moderator/links">Модератор</a>
-                                    </li>
-                                    <li>
-                                        <a href="/random/manualDomain">Поиск контактов</a>
-                                    </li>
-                                    <li>
-                                        <a href="/random/link">Отправка</a>
-                                    </li>
-                                    <li>
-                                        <a href="/link/statistic">Статистика</a>
-                                    </li>
+                                    @if (\App\User::isModerator())
+                                        <li>
+                                            <a href="/moderator/links">Модератор</a>
+                                        </li>
+                                    @endif
+
+                                    @if (\App\User::isExternalUser())
+                                        <li>
+                                            <a href="/random/manualDomain">Поиск контактов</a>
+                                        </li>
+                                        <li>
+                                            <a href="/random/link">Отправка</a>
+                                        </li>
+                                        <li>
+                                            <a href="/link/statistic">Статистика</a>
+                                        </li>
+                                    @endif
+                                    @if (\App\User::isModerator())
+                                        <li>
+                                            <a href="/link/moderation_log">Лог модерации</a>
+                                        </li>
+                                    @endif
+
                                 </ul>
                             </li>
+                                @if (\App\User::isAdmin())
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                            Очтеты<span class="caret"></span>
+                                        </a>
+
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a href="/moderator/report">Модерация</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endif
                         @endif
                     </ul>
 
@@ -122,7 +163,7 @@
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
-                            {{--<li><a href="{{ route('register') }}">Register</a></li>--}}
+                            <li><a href="{{ route('register') }}">Register</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -157,9 +198,5 @@
 
     </div>
     <!-- Scripts -->
-
-    <script src="{{ asset('js/datatables.min.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
-
 </body>
 </html>

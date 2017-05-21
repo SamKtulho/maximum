@@ -4,9 +4,15 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
+    const ROLE_GUEST = 0;
+    const ROLE_FINDER = 1;
+    const ROLE_MODERATOR = 2;
+    const ROLE_ADMIN = 3;
+    
     use Notifiable;
 
     /**
@@ -15,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role'
     ];
 
     /**
@@ -30,5 +36,20 @@ class User extends Authenticatable
     public function shorturls()
     {
         return $this->hasMany('App\Models\Shorturl');
+    }
+
+    public static function isAdmin()
+    {
+        return Auth::user() && Auth::user()->role == self::ROLE_ADMIN;
+    }
+
+    public static function isModerator()
+    {
+        return Auth::user() && (Auth::user()->role == self::ROLE_MODERATOR || Auth::user()->role == self::ROLE_ADMIN);
+    }
+
+    public static function isExternalUser()
+    {
+        return Auth::user() && (Auth::user()->role == self::ROLE_FINDER || Auth::user()->role == self::ROLE_ADMIN);
     }
 }

@@ -1,6 +1,16 @@
 
 $( document ).ready(function() {
 
+    function setDomainToFrame(domain) {
+        $('iframe').attr("src", '//' + domain);
+    }
+
+    $('#is_active').click(function () {
+        if ($(this).prop('checked')) {
+            setDomainToFrame($('#link').html());
+        }
+    });
+
     if ($('.email-statistic').length > 0) {
         $.fn.dataTable.Api.register( 'sum()', function ( ) {
             return this.flatten().reduce( function ( a, b ) {
@@ -89,20 +99,34 @@ $( document ).ready(function() {
             $.ajax({
                 url: '/moderator/vote',
                 type: 'POST',
-                data: {'domain_id': $('#domain_id').val(), 'vote': $('#vote').val(), '_token': $('input[name=_token]').val()},
+                data: {
+                    'domain_id': $('#domain_id').val(),
+                    'vote': $('#vote').val(),
+                    'is_active': $('#is_active').prop('checked') ? 1 : 0,
+                    '_token': $('input[name=_token]').val()
+                },
                 dataType: 'JSON',
                 success: function (data) {
                     if (data.response !== undefined) {
                         var domain = data.response.domain;
                         var count = data.response.count;
+                        var userCount = data.response.user_count;
+
+                        var url = '';
+
                         $('.counter').html(count);
+                        $('.user-stat').html(userCount);
+
                         if (domain) {
                             $('#domain_id').val(domain.id);
-                            $('iframe').attr("src", '//' + domain.domain);
+                            if ($('#is_active').prop('checked')) {
+                                url = domain.domain;
+                            }
                             $('#link').attr("href", '//' + domain.domain);
                             $('#link').html(domain.domain);
                             $('.registrar').html('(' + domain.registrar + ')<br>' +  domain.source);
                         }
+                        setDomainToFrame(url);
                     }
                 }
             });
@@ -121,16 +145,28 @@ $( document ).ready(function() {
             $.ajax({
                 url: '/moderator/vote_email',
                 type: 'POST',
-                data: {'domain_id': $('#domain_id').val(), 'vote': $('#vote').val(), '_token': $('input[name=_token]').val()},
+                data: {
+                    'domain_id': $('#domain_id').val(),
+                    'vote': $('#vote').val(),
+                    'is_active': $('#is_active').prop('checked') ? 1 : 0,
+                    '_token': $('input[name=_token]').val()
+                },
                 dataType: 'JSON',
                 success: function (data) {
                     if (data.response !== undefined) {
                         var domain = data.response.domain;
                         var count = data.response.count;
+                        var userCount = data.response.user_count;
+                        var url = '';
+
                         $('.counter').html(count);
+                        $('.user-stat').html(userCount);
+
                         if (domain) {
                             $('#domain_id').val(domain.id);
-                            $('iframe').attr("src", '//' + domain.domain);
+                            if ($('#is_active').prop('checked')) {
+                                url = domain.domain;
+                            }
                             $('#link').attr("href", '//' + domain.domain);
                             $('#link').html(domain.domain);
                             $('.email').html('(' + domain.email + ')<br>' + domain.source);
@@ -138,9 +174,8 @@ $( document ).ready(function() {
                             $('#link').attr("href", '#');
                             $('#link').html('');
                             $('.email').html('');
-                            $('iframe').attr("src", '');
                         }
-
+                        setDomainToFrame(url);
                     }
                 }
             });
@@ -159,18 +194,31 @@ $( document ).ready(function() {
             $.ajax({
                 url: '/moderator/vote_subdomain',
                 type: 'POST',
-                data: {'domain_id': $('#domain_id').val(), 'vote': $('#vote').val(), '_token': $('input[name=_token]').val()},
+                data: {
+                    'domain_id': $('#domain_id').val(),
+                    'vote': $('#vote').val(),
+                    'is_active': $('#is_active').prop('checked') ? 1 : 0,
+                    '_token': $('input[name=_token]').val()
+                },
                 dataType: 'JSON',
                 success: function (data) {
                     if (data.response !== undefined) {
                         var domain = data.response.domain;
                         var count = data.response.count;
+                        var userCount = data.response.user_count;
+                        var url = '';
+
                         $('#domain_id').val(domain.id);
-                        $('iframe').attr("src", '//' + domain.domain);
+                        if ($('#is_active').prop('checked')) {
+                            url = domain.domain;
+                        }
                         $('#link').attr("href", '//' + domain.domain);
                         $('#link').html(domain.domain);
                         $('.counter').html(count);
+                        $('.user-stat').html(userCount);
+
                         $('.registrar').html('(' + domain.source + ')');
+                        setDomainToFrame(url);
                     }
                 }
             });
