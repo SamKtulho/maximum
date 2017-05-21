@@ -150,7 +150,13 @@ class ProcessDomain extends Command
                                 'referer'         => true,
                                 'track_redirects' => true
                             ],
-                                'connect_timeout' => 15
+                                'connect_timeout' => 15,
+                                'proxy' => [
+                                    'http'  => 'tcp://212.237.27.151:8080', // Use this proxy with "http"
+                                    'https' => 'https://130.211.186.104:80', // Use this proxy with "https",
+                                    'no' => ['.mit.edu', 'foo.com']    // Don't use a proxy with these
+                                ]
+
                             ]
                         );
                     } catch (\GuzzleHttp\Exception\ConnectException $e) {
