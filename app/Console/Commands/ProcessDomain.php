@@ -151,11 +151,10 @@ class ProcessDomain extends Command
                                 'track_redirects' => true
                             ],
                                 'connect_timeout' => 15,
-                          /*      'proxy' => [
-                                    'http'  => 'tcp://212.237.27.151:8080', // Use this proxy with "http"
-                                    'https' => 'https://130.211.186.104:80', // Use this proxy with "https",
-                                    'no' => ['.mit.edu', 'foo.com']    // Don't use a proxy with these
-                                ]*/
+                                'proxy' => [
+                                    'http'  => 'http://algerman_sam_gmail_com:4877c661c5428993b279094e87865901@89.223.29.109:42971', // Use this proxy with "http"
+                                    'https' => 'http://algerman_sam_gmail_com:4877c661c5428993b279094e87865901@89.223.29.109:42971', // Use this proxy with "https"
+                                ]
 
                             ]
                         );
