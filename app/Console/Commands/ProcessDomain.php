@@ -161,8 +161,10 @@ class ProcessDomain extends Command
                     } catch (\GuzzleHttp\Exception\ConnectException $e) {
                         $domainModel->status = Domain::STATUS_DELAYED;
                         $domainModel->save();
+                        sleep(10);
                         continue;
                     } catch (\Exception $e) {
+                        sleep(10);
                         continue;
                     }
 
@@ -199,7 +201,7 @@ class ProcessDomain extends Command
                         $domainModel->status = Domain::STATUS_EMAIL_NOT_FOUND;
                     }
                     $domainModel->save();
-                    sleep(5);
+                    sleep(2);
 
                 } else {
                     try {
