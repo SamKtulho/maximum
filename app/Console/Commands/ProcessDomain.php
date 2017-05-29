@@ -116,7 +116,7 @@ class ProcessDomain extends Command
             $subdomainToLinkPattern .= '~';
 
             foreach ($domains as $domainModel) {
-                $this->info($domainModel->domain);
+               // $this->info($domainModel->domain);
                 $isSubdomainExclude = preg_match($subdomainToEmailPattern, $domainModel->domain);
                 if ((substr_count($domainModel->domain, '.') === 1
                         || preg_match($subdomainToLinkPattern, $domainModel->domain))
@@ -132,7 +132,7 @@ class ProcessDomain extends Command
                         $link->save();
                         $domainModel->type = Domain::TYPE_LINK;
                         $domainModel->save();
-                        $this->info('Link');
+                        $this->info($domainModel->domain . ' - registrar');
 
                     } catch (\Exception $e) {
                         continue;
@@ -192,7 +192,7 @@ class ProcessDomain extends Command
                         $emailModel->is_valid = Email::STATUS_VALID;
                         try {
                             $emailModel->save();
-                            $this->info('Email ' . $email);
+                            $this->info($domainModel->domain . ' email found: ' . $email);
 
                         } catch (\Exception $e) {
                             continue;
@@ -207,7 +207,7 @@ class ProcessDomain extends Command
                     try {
                         $domainModel->type = Domain::TYPE_SUBDOMAIN;
                         $domainModel->save();
-                        $this->info('Subdomain');
+                        $this->info($domainModel->domain . ' - subdomain');
                     } catch (\Exception $e) {
                         continue;
                     }

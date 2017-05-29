@@ -46,7 +46,7 @@ class SaveRussian extends Command
             foreach ($domains as $domainModel) {
                 file_put_contents($this->maxidPath, $domainModel->id);
 
-                $this->info($domainModel->id . ' ' . $domainModel->domain . ' ' . $domainModel->source);
+                $info = ($domainModel->id . ' ' . $domainModel->domain . ' ' . $domainModel->source);
 
                 if (strpos($domainModel->domain, '.ru') !== false) {
                     continue;
@@ -85,9 +85,9 @@ class SaveRussian extends Command
                         || strpos((string) $responseBody, 'CP1251') !== false
                         || strpos((string) $responseBody, 'koi8-') !== false
                     ) {
-                        $this->info('OK');
+                        $this->info($info . ' OK');
                     } else {
-                        $this->error('Drop!');
+                        $this->error($info . ' Drop!');
                         $domainModel->status = Domain::STATUS_BAD;
                         $domainModel->save();
                     }
