@@ -17,11 +17,11 @@ class AddIndexes extends Migration
             $table->index('is_valid');
         });
 
-        Schema::create('domains', function (Blueprint $table) {
+        Schema::table('domains', function (Blueprint $table) {
             $table->index(['status', 'type']);
         });
 
-        Schema::create('links', function (Blueprint $table) {
+        Schema::table('links', function (Blueprint $table) {
             $table->index(['status', 'registrar']);
         });
     }
