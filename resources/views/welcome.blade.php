@@ -70,7 +70,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @if (Auth::check())
-                        <a href="{{ url('/random/email') }}">Home</a>
+                        <a href="{{ Auth::user()->role == \App\User::ROLE_MODERATOR ? url('/moderator/links') : (Auth::user()->role == \App\User::ROLE_FINDER ? url('/random/manualDomain') : url('/random/email')) }}">Home</a>
                     @else
                         <a href="{{ url('/login') }}">Login</a>
                         <a href="{{ url('/register') }}">Register</a>
