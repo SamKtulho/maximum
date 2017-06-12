@@ -25,17 +25,10 @@ class Email
     
     public static function getEmailsCount()
     {
-        $allCount = 0;
-
-        $allEmails = \App\Models\Email::where('is_valid', \App\Models\Email::STATUS_VALID)->with(['domain'=> function ($query) {
-            $query->where('status', Domain::STATUS_NOT_PROCESSED);
-        }])->get();
-
-        foreach ($allEmails as $email) {
-            if ($email->domain) {
-                ++$allCount;
-            }
-        }
+        $allCount = DB::table('emails')
+            ->join('domains', 'domains.id', '=', 'emails.domain_id')
+            ->where('emails.is_valid', \App\Models\Email::STATUS_VALID)
+            ->where('domains.status', Domain::STATUS_NOT_PROCESSED)->count();
 
         $result = [];
         $count = 0;
