@@ -81,6 +81,7 @@ class Random
             $shortUrl->url = $tRand->getShortUrl();
             $shortUrl->domain_id = $storedDomain->id;
             $shortUrl->type = Shorturl::TYPE_REGISTRAR;
+            $shortUrl->type = Shorturl::TYPE_REGISTRAR;
             $shortUrl->user_id = Auth::user()->id;
             $shortUrl->save();
         }
@@ -243,6 +244,7 @@ class Random
                 $shortUrl->url = $tRand->getShortUrl();
                 $shortUrl->domain_id = $storedDomain->id;
                 $shortUrl->type = $forMailRu ? Shorturl::TYPE_OTHER : Shorturl::TYPE_GOOGLE;
+                $shortUrl->action = Shorturl::ACTION_MAIL_SENT;
                 $shortUrl->user_id = Auth::user()->id;
                 $shortUrl->save();
             }

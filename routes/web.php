@@ -52,7 +52,7 @@ Route::post('/link/moderation_log/data', 'LinkController@moderationLogData');
 
 Route::get('/manual/count', 'ManualController@count');
 Route::get('/manualSubdomain/count', 'ManualController@subdomainCount');
-Route::post('/manual/notFound', 'ManualController@notFound');
+Route::post('/manual/update_action', 'ManualController@updateAction');
 
 Route::get('/subdomain/statistic', 'SubdomainController@statistic');
 Route::post('/subdomain/statistic/data', 'SubdomainController@data');

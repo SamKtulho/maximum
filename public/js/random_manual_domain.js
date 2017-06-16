@@ -9,11 +9,13 @@ $( document ).ready(function() {
         getRandomManualData({'name': 'domainOnly', 'value': true});
     });
 
-    $('.btn-not-found').click(function () {
+    $('.btn-action-sent').click(function () {
         $('#preresult .action-buttons').addClass('hide');
         var data = $( "form" ).serializeArray();
         data.push({'name': 'id', 'value': $('#preresult #domain_id').val()});
-        $.post( "/manual/notFound", data, function( data ) {
+        data.push({'name': 'action', 'value': $(this).val()});
+     
+        $.post( "/manual/update_action", data, function( data ) {
             $('.main-button').prop('disabled', false);
 
             if (data.error !== undefined) {
@@ -44,6 +46,10 @@ $( document ).ready(function() {
                     $('#preresult .action-buttons').removeClass('hide');
                     $('#preresult #domain_id').val(data.response.id);
                     $("#preresult #domain_link" ).html( '<a target="_blank" href="//' + data.response.domain + '">' + data.response.domain + '</a>' );
+                    $('.counters').removeClass('hide');
+                    $(".mails_sent" ).html(data.response.statistic[1]);
+                    $(".forms_sent" ).html(data.response.statistic[2]);
+                    $(".total_sent" ).html(data.response.statistic[1] + data.response.statistic[2]);
                 } else {
                     $("#preresult #domain_link" ).html('');
                 }

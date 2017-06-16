@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css?a=1') }}" rel="stylesheet">
     <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 
     <script src="{{ asset('js/app.js') }}"></script>

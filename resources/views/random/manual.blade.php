@@ -5,13 +5,18 @@
     <div class="container random-manual">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="flash-message">
-                    <p class=""> </p>
-                </div> <!-- end .flash-message -->
                 {!! Form::open(['route' => 'random.manualDomain']) !!}
                 <div class="vert25">
                     {!! Form::label('Настройки письма:') !!}
                     {!! Form::button('Показать', ['class'=>'btn btn-sm show-button']) !!}
+                    <span class="counters hide">
+                        <span title="email'ов отправлено" class="counter text-success mails_sent"></span>
+                        <span class="counter">+</span>
+                        <span title="форм отправлено" class="counter text-success forms_sent"></span>
+                        <span class="counter">=</span>
+                        <span title="всего отправлено" class="counter text-primary lead total_sent"></span>
+                    </span>
+
                 </div>
                 <div class="mail-settings hide">
                     <div class="form-group">
@@ -91,8 +96,13 @@
                     <div class="form-group text-center">
                         <p><div id="domain_link"></div></p>
                     </div>
+                    <div class="flash-message">
+                        <p class=""> </p>
+                    </div> <!-- end .flash-message -->
                     <div class="form-group text-center action-buttons hide">
-                        {!! Form::button('Контакты не найдены', ['class'=>'btn btn-danger btn-not-found', 'value' => 1]) !!}
+                        {!! Form::button('Отправлен e-mail', ['class'=>'btn btn-info btn-action-sent', 'value' => \App\Models\Shorturl::ACTION_MAIL_SENT]) !!}
+                        {!! Form::button('Отправлена форма', ['class'=>'btn btn-success btn-action-sent', 'value' => \App\Models\Shorturl::ACTION_FORM_SENT]) !!}
+                        {!! Form::button('Контакты не найдены', ['class'=>'btn btn-danger btn-action-sent', 'value' => \App\Models\Shorturl::ACTION_NOT_FOUND]) !!}
                         {!! Form::hidden('domain_id', null, ['id' => 'domain_id']) !!}
                         <span class="text-muted registrar"></span>
 

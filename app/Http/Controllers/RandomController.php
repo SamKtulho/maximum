@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Shorturl;
 use Illuminate\Http\Request;
 use App\Services\Random;
 use App\Models\Template;
@@ -141,7 +142,8 @@ class RandomController extends Controller
 
         $data = Random::manualGenText($fio, $email, $title, $content, $domain, $isSkip);
 
-        return response()->json(['response' => $data]);
+        $stat = Shorturl::getStatistic(Shorturl::TYPE_REGISTRAR);
+        return response()->json(['response' => array_merge($data, ['statistic' => $stat])]);
     }
 
     public function manualSubdomainStore(Request $request)
