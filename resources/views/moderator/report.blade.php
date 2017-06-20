@@ -7,20 +7,24 @@
             <div class="row">
                 <div class="col-md-11">
                     <h2>Отчет по датам</h2>
+
+
                     <table class="table table-striped">
                         <thead>
                         <tr class="text-center">
                             <th></th>
                             <th class="text-center">Сегодня</th>
                             <th class="text-center">Вчера</th>
-                            @foreach ($reportByDate[0] as $date => $count)
-                                @if(strtotime(date('Y-m-d', strtotime('-' . 0 . ' days'))) == $date
-                                     || strtotime(date('Y-m-d', strtotime('-' . 1 . ' days'))) == $date
-                                     )
-                                    @continue;
-                                @endif
-                                <th class="text-center">{{ date('Y-m-d', $date) }}</th>
-                            @endforeach
+                            @if(!empty($reportByDate[0]))
+                                @foreach ($reportByDate[0] as $date => $count)
+                                    @if(strtotime(date('Y-m-d', strtotime('-' . 0 . ' days'))) == $date
+                                         || strtotime(date('Y-m-d', strtotime('-' . 1 . ' days'))) == $date
+                                         )
+                                        @continue;
+                                    @endif
+                                    <th class="text-center">{{ date('Y-m-d', $date) }}</th>
+                                @endforeach
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
