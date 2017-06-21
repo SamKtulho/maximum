@@ -25,178 +25,185 @@
     </script>
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
+<div id="app">
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                <!-- Collapsed Hamburger -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
+                <!-- Branding Image -->
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+            </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        @if (!Auth::guest() && Auth::user()->role > \App\User::ROLE_GUEST)
-                            @if (\App\User::isAdmin())
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        Домены<span class="caret"></span>
-                                    </a>
-
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="/domain/create">Добавить новые</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            @endif
-
-                            @if (\App\User::isAdmin())
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        Письма<span class="caret"></span>
-                                    </a>
-
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="/moderator/emails">Модератор</a>
-                                        </li>
-                                        <li>
-                                            <a href="/random/email">Отправка</a>
-                                        </li>
-                                        <li>
-                                            <a href="/email/statistic">Статистика</a>
-                                        </li>
-                                        <li>
-                                            <a href="/email/moderation_log">Лог модерации</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            @endif
-
-
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav navbar-nav">
+                    @if (!Auth::guest() && Auth::user()->role > \App\User::ROLE_GUEST)
+                        @if (\App\User::isAdmin())
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    Субдомены<span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    @if (\App\User::isModerator())
-
-                                        <li>
-                                            <a href="/moderator/subdomains">Модератор</a>
-                                        </li>
-                                    @endif
-                                    @if (\App\User::isExternalUser())
-
-                                        <li>
-                                            <a href="/random/manualSubdomain">Поиск контактов</a>
-                                        </li>
-                                        <li>
-                                            <a href="/subdomain/statistic">Статистика</a>
-                                        </li>
-                                    @endif
-
-                                </ul>
-                            </li>
-
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    Регистраторы<span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    @if (\App\User::isModerator())
-                                        <li>
-                                            <a href="/moderator/links">Модератор</a>
-                                        </li>
-                                    @endif
-
-                                    @if (\App\User::isExternalUser())
-                                        <li>
-                                            <a href="/random/manualDomain">Поиск контактов</a>
-                                        </li>
-                                        <li>
-                                            <a href="/random/link">Отправка</a>
-                                        </li>
-                                        <li>
-                                            <a href="/link/statistic">Статистика</a>
-                                        </li>
-                                    @endif
-                                    @if (\App\User::isModerator())
-                                        <li>
-                                            <a href="/link/moderation_log">Лог модерации</a>
-                                        </li>
-                                    @endif
-
-                                </ul>
-                            </li>
-                                @if (\App\User::isAdmin())
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                            Очтеты<span class="caret"></span>
-                                        </a>
-
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a href="/moderator/report">Модерация</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                @endif
-                        @endif
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    Домены<span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
+                                        <a href="/domain/create">Добавить новые</a>
                                     </li>
                                 </ul>
                             </li>
                         @endif
-                    </ul>
-                </div>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Письма<span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                @if (\App\User::isModerator())
+                                    <li>
+                                        <a href="/moderator/emails">Модератор</a>
+                                    </li>
+                                @endif
+
+                                @if (\App\User::isExternalUser())
+                                    <li>
+                                        <a href="/random/email">Отправка</a>
+                                    </li>
+                                @endif
+
+                                @if (\App\User::isAdmin())
+                                    <li>
+                                        <a href="/email/statistic">Статистика</a>
+                                    </li>
+                                @endif
+                                @if (\App\User::isModerator())
+
+                                    <li>
+                                        <a href="/email/moderation_log">Лог модерации</a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Субдомены<span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                @if (\App\User::isModerator())
+
+                                    <li>
+                                        <a href="/moderator/subdomains">Модератор</a>
+                                    </li>
+                                @endif
+                                @if (\App\User::isExternalUser())
+
+                                    <li>
+                                        <a href="/random/manualSubdomain">Поиск контактов</a>
+                                    </li>
+                                    <li>
+                                        <a href="/subdomain/statistic">Статистика</a>
+                                    </li>
+                                @endif
+
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Регистраторы<span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                @if (\App\User::isModerator())
+                                    <li>
+                                        <a href="/moderator/links">Модератор</a>
+                                    </li>
+                                @endif
+
+                                @if (\App\User::isExternalUser())
+                                    <li>
+                                        <a href="/random/manualDomain">Поиск контактов</a>
+                                    </li>
+                                    <li>
+                                        <a href="/random/link">Отправка</a>
+                                    </li>
+                                    <li>
+                                        <a href="/link/statistic">Статистика</a>
+                                    </li>
+                                @endif
+                                @if (\App\User::isModerator())
+                                    <li>
+                                        <a href="/link/moderation_log">Лог модерации</a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                        @if (\App\User::isAdmin())
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Очтеты<span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="/moderator/report">Модерация</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
+                    @endif
+                </ul>
+
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Authentication Links -->
+                    @if (Auth::guest())
+                        <li><a href="{{ route('login') }}">Login</a></li>
+                        <li><a href="{{ route('register') }}">Register</a></li>
+                    @else
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        Logout
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+                </ul>
             </div>
-        </nav>
-
-        <div id="page_title">
-            {{ $title ?? '' }}
         </div>
+    </nav>
 
-        @yield('content')
-
+    <div id="page_title">
+        {{ $title ?? '' }}
     </div>
-    <!-- Scripts -->
+
+    @yield('content')
+
+</div>
+<!-- Scripts -->
 </body>
 </html>
