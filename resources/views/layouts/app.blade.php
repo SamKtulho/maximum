@@ -141,6 +141,9 @@
                                     <li>
                                         <a href="/link/statistic">Статистика</a>
                                     </li>
+                                    <li>
+                                        <a href="/manual/found_log">Лог поиска контактов</a>
+                                    </li>
                                 @endif
                                 @if (\App\User::isModerator())
                                     <li>

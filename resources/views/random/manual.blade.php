@@ -103,6 +103,7 @@
                         {!! Form::button('Отправлен e-mail', ['class'=>'btn btn-info btn-action-sent', 'value' => \App\Models\Shorturl::ACTION_MAIL_SENT]) !!}
                         {!! Form::button('Отправлена форма', ['class'=>'btn btn-success btn-action-sent', 'value' => \App\Models\Shorturl::ACTION_FORM_SENT]) !!}
                         {!! Form::button('Контакты не найдены', ['class'=>'btn btn-danger btn-action-sent', 'value' => \App\Models\Shorturl::ACTION_NOT_FOUND]) !!}
+                        {!! Form::button('Сайт не подходит', ['class'=>'btn btn-warning btn-action-sent', 'value' => \App\Models\Shorturl::ACTION_BAD_DOMAIN]) !!}
                         {!! Form::hidden('domain_id', null, ['id' => 'domain_id']) !!}
                         <span class="text-muted registrar"></span>
 

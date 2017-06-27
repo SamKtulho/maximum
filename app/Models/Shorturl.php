@@ -15,6 +15,7 @@ class Shorturl extends Model
     const ACTION_MAIL_SENT = 1;
     const ACTION_FORM_SENT = 2;
     const ACTION_NOT_FOUND = 3;
+    const ACTION_BAD_DOMAIN = 4;
 
     public function user()
     {

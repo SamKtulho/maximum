@@ -18,5 +18,6 @@ class VerifyCsrfToken extends BaseVerifier
         '/link/moderation_log/data',
         '/email/moderation_log/data',
         '/moderator/change_vote',
+        '/manual/found_log/data',
     ];
 }
