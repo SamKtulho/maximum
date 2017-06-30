@@ -11,7 +11,10 @@
     padding-right: 20px !important;
 }
 
-#example .btn-success.btn-xs, #example .btn-danger.btn-xs {
+.link-moderation-log #example .btn-success.btn-xs, .link-moderation-log #example .btn-danger.btn-xs {
+    width: 50px;
+}
+.email-moderation-log #example .btn-success.btn-xs, .email-moderation-log #example .btn-danger.btn-xs {
     width: 50px;
 }
 
