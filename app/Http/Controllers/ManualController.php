@@ -44,7 +44,7 @@ class ManualController extends Controller
             $modelLink = Link::where('domain_id', $domainId)->first();
             $modelLink->status = Link::STATUS_NOT_PROCESSED;
             $modelLink->save();
-            Shorturl::where('domain_id', $domainId)->delete();
+            //Shorturl::where('domain_id', $domainId)->delete();
 
             $message = Shorturl::ACTION_BAD_DOMAIN ? 'Домен отбракован' : 'Домен отправлен в генератор через регистраторов.';
             return response()->json(['response' => $message]);

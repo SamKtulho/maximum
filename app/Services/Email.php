@@ -3,9 +3,7 @@
 namespace App\Services;
 
 use App\Models\Domain;
-use App\Models\Shorturl;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 class Email
 {
