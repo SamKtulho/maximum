@@ -27,6 +27,9 @@
                         </thead>
                         <tbody>
                         @foreach ($reportByDate as $name => $row)
+                            @if (!$name)
+                                @continue
+                            @endif
                             <tr>
                                 <td>{{ \App\Models\Shorturl::getActionMap()[$name] }}</td>
                                 @foreach ($row as $date => $count)

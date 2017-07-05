@@ -162,8 +162,6 @@
                                     <li>
                                         <a href="/moderator/report">Модерация</a>
                                     </li>
-                                </ul>
-                                <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <a href="/manual/report">Поиск контактов</a>
                                     </li>
