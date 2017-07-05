@@ -45,7 +45,7 @@ $( document ).ready(function() {
                 if (data.response.domain != undefined) {
                     $('#preresult .action-buttons').removeClass('hide');
                     $('#preresult #domain_id').val(data.response.id);
-                    $("#preresult #domain_link" ).html( '<a target="_blank" href="//' + data.response.domain + '">' + data.response.domain + '</a>' );
+                    $("#preresult #domain_link" ).html( '<a target="_blank" href="//' + data.response.domain + '">' + data.response.domain + '</a> (' + data.response.source + ')' );
                     $('.counters').removeClass('hide');
                     $(".mails_sent" ).html(data.response.statistic[1]);
                     $(".forms_sent" ).html(data.response.statistic[2]);

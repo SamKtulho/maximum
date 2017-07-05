@@ -62,6 +62,7 @@ class Random
             return [];
         }
         $storedDomain = $isSkip ? '' : Domain::find($domainId);
+        $source = '';
         if (!$isSkip) {
             $storedDomain->status = Domain::STATUS_PROCESSED;
             $modelLink = ModelLink::where('domain_id', $storedDomain->id)->first();
@@ -84,9 +85,10 @@ class Random
             $shortUrl->type = Shorturl::TYPE_REGISTRAR;
             $shortUrl->user_id = Auth::user()->id;
             $shortUrl->save();
+            $source = $storedDomain->source;
         }
-
-        return (['fio' => $fioRand->getText(), 'email' => $emailRand->getText(), 'text' => $tRand->getText(), 'title' => ($titleRand ? $titleRand->getText() : ''), 'domain' => ($isSkip ? date('dmY') . '.com' : $domain), 'id' => $domainId]);
+        
+        return (['fio' => $fioRand->getText(), 'email' => $emailRand->getText(), 'text' => $tRand->getText(), 'title' => ($titleRand ? $titleRand->getText() : ''), 'domain' => ($isSkip ? date('dmY') . '.com' : $domain), 'id' => $domainId, 'source' => $source]);
     }
 
     public static function getNextDomain($domains, $isSkip = false)
