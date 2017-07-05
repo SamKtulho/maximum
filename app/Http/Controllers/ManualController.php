@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Domain;
 use App\Models\Link;
 use App\Models\Shorturl;
+use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 
 class ManualController extends Controller
@@ -72,5 +73,54 @@ class ManualController extends Controller
 
         return $datatables->eloquent($query)
             ->make(true);
+    }
+
+    public function report()
+    {
+        $daysBefore = 7;
+        $range = [];
+        for ($i = 0; $i < $daysBefore; ++$i) {
+            $range[] = strtotime(date('Y-m-d', strtotime('-' . $i . ' days')));
+        }
+
+        $statDBUser = DB::table('shorturls')
+            ->join('users', 'users.id', '=', 'shorturls.user_id')
+            ->where('type', Shorturl::TYPE_REGISTRAR)
+            ->select('user_id', 'action', 'users.name', DB::raw('count(*) as total'))
+            ->groupBy('user_id')
+            ->groupBy('action')
+            ->get();
+
+        $statDBDate = DB::table('shorturls')
+            ->where('created_at', '>', date('Y-m-d', strtotime('-'. $daysBefore . ' days')))
+            ->where('type', Shorturl::TYPE_REGISTRAR)
+            ->select('action', 'created_at', DB::raw('count(*) as total'))
+            ->groupBy('action')
+            ->groupBy('created_at')
+            ->get()->toArray();
+
+        $resultByDate = [];
+
+        foreach ($statDBDate as $stat) {
+            $statDate = strtotime(str_limit($stat->created_at, 10, ''));
+            $resultByDate[$stat->action][$statDate] =
+                isset($resultByDate[$stat->action][$statDate])
+                    ? $resultByDate[$stat->action][$statDate] + $stat->total
+                    : $stat->total;
+        }
+
+
+        foreach ($resultByDate as &$result) {
+            foreach ($range as $date) {
+                if (!isset($result[$date])) {
+                    $result[$date] = 0;
+                }
+            }
+            krsort($result);
+        }
+
+        unset($result);
+
+        return view('manual.report', ['reportByUser' => $statDBUser, 'reportByDate' => $resultByDate]);
     }
 }

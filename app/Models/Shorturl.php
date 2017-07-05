@@ -17,6 +17,21 @@ class Shorturl extends Model
     const ACTION_NOT_FOUND = 3;
     const ACTION_BAD_DOMAIN = 4;
 
+    private static $actionMap = [
+        self::ACTION_MAIL_SENT => 'Почта',
+        self::ACTION_FORM_SENT => 'Форма',
+        self::ACTION_NOT_FOUND => 'Не найдено',
+        self::ACTION_BAD_DOMAIN => 'Плохой сайт'
+    ];
+
+    /**
+     * @return array
+     */
+    public static function getActionMap()
+    {
+        return self::$actionMap;
+    }
+
     public function user()
     {
         return $this->belongsTo('\App\User')->select(['id', 'name']);
