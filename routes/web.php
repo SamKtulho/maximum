@@ -53,8 +53,8 @@ Route::post('/link/moderation_log/data', 'LinkController@moderationLogData');
 Route::get('/manual/count', 'ManualController@count');
 Route::get('/manualSubdomain/count', 'ManualController@subdomainCount');
 Route::post('/manual/update_action', 'ManualController@updateAction');
-Route::get('/manual/found_log', 'ManualController@foundLog')->middleware('is_admin');
-Route::post('/manual/found_log/data', 'ManualController@foundLogData')->middleware('is_admin');
+Route::get('/manual/found_log', 'ManualController@foundLog');
+Route::post('/manual/found_log/data', 'ManualController@foundLogData');
 Route::get('/manual/report', 'ManualController@report')->middleware('is_admin');
 
 Route::get('/subdomain/statistic', 'SubdomainController@statistic');
