@@ -229,14 +229,14 @@ class Random
             }
 
             $forMailRu = false;
-            if (!$isSkip) {
+            /*if (!$isSkip) {
                 foreach ($emailMasks['mail'] as $pat) {
                     if (strpos($results->email, $pat) !== false) {
                         $forMailRu = true;
                         break;
                     }
                 }
-            }
+            }*/
 
             $tRand = new TextRandomizer($text, ($isSkip ? date('dmY') . '.com' : $results->domain), $forMailRu);
             $titleRand = new TextRandomizer($title, ($isSkip ? date('dmY') . '.com' : $results->domain), $forMailRu);
