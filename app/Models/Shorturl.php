@@ -49,8 +49,14 @@ class Shorturl extends Model
     
     public static function getStatistic($type)
     {
-        $mails = Shorturl::where('type', $type)->where('user_id', Auth::id())->where('action', self::ACTION_MAIL_SENT)->count();
-        $forms = Shorturl::where('type', $type)->where('user_id', Auth::id())->where('action', self::ACTION_FORM_SENT)->count();
+        $mails = Shorturl::where('type', $type)
+            ->where('user_id', Auth::id())
+            ->where('action', self::ACTION_MAIL_SENT)
+            ->count();
+        $forms = Shorturl::where('type', $type)
+            ->where('user_id', Auth::id())
+            ->where('action', self::ACTION_FORM_SENT)
+            ->count();
 
         return [self::ACTION_MAIL_SENT => $mails, self::ACTION_FORM_SENT => $forms];
     }

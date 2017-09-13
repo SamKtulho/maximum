@@ -10,6 +10,37 @@ use Illuminate\Support\Facades\Auth;
 
 class Random
 {
+    public static function manualEmailGenText($fio, $email, $title, $text, $domains, $isSkip = false)
+    {
+        list($domainId, $domain) = self::getNextEmailDomain();
+
+        if (!$domainId) {
+            return [];
+        }
+        $storedDomain = $isSkip ? '' : Domain::find($domainId);
+        if (!$isSkip) {
+            $storedDomain->status = Domain::STATUS_PROCESSED;
+            $storedDomain->save();
+        }
+
+        $fioRand = new TextRandomizer($fio, ($isSkip ? date('dmY') . '.com' : $domain));
+        $emailRand = new TextRandomizer($email, ($isSkip ? date('dmY') . '.com' : $domain));
+        $tRand = new TextRandomizer($text, ($isSkip ? date('dmY') . '.com' : $domain));
+        $titleRand = new TextRandomizer($title, ($isSkip ? date('dmY') . '.com' : $domain));
+
+        if (!$isSkip && !empty($storedDomain)) {
+            $shortUrl = new Shorturl();
+            $shortUrl->url = $tRand->getShortUrl();
+            $shortUrl->domain_id = $storedDomain->id;
+            $shortUrl->type = Shorturl::TYPE_GOOGLE;
+            $shortUrl->user_id = Auth::user()->id;
+            $shortUrl->save();
+        }
+
+        return (['fio' => $fioRand->getText(), 'email' => $emailRand->getText(), 'text' => $tRand->getText(), 'title' => ($titleRand ? $titleRand->getText() : ''), 'domain' => ($isSkip ? date('dmY') . '.com' : $domain), 'id' => $domainId]);
+    }
+
+
     public static function manualSubdomainGenText($fio, $email, $title, $text, $domains, $isSkip = false)
     {
         list($domainId, $domain) = self::getNextSubdomain();
@@ -45,6 +76,20 @@ class Random
         $modelManual = DB::table('domains')
             ->where('domains.status', Domain::STATUS_MANUAL_CHECK)
             ->where('domains.type', Domain::TYPE_SUBDOMAIN);
+
+
+        $result = $modelManual->first();
+        if (empty($result)) {
+            return [0, ''];
+        }
+        return [$result->id, $result->domain];
+    }
+
+    public static function getNextEmailDomain()
+    {
+        $modelManual = DB::table('domains')
+            ->where('domains.status', Domain::STATUS_MANUAL_CHECK)
+            ->where('domains.type', Domain::TYPE_EMAIL);
 
 
         $result = $modelManual->first();

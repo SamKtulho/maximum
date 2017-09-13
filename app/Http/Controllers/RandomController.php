@@ -56,6 +56,16 @@ class RandomController extends Controller
         return view('random.manualSubdomain', ['template' => $template, 'title' => 'Субдомены -> поиск контактов']);
     }
 
+    public function manualEmail()
+    {
+        $linkTemplate = Template::where('type', Template::TYPE_MANUAL_EMAIL)->first();
+        $template = [];
+        if ($linkTemplate) {
+            $template = unserialize($linkTemplate->template);
+        }
+        return view('random.manualEmail', ['template' => $template, 'title' => 'Письма -> поиск контактов']);
+    }
+
     public function emailStore(Request $request)
     {
         $title = $request->get('title');
@@ -172,5 +182,35 @@ class RandomController extends Controller
         $data = Random::manualSubdomainGenText($fio, $email, $title, $content, $isSkip);
 
         return response()->json(['response' => $data]);
+    }
+
+    public function manualEmailStore(Request $request)
+    {
+        $title = $request->get('title');
+        $content = $request->get('content');
+        $domain = $request->get('ldomain');
+        $fio = $request->get('fio');
+        $email = $request->get('email');
+        $isSkip = (bool) $request->get('skip', false);
+        $isSave = (bool) $request->get('saveTemplate', false);
+
+        if ($isSave) {
+            $linkTemplate = Template::where('type', Template::TYPE_MANUAL_EMAIL)->first();
+            if (!$linkTemplate) {
+                $linkTemplate = new Template();
+                $linkTemplate->type = Template::TYPE_MANUAL_EMAIL;
+            }
+            $linkTemplate->template = serialize(['title' => $title, 'content' => $content, 'fio' => $fio, 'email' => $email]);
+            $linkTemplate->save();
+            return response()->json(['response' => 'Сохранено']);
+        }
+        if (!$title || !$content || !$fio || !$email) {
+            return response()->json(['error' => 'Введите заголовок, текст письма, ФИО, email и хотябы 1 регистратор!']);
+        }
+
+        $data = Random::manualEmailGenText($fio, $email, $title, $content, $domain, $isSkip);
+
+        $stat = Shorturl::getStatistic(Shorturl::TYPE_GOOGLE);
+        return response()->json(['response' => array_merge($data, ['statistic' => $stat])]);
     }
 }

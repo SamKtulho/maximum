@@ -33,6 +33,8 @@ Route::post('/random/email/store', ['as' => 'random.email.store', 'uses' => 'Ran
 Route::get('/random/link', ['as' => 'random.link', 'uses' => 'RandomController@link']);
 Route::post('/random/link/store', ['as' => 'random.link.store', 'uses' => 'RandomController@linkStore']);
 Route::get('/random/manualDomain', ['as' => 'random.manualDomain', 'uses' => 'RandomController@manualDomain']);
+Route::get('/random/manualEmail', ['as' => 'random.manualEmail', 'uses' => 'RandomController@manualEmail']);
+Route::post('/random/manualEmail/store', ['as' => 'random.manualEmail.store', 'uses' => 'RandomController@manualEmailStore']);
 
 Route::post('/random/manualDomain/store', ['as' => 'random.manualDomain.store', 'uses' => 'RandomController@manualDomainStore']);
 Route::get('/random/manualSubdomain', ['as' => 'random.manualSubdomain', 'uses' => 'RandomController@manualSubdomain']);
@@ -52,6 +54,7 @@ Route::post('/link/moderation_log/data', 'LinkController@moderationLogData');
 
 Route::get('/manual/count', 'ManualController@count');
 Route::get('/manualSubdomain/count', 'ManualController@subdomainCount');
+Route::get('/manualEmail/count', 'ManualController@emailCount');
 Route::post('/manual/update_action', 'ManualController@updateAction');
 Route::get('/manual/found_log', 'ManualController@foundLog');
 Route::post('/manual/found_log/data', 'ManualController@foundLogData');

@@ -11,18 +11,17 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css?a=1') }}" rel="stylesheet">
-    <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ mix('/css/all.css') }}">
 
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/datatables.min.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+
+    <script src="{{ asset(mix('js/app.js')) }}"></script>
+    <script src="{{ asset('js/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
 </head>
 <body>
 <div id="app">
@@ -79,6 +78,12 @@
                                         <a href="/random/email">Отправка</a>
                                     </li>
                                 @endif
+
+                                    @if (\App\User::isExternalUser())
+                                        <li>
+                                            <a href="/random/manualEmail">Поиск контактов</a>
+                                        </li>
+                                    @endif
 
                                 @if (\App\User::isAdmin())
                                     <li>

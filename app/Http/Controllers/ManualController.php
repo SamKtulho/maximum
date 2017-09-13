@@ -27,6 +27,11 @@ class ManualController extends Controller
         return response()->json(['response' => \App\Services\Manual::getSubdomainsCount()]);
     }
 
+    public function emailCount()
+    {
+        return response()->json(['response' => \App\Services\Manual::getEmailsCount()]);
+    }
+
     public function updateAction(Request $request)
     {
         $this->validate($request, [
@@ -41,10 +46,11 @@ class ManualController extends Controller
             $domain = Domain::find($domainId);
             $domain->status = $action == Shorturl::ACTION_BAD_DOMAIN ? Domain::STATUS_BAD : Domain::STATUS_NOT_PROCESSED;
             $domain->save();
-            $modelLink = Link::where('domain_id', $domainId)->first();
-            $modelLink->status = Link::STATUS_NOT_PROCESSED;
-            $modelLink->save();
-            //Shorturl::where('domain_id', $domainId)->delete();
+            if ($modelLink = Link::where('domain_id', $domainId)->first()) {
+                $modelLink->status = Link::STATUS_NOT_PROCESSED;
+                $modelLink->save();
+            }
+
             $shorturl = Shorturl::where('domain_id', $domainId)->first();
             $shorturl->action = $action;
             $shorturl->save();
@@ -84,7 +90,11 @@ class ManualController extends Controller
 
         $statDBUser = DB::table('shorturls')
             ->join('users', 'users.id', '=', 'shorturls.user_id')
-            ->where('type', Shorturl::TYPE_REGISTRAR)
+            ->where(function ($query) {
+                $query->orWhere('type', Shorturl::TYPE_REGISTRAR)->
+                orWhere('type', Shorturl::TYPE_GOOGLE);
+            })
+            ->where('action', '>', 0)
             ->select('user_id', 'action', 'users.name', DB::raw('count(*) as total'))
             ->groupBy('user_id')
             ->groupBy('action')
@@ -92,7 +102,11 @@ class ManualController extends Controller
 
         $statDBDate = DB::table('shorturls')
             ->where('created_at', '>', date('Y-m-d', strtotime('-'. $daysBefore . ' days')))
-            ->where('type', Shorturl::TYPE_REGISTRAR)
+            ->where(function ($query) {
+                $query->orWhere('type', Shorturl::TYPE_REGISTRAR)->
+                orWhere('type', Shorturl::TYPE_GOOGLE);
+            })
+            ->where('action', '>', 0)
             ->select('action', 'created_at', DB::raw('count(*) as total'))
             ->groupBy('action')
             ->groupBy('created_at')
