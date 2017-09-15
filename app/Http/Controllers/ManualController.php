@@ -74,7 +74,10 @@ class ManualController extends Controller
 
     public function foundLogData(Datatables $datatables)
     {
-        $query = Shorturl::with('user')->with('domain')->where('shorturls.type', Shorturl::TYPE_REGISTRAR);
+        $query = Shorturl::with('user')->with('domain')->where(function ($query) {
+            $query->orWhere('shorturls.type', Shorturl::TYPE_REGISTRAR)->
+            orWhere('shorturls.type', Shorturl::TYPE_GOOGLE);
+        });
 
         return $datatables->eloquent($query)
             ->make(true);
