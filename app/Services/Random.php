@@ -17,6 +17,8 @@ class Random
         if (!$domainId) {
             return [];
         }
+        $source = '';
+
         $storedDomain = $isSkip ? '' : Domain::find($domainId);
         if (!$isSkip) {
             $storedDomain->status = Domain::STATUS_PROCESSED;
@@ -35,9 +37,10 @@ class Random
             $shortUrl->type = Shorturl::TYPE_GOOGLE;
             $shortUrl->user_id = Auth::user()->id;
             $shortUrl->save();
+            $source = $storedDomain->source;
         }
 
-        return (['fio' => $fioRand->getText(), 'email' => $emailRand->getText(), 'text' => $tRand->getText(), 'title' => ($titleRand ? $titleRand->getText() : ''), 'domain' => ($isSkip ? date('dmY') . '.com' : $domain), 'id' => $domainId]);
+        return (['fio' => $fioRand->getText(), 'email' => $emailRand->getText(), 'text' => $tRand->getText(), 'title' => ($titleRand ? $titleRand->getText() : ''), 'domain' => ($isSkip ? date('dmY') . '.com' : $domain), 'id' => $domainId, 'source' => $source]);
     }
 
 
@@ -126,7 +129,6 @@ class Random
             $shortUrl = new Shorturl();
             $shortUrl->url = $tRand->getShortUrl();
             $shortUrl->domain_id = $storedDomain->id;
-            $shortUrl->type = Shorturl::TYPE_REGISTRAR;
             $shortUrl->type = Shorturl::TYPE_REGISTRAR;
             $shortUrl->user_id = Auth::user()->id;
             $shortUrl->save();
