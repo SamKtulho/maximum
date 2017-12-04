@@ -13,7 +13,9 @@ class Manual
             ->join('domains', 'domains.id', '=', 'links.domain_id')
             ->where('links.status', \App\Models\Link::STATUS_NOT_PROCESSED)
             ->whereNotNull('links.registrar')
-            ->where('domains.status', Domain::STATUS_MANUAL_CHECK)->count();
+            ->where('domains.type', Domain::TYPE_LINK)
+            ->where('domains.status', Domain::STATUS_MANUAL_CHECK)
+            ->count();
 
         $result = [];
         $count = 0;
