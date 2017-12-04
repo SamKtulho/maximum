@@ -26,7 +26,9 @@ class Link
             ->join('domains', 'domains.id', '=', 'links.domain_id')
             ->where('links.status', \App\Models\Link::STATUS_NOT_PROCESSED)
             ->whereNotNull('links.registrar')
-            ->where('domains.status', Domain::STATUS_NOT_PROCESSED)->count();
+            ->where('domains.status', Domain::STATUS_NOT_PROCESSED)
+            ->where('domains.type', Domain::TYPE_LINK)
+            ->count();
 
         $result = [];
         $count = 0;
