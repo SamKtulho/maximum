@@ -47,7 +47,21 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     @if (!Auth::guest() && Auth::user()->role > \App\User::ROLE_GUEST)
-                        @if (\App\User::isAdmin())
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Heyyy Feed<span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="/heyyy/feed">Coupons</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                       {{-- @if (\App\User::isAdmin())
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Домены<span class="caret"></span>
@@ -59,9 +73,9 @@
                                     </li>
                                 </ul>
                             </li>
-                        @endif
+                        @endif--}}
 
-                        <li class="dropdown">
+                        {{--<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 Письма<span class="caret"></span>
                             </a>
@@ -98,8 +112,8 @@
                                 @endif
                             </ul>
                         </li>
-
-                        <li class="dropdown">
+--}}
+                        {{--<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 Субдомены<span class="caret"></span>
                             </a>
@@ -122,9 +136,9 @@
                                 @endif
 
                             </ul>
-                        </li>
+                        </li>--}}
 
-                        <li class="dropdown">
+                        {{--<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 Регистраторы<span class="caret"></span>
                             </a>
@@ -156,8 +170,8 @@
                                     </li>
                                 @endif
                             </ul>
-                        </li>
-                        @if (\App\User::isAdmin())
+                        </li>--}}
+                        {{--@if (\App\User::isAdmin())
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Очтеты<span class="caret"></span>
@@ -172,7 +186,7 @@
                                     </li>
                                 </ul>
                             </li>
-                        @endif
+                        @endif--}}
                     @endif
                 </ul>
 

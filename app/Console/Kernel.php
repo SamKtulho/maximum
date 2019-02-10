@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\AddDomainType::class,
         Commands\ProcessDomain::class,
         Commands\SaveRussian::class,
+        Commands\GetCoupons::class,
     ];
 
     /**

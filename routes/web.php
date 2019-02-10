@@ -68,3 +68,8 @@ Route::post('/domain/back', 'DomainController@back')->name('domainBack');
 $router->resource('domain', 'DomainController');
 $router->resource('email', 'EmailController');
 $router->resource('link', 'LinkController');
+
+
+Route::get('/heyyy/feed', 'HeyyyController@index');
+Route::get('/heyyy/getCoupon', 'HeyyyController@getCoupon');
+Route::post('/heyyy/feed', 'HeyyyController@save');

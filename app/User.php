@@ -12,7 +12,8 @@ class User extends Authenticatable
     const ROLE_FINDER = 1;
     const ROLE_MODERATOR = 2;
     const ROLE_ADMIN = 3;
-    
+    const ROLE_HEY_CONTENT = 4;
+
     use Notifiable;
 
     /**
